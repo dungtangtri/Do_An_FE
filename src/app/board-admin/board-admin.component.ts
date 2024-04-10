@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
+import {AdminService} from "./service/admin.service";
+import {GetAllUserDto} from "./models/get-all-user-dto";
 
 @Component({
   selector: 'app-board-admin',
@@ -7,26 +8,17 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./board-admin.component.css']
 })
 export class BoardAdminComponent implements OnInit {
-  content?: string;
+  content : GetAllUserDto[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.userService.getAdminBoard().subscribe({
+    this.adminService.getAllUser().subscribe({
       next: data => {
         this.content = data;
       },
       error: err => {
-        if (err.error) {
-          try {
-            const res = JSON.parse(err.error);
-            this.content = res.message;
-          } catch {
-            this.content = `Error with status: ${err.status} - ${err.statusText}`;
-          }
-        } else {
-          this.content = `Error with status: ${err.status}`;
-        }
+        console.log(err);
       }
     });
   }

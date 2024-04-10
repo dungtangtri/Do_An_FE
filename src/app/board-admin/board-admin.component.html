@@ -1,5 +1,53 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
-</div>
+<p-table
+  [value]="content"
+  styleClass="cp-table"
+  responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="">
+        <div class="flex justify-content-center">
+          <span>STT</span>
+          <!--                                    <p-sortIcon field=""></p-sortIcon>-->
+        </div>
+      </th>
+      <th pSortableColumn="">
+        <div class="flex justify-content-center">
+          <span>User ID</span>
+          <!--                        <p-sortIcon field="status"></p-sortIcon>-->
+        </div>
+      </th>
+      <th>Email</th>
+      <th>Create Time</th>
+      <th>Order Description</th>
+      <th>Reservation Start Time</th>
+      <th>Reservation End Time</th>
+      <th>Room ID</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-data let-index="rowIndex">
+    <tr>
+      <td>
+        {{ index + 1 }}
+      </td>
+      <td>{{data.user_id}}</td>
+      <td>{{data.email}}</td>
+      <td>{{data.create_time}}</td>
+      <td>{{data.order_description}}</td>
+      <td>{{data.reservation_start_time}}</td>
+      <td>{{data.reservation_end_time}}</td>
+      <td>{{data.room_id}}</td>
+      <td>{{data.status}}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="11">
+        <div class="flex flex-column empty">
+          <p-image src="assets/images/Empty.png" alt="empty"></p-image>
+          <span> Không có dữ liệu </span>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

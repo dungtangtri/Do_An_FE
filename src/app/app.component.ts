@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
 
   constructor(
     private storageService: StorageService,
+    private authService: AuthService,
     private eventBusService: EventBusService
   ) {}
 
@@ -42,7 +43,16 @@ export class AppComponent implements OnInit{
   }
 
   logout(): void {
+    this.authService.logout().subscribe({
+      next: res => {
+        console.log(res);
         this.storageService.clean();
+
         window.location.reload();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 }

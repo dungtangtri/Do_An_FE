@@ -1,5 +1,5 @@
 {
-  "name": "angular-16-jwt-auth",
+  "name": "Do_An_FE",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "bootstrap": "^4.6.2",
+    "primeng": "^17.13.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
