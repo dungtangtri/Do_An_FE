@@ -1,5 +1,69 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+<div class="flex align-items-center justify-content-between flex-wrap content-header">
+  <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
+    <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd.mm.yy" placeholder="Start Date"
+                [showIcon]="true"
+                selectionMode="single" view="date" >
+    </p-calendar>
+
+    <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date" dateFormat="dd.mm.yy"
+                [showIcon]="true"
+                selectionMode="single" view="date">
+    </p-calendar>
+    <button pButton type="button" icon="pi pi-sync" iconPos="left" label="Search" (click)="onSearch()"
+            class="cp-button"></button>
+  </form>
+
+</div>
+<div class="element-below-calendar">
+  <p-table
+    [columns]="cols"
+    [value]="content"
+    responsiveLayout="scroll"
+    [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columns">
+          <p-columnFilter type="text"
+                          [field]="col.field"
+                          [matchModeOptions]="matchModeOptions">
+            <ng-template pTemplate="header">
+            </ng-template>
+          </p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-index="rowIndex">
+      <tr>
+        <td>
+          {{ index + 1 }}
+        </td>
+        <td>{{ data.reservation_id }}</td>
+        <td>{{ data.create_time|dateFormat: 'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>{{ data.reservation_description }}</td>
+        <td>{{ data.reservation_start_time|dateFormat: 'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>{{ data.reservation_end_time|dateFormat: 'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>{{ data.room_id }}</td>
+        <td>
+          <p-tag class="custom-tag-installed" *ngIf="data.status === '1'">ACCEPTED</p-tag>
+          <p-tag class="custom-tag-deleted" *ngIf="data.status === '2'">REJECTED</p-tag>
+          <p-tag class="custom-tag-warning" *ngIf="data.status === '0'">PROCESSING</p-tag>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="11">
+          <div class="flex flex-column empty">
+            <p-image src="assets/images/Empty.png" alt="empty"></p-image>
+            <span> Không có dữ liệu </span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

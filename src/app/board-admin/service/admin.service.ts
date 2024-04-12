@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {GetAllUserDto} from "../models/get-all-user-dto";
+import {GetAllUserWithReservationDto} from "../models/get-all-user-with-reservation-dto";
+import {BaseSearchForm} from "../../shared/BaseSearchForm";
 const API_URL = 'http://localhost:8080/api/';
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ const API_URL = 'http://localhost:8080/api/';
 export class AdminService {
 
   constructor(private http: HttpClient) { }
-  getAllUser() {
-    return this.http.get<GetAllUserDto[]>(API_URL + 'get-all-user', { responseType: 'json' });
+  getAllUser(searchForm: BaseSearchForm) {
+    return this.http.post<GetAllUserWithReservationDto[]>(API_URL + 'get-all-user-reservations', searchForm);
   }
 }

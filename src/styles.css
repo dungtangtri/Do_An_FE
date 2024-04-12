@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "primeng/resources/primeng.css";
-
+body{
+  background-color: ghostwhite;
+}
 .p-datatable .p-datatable-tbody > tr {
   border-bottom: 1px solid #d1d1d1;
 }
@@ -38,7 +40,40 @@
   background-color: #f0f0f0;
   text-align: center;
 }
+.custom-tag-installed {
+  .p-tag {
+    background-color: #e8fff3;
+    color: #0fb215;
+    border: 6px;
+  }
+}
+.custom-tag-deleted {
+  .p-tag {
+    background-color: #fff5f5;
+    color: #e53131;
+    border: 6px;
+  }
+}
+.custom-tag-warning {
+  .p-tag {
+    background-color: #fff8dd;
+    color: #ffc700;
+    border: 6px;
+  }
+}
 
 
+:host ::ng-deep .p-calendar{
+  border: 2px solid green;
+  border-radius: 10px;
+}
 
+.p-calendar,
+.p-datepicker table td.p-datepicker-today>span,
+.p-calendar .p-datepicker,
+table td.p-datepicker-today>span:hover {
+  background-color: #A2D2FF;
+  color: black;
+  font-weight: bold;
+}
 

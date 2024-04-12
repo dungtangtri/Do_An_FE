@@ -6,13 +6,19 @@
         <a href="/home" class="nav-link" routerLink="home">Home </a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+        <a href="/get-all-user-reservation" class="nav-link" routerLink="get-all-user-reservation">Get Users Reservations</a>
       </li>
       <li class="nav-item" *ngIf="showTeacherBoard">
         <a href="/teacher" class="nav-link" routerLink="teacher">Teacher Board</a>
       </li>
       <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
+        <a href="/my-reservation" class="nav-link" *ngIf="isLoggedIn" routerLink="my-reservation">My Reservations</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/approve-reservation" class="nav-link" routerLink="all-user">Approve Reservations</a>
+      </li>
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/all-reservations" class="nav-link" routerLink="all-reservations">All Reservations</a>
       </li>
     </ul>
 

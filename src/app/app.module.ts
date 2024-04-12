@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -20,6 +20,13 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InputTextModule} from "primeng/inputtext";
 import { DateFormatPipe } from './date-format.pipe';
+import {TagModule} from "primeng/tag";
+import { ApproveReservationsComponent } from './approve-reservations/approve-reservations.component';
+import {DropdownModule} from "primeng/dropdown";
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import {TabViewModule} from "primeng/tabview";
+import {CalendarModule} from "primeng/calendar";
+
 
 @NgModule({
   declarations: [
@@ -32,6 +39,7 @@ import { DateFormatPipe } from './date-format.pipe';
     BoardModeratorComponent,
     BoardUserComponent,
     DateFormatPipe,
+    ApproveReservationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +53,12 @@ import { DateFormatPipe } from './date-format.pipe';
     BrowserAnimationsModule,
     FormsModule,
     InputTextModule,
+    TagModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    OverlayPanelModule,
+    TabViewModule,
+    CalendarModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
