@@ -5,18 +5,18 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BoardUserComponent } from './board-user/board-user.component';
+import { UserGetMyReservationsComponent } from './board-user/user-get-my-reservations.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { AdminGetAllReservationsComponent } from './admin-get-all-users-reservations/admin-get-all-reservations.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'my-reservation', component: BoardUserComponent },
+  { path: 'my-reservation', component: UserGetMyReservationsComponent },
   { path: 'teacher', component: BoardModeratorComponent },
-  { path: 'get-all-user-reservation', component: BoardAdminComponent },
+  { path: 'get-all-user-reservation', component: AdminGetAllReservationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

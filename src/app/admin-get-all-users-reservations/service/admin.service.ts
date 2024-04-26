@@ -13,4 +13,7 @@ export class AdminService {
   getAllUser(searchForm: BaseSearchForm) {
     return this.http.post<GetAllUserWithReservationDto[]>(API_URL + 'get-all-user-reservations', searchForm);
   }
+  deleteReservation(id: number){
+    return this.http.post(API_URL + 'deleteReservation', id,{responseType: 'text'});
+  }
 }

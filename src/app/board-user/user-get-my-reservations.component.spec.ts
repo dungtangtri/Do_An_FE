@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardUserComponent } from './board-user.component';
+import { UserGetMyReservationsComponent } from './user-get-my-reservations.component';
 
 describe('BoardUserComponent', () => {
-  let component: BoardUserComponent;
-  let fixture: ComponentFixture<BoardUserComponent>;
+  let component: UserGetMyReservationsComponent;
+  let fixture: ComponentFixture<UserGetMyReservationsComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BoardUserComponent]
+      declarations: [UserGetMyReservationsComponent]
     });
-    fixture = TestBed.createComponent(BoardUserComponent);
+    fixture = TestBed.createComponent(UserGetMyReservationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

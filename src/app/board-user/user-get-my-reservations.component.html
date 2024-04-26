@@ -53,6 +53,9 @@
           <p-tag class="custom-tag-deleted" *ngIf="data.status === '2'">REJECTED</p-tag>
           <p-tag class="custom-tag-warning" *ngIf="data.status === '0'">PROCESSING</p-tag>
         </td>
+        <td>
+          <button pButton type="button" icon="pi pi-trash" ></button>
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

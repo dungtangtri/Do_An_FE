@@ -9,18 +9,18 @@
                 [showIcon]="true"
                 selectionMode="single" view="date">
     </p-calendar>
-    <button pButton type="button" icon="pi pi-sync" iconPos="left" label="Search" (click)="onSearch()"
-            class="cp-button"></button>
+    <button pButton type="button" icon="pi pi-search" (click)="onSearch()"
+    class="cp-button"></button>
   </form>
-
 </div>
 <div>
+  <p-toast></p-toast>
 <p-table
   [columns]="cols"
   [value]="content"
   responsiveLayout="scroll"
   [paginator]="true" [rows]="10">
-    <ng-template pTemplate="header" let-columns>
+  <ng-template pTemplate="header" let-columns>
     <tr>
         <th *ngFor="let col of columns">
             {{ col.header }}
@@ -55,7 +55,12 @@
         <p-tag class="custom-tag-deleted" *ngIf="data.status === '2'">REJECTED</p-tag>
         <p-tag class="custom-tag-warning" *ngIf="data.status === '0'">PROCESSING</p-tag>
       </td>
+      <td>
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteReservation(data)"
+        class="cp-button"></button>
+      </td>
     </tr>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" ></p-confirmDialog>
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>

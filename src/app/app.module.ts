@@ -9,9 +9,9 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
-import {BoardAdminComponent} from './board-admin/board-admin.component';
+import {AdminGetAllReservationsComponent} from './admin-get-all-users-reservations/admin-get-all-reservations.component';
 import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
-import {BoardUserComponent} from './board-user/board-user.component';
+import {UserGetMyReservationsComponent} from './board-user/user-get-my-reservations.component';
 import {TableModule} from 'primeng/table';
 import {httpInterceptorProviders} from './_helpers/http.interceptor';
 import {ImageModule} from "primeng/image";
@@ -26,7 +26,11 @@ import {DropdownModule} from "primeng/dropdown";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {TabViewModule} from "primeng/tabview";
 import {CalendarModule} from "primeng/calendar";
-
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import { MessagesModule } from 'primeng/messages';
+import {ToastModule} from "primeng/toast";
+import {ConfirmationService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -35,9 +39,9 @@ import {CalendarModule} from "primeng/calendar";
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    BoardAdminComponent,
+    AdminGetAllReservationsComponent,
     BoardModeratorComponent,
-    BoardUserComponent,
+    UserGetMyReservationsComponent,
     DateFormatPipe,
     ApproveReservationsComponent,
   ],
@@ -59,8 +63,13 @@ import {CalendarModule} from "primeng/calendar";
     OverlayPanelModule,
     TabViewModule,
     CalendarModule,
+    ConfirmPopupModule,
+    MessagesModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }
