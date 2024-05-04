@@ -8,7 +8,7 @@ import {CONSTANTS} from "../board-user/utils/CONSTANTS";
 import {FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-board-admin',
+  selector: 'app-admin-get-all-users-reservations',
   templateUrl: './admin-get-all-reservations.html',
   styleUrls: ['./admin-get-all-reservations.component.css'],
   providers: [ConfirmationService, MessageService]
@@ -53,7 +53,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
       { field: 'create_time', header: 'Create Time' },
       { field: 'reservation_description', header: 'Reservation Description' },
       { field: 'reservation_start_time', header: 'Reservation Start Time' },
-      { field: 'reservation_end_time', header: 'Reservation Start Time' },
+      { field: 'reservation_end_time', header: 'Reservation End Time' },
       { field: 'room_id', header: 'Room ID' },
       { field: 'status', header: 'Status' },
       { field: 'action', header: 'Action'}
@@ -61,12 +61,14 @@ export class AdminGetAllReservationsComponent implements OnInit {
   }
   getData(){
     const searchForm : BaseSearchForm = Util.getDataFormSearch(this.formSearch)
-    this.adminService.getAllUser(searchForm).subscribe({
+    this.adminService.getAllReservations(searchForm).subscribe({
       next: data => {
         this.content = data;
+        this.messageService.add({ severity: 'success', summary: 'Successfully retrieving data', detail: 'Successfully retrieving data from the server.'});
       },
       error: err => {
-        console.log(err);
+        this.messageService.add({ severity: 'error', summary: 'Error retrieving data', detail: 'Error retrieving data from the server, please try again later.' });
+
       }
     });
   }
@@ -75,13 +77,13 @@ export class AdminGetAllReservationsComponent implements OnInit {
   }
   deleteReservation(data : GetAllUserWithReservationDto){
       this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
+        message: 'Are you sure that you want to delete this reservation? This can not be undone.',
+        header:'Delete Reservation',
         icon: 'pi pi-exclamation-circle color-red',
         accept: () => {
          this.acceptDelete(data);
         }
       });
-
   }
   acceptDelete(data : GetAllUserWithReservationDto){
     const id = data.reservation_id;
@@ -92,8 +94,6 @@ export class AdminGetAllReservationsComponent implements OnInit {
         },
         error: err => {
             this.messageService.add({ severity: 'error', summary: 'Delete Unsuccessfully', detail: 'You have deleted unsuccessfully' });
-          console.log(err.message);
-
         }
       })
     }

@@ -10,7 +10,7 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
 import {AdminGetAllReservationsComponent} from './admin-get-all-users-reservations/admin-get-all-reservations.component';
-import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
+import {AllUserComponent} from './all-user/all-user.component';
 import {UserGetMyReservationsComponent} from './board-user/user-get-my-reservations.component';
 import {TableModule} from 'primeng/table';
 import {httpInterceptorProviders} from './_helpers/http.interceptor';
@@ -31,6 +31,7 @@ import { MessagesModule } from 'primeng/messages';
 import {ToastModule} from "primeng/toast";
 import {ConfirmationService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {TooltipModule} from "primeng/tooltip";
 
 @NgModule({
   declarations: [
@@ -40,34 +41,35 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     HomeComponent,
     ProfileComponent,
     AdminGetAllReservationsComponent,
-    BoardModeratorComponent,
+    AllUserComponent,
     UserGetMyReservationsComponent,
     DateFormatPipe,
     ApproveReservationsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    TableModule,
-    ImageModule,
-    ButtonModule,
-    AutoCompleteModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    InputTextModule,
-    TagModule,
-    DropdownModule,
-    ReactiveFormsModule,
-    OverlayPanelModule,
-    TabViewModule,
-    CalendarModule,
-    ConfirmPopupModule,
-    MessagesModule,
-    ToastModule,
-    ConfirmDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        TableModule,
+        ImageModule,
+        ButtonModule,
+        AutoCompleteModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        InputTextModule,
+        TagModule,
+        DropdownModule,
+        ReactiveFormsModule,
+        OverlayPanelModule,
+        TabViewModule,
+        CalendarModule,
+        ConfirmPopupModule,
+        MessagesModule,
+        ToastModule,
+        ConfirmDialogModule,
+        TooltipModule
+    ],
   providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]
 

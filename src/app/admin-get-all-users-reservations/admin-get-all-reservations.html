@@ -1,12 +1,12 @@
 <div class="flex align-items-center justify-content-between flex-wrap content-header">
   <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
     <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd.mm.yy" placeholder="Start Date"
-                [showIcon]="true"
+                [showIcon]="true" [readonlyInput] = "true"
                 selectionMode="single" view="date" >
     </p-calendar>
 
     <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date" dateFormat="dd.mm.yy"
-                [showIcon]="true"
+                [showIcon]="true" [readonlyInput] = "true"
                 selectionMode="single" view="date">
     </p-calendar>
     <button pButton type="button" icon="pi pi-search" (click)="onSearch()"
@@ -56,7 +56,7 @@
         <p-tag class="custom-tag-warning" *ngIf="data.status === '0'">PROCESSING</p-tag>
       </td>
       <td>
-        <button pButton type="button" icon="pi pi-trash" (click)="deleteReservation(data)"
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteReservation(data)" pTooltip="Delete Reservation"
         class="cp-button"></button>
       </td>
     </tr>

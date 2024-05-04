@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserGetMyReservationsComponent } from './board-user/user-get-my-reservations.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+import { AllUserComponent } from './all-user/all-user.component';
 import { AdminGetAllReservationsComponent } from './admin-get-all-users-reservations/admin-get-all-reservations.component';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'my-reservation', component: UserGetMyReservationsComponent },
-  { path: 'teacher', component: BoardModeratorComponent },
+  { path: 'all-user', component: AllUserComponent },
   { path: 'get-all-user-reservation', component: AdminGetAllReservationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

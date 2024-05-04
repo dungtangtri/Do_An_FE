@@ -9,13 +9,12 @@
                 [showIcon]="true" [readonlyInput] = "true"
                 selectionMode="single" view="date">
     </p-calendar>
-    <button pButton type="button" icon="pi pi-sync" iconPos="left" label="Search" (click)="onSearch()"
+    <button pButton type="button" icon="pi pi-search" (click)="onSearch()"
             class="cp-button"></button>
   </form>
-
 </div>
-<p-toast></p-toast>
-<div class="element-below-calendar">
+<div>
+  <p-toast></p-toast>
   <p-table
     [columns]="cols"
     [value]="content"
@@ -43,21 +42,27 @@
         <td>
           {{ index + 1 }}
         </td>
-        <td>{{ data.reservation_id }}</td>
-        <td>{{ data.create_time|dateFormat: 'dd/MM/yyyy HH:mm:ss' }}</td>
-        <td>{{ data.reservation_description }}</td>
-        <td>{{ data.reservation_start_time|dateFormat: 'dd/MM/yyyy HH:mm:ss' }}</td>
-        <td>{{ data.reservation_end_time|dateFormat: 'dd/MM/yyyy HH:mm:ss' }}</td>
-        <td>{{ data.room_id }}</td>
+        <td>{{data.user_id}}</td>
+        <td>{{data.username}}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.created_at|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{data.user_role}}</td>
         <td>
-          <p-tag class="custom-tag-installed" *ngIf="data.status === '1'">ACCEPTED</p-tag>
-          <p-tag class="custom-tag-deleted" *ngIf="data.status === '2'">REJECTED</p-tag>
-          <p-tag class="custom-tag-warning" *ngIf="data.status === '0'">PROCESSING</p-tag>
+          <ng-container *ngIf="data.user_role === 'ROLE_ADMIN'; else regularUser">
+            <button pButton type="button" icon="pi pi-trash"
+                    (click)="deleteUser(data)"
+                    [disabled]="true"></button>
+          </ng-container>
+
+          <ng-template #regularUser>
+            <button pButton type="button" icon="pi pi-trash"
+                    [
+                    (click)="deleteUser(data)"
+                    pTooltip="Delete User"
+                    ></button>
+          </ng-template>
         </td>
-        <td>
-          <button pButton type="button" icon="pi pi-trash" *ngIf=" data.status === '2'" [disabled]="true"></button>
-          <button pButton type="button" icon="pi pi-trash" *ngIf="data.status === '1'|| data.status === '0'" [disabled]="false" (click)="changeStatusReservation(data)" pTooltip="Delete Reservation"></button>
-        </td>
+
       </tr>
       <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" ></p-confirmDialog>
     </ng-template>
