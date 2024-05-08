@@ -9,7 +9,9 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
-import {AdminGetAllReservationsComponent} from './admin-get-all-users-reservations/admin-get-all-reservations.component';
+import {
+  AdminGetAllReservationsComponent
+} from './admin-get-all-users-reservations/admin-get-all-reservations.component';
 import {AllUserComponent} from './all-user/all-user.component';
 import {UserGetMyReservationsComponent} from './board-user/user-get-my-reservations.component';
 import {TableModule} from 'primeng/table';
@@ -19,21 +21,22 @@ import {ButtonModule} from "primeng/button";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InputTextModule} from "primeng/inputtext";
-import { DateFormatPipe } from './date-format.pipe';
+import {DateFormatPipe} from './date-format.pipe';
 import {TagModule} from "primeng/tag";
-import { ApproveReservationsComponent } from './approve-reservations/approve-reservations.component';
+import {ApproveReservationsComponent} from './approve-reservations/approve-reservations.component';
 import {DropdownModule} from "primeng/dropdown";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {TabViewModule} from "primeng/tabview";
 import {CalendarModule} from "primeng/calendar";
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
-import { MessagesModule } from 'primeng/messages';
+import {MessagesModule} from 'primeng/messages';
 import {ToastModule} from "primeng/toast";
 import {ConfirmationService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {TooltipModule} from "primeng/tooltip";
 import {DialogModule} from "primeng/dialog";
 import {ToolbarModule} from "primeng/toolbar";
+import {StyleClassModule} from 'primeng/styleclass';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,8 @@ import {ToolbarModule} from "primeng/toolbar";
         ConfirmDialogModule,
         TooltipModule,
         DialogModule,
-        ToolbarModule
+      ToolbarModule,
+      StyleClassModule
     ],
   providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]

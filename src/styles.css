@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "primeng/resources/primeng.css";
+@import "primeflex/primeflex.css";
 body{
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: ghostwhite;
 }
 .p-datatable .p-datatable-tbody > tr {
