@@ -32,6 +32,8 @@ import {ToastModule} from "primeng/toast";
 import {ConfirmationService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {TooltipModule} from "primeng/tooltip";
+import {DialogModule} from "primeng/dialog";
+import {ToolbarModule} from "primeng/toolbar";
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import {TooltipModule} from "primeng/tooltip";
         MessagesModule,
         ToastModule,
         ConfirmDialogModule,
-        TooltipModule
+        TooltipModule,
+        DialogModule,
+        ToolbarModule
     ],
   providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]

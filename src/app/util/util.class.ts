@@ -37,4 +37,16 @@ export class Util{
   static convertDateToTimeStamp(date: Date): number {
     return date.getTime();
   }
+  // @ts-ignore
+  static checkExportFile(res, fileName) {
+    const blob = new Blob([res], {type: 'application/octet-stream'});
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = fileName + '.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 }

@@ -49,7 +49,7 @@ export class UserGetMyReservationsComponent implements OnInit {
       },
     ];
     this.cols = [
-      {field: 'stt', header: 'STT'},
+      {field: 'no', header: 'No.'},
       {field: 'reservation_id', header: 'Reservation ID'},
       {field: 'create_time', header: 'Create Time'},
       {field: 'reservation_description', header: 'Reservation Description'},
@@ -95,7 +95,7 @@ export class UserGetMyReservationsComponent implements OnInit {
       }
     });
   }
-
+// TODO: Thay icon xóa thành đổi trạng thái cho người dùng
   acceptChangeStatusReservation(data: GetMyReservationsDto) {
     const id = data.reservation_id;
     const changeStatusForm: ChangeStatusForm = {
@@ -119,5 +119,36 @@ export class UserGetMyReservationsComponent implements OnInit {
         });
       }
     })
+  }
+  exportExcel(){
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to export the data?',
+      header:'Export Excel',
+      icon: 'pi pi-exclamation-circle color-red',
+      accept: () => {
+        this.acceptExport();
+      }
+    });
+  }
+  acceptExport(){
+    const searchForm : BaseSearchForm = Util.getDataFormSearch(this.formSearch)
+    this.userService.exportGetCurrentUserReservations(searchForm).subscribe({
+      next: res => {
+        if(res){
+          Util.checkExportFile(res, "Current_User_Reservations");
+          this.messageService.add({ severity: 'success', summary: 'Successfully export data', detail: 'Successfully export data from the server.'});
+        }
+        else{
+          this.messageService.add({ severity: 'error', summary: 'Error export data', detail: 'Error exporting data from the server, please try again later.' });
+        }
+      },
+      error: err => {
+        this.messageService.add({ severity: 'error', summary: 'Error export data', detail: 'Error exporting data from the server, please try again later.' });
+      }
+    });
+  }
+  resetForm(){
+    this.formSearch.reset();
+    this.getData();
   }
 }

@@ -1,18 +1,32 @@
 <div class="flex align-items-center justify-content-between flex-wrap content-header">
   <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
-    <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd.mm.yy" placeholder="Start Date"
-                [showIcon]="true" [readonlyInput] = "true"
-                selectionMode="single" view="date" >
-    </p-calendar>
-
-    <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date" dateFormat="dd.mm.yy"
-                [showIcon]="true" [readonlyInput] = "true"
-                selectionMode="single" view="date">
-    </p-calendar>
-    <button pButton type="button" icon="pi pi-search" (click)="onSearch()"
-            class="cp-button"></button>
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <div class="calendar-container">
+          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd.mm.yy" placeholder="Start Date"
+                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+          </p-calendar>
+        </div>
+        <div class="calendar-container">
+          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date" dateFormat="dd.mm.yy"
+                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+          </p-calendar>
+        </div>
+      </div>
+      <div class="p-toolbar-group-right">
+        <button pButton type="button" label="Search" pTooltip="Search"
+                (click)="onSearch()" tooltipPosition="bottom"
+                class="mr-2"></button>
+        <button pButton type="button" icon="pi pi-sync" label="Reset Form" tooltipPosition="bottom"
+                pTooltip="Reset Form" class="mr-2" (click)="resetForm()"></button>
+        <button pButton type="button" icon="pi pi-upload"  pTooltip="Export Excel"
+                label="Export Excel" tooltipPosition="bottom"
+                (click)="exportExcel()"></button>
+      </div>
+    </p-toolbar>
   </form>
 </div>
+
 <div>
   <p-toast></p-toast>
   <p-table
@@ -21,6 +35,7 @@
     responsiveLayout="scroll"
     [paginator]="true" [rows]="10">
     <ng-template pTemplate="header" let-columns>
+      <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
       <tr>
         <th *ngFor="let col of columns">
           {{ col.header }}
@@ -48,23 +63,13 @@
         <td>{{data.created_at|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
         <td>{{data.user_role}}</td>
         <td>
-          <ng-container *ngIf="data.user_role === 'ROLE_ADMIN'; else regularUser">
-            <button pButton type="button" icon="pi pi-trash"
-                    (click)="deleteUser(data)"
-                    [disabled]="true"></button>
-          </ng-container>
-
-          <ng-template #regularUser>
-            <button pButton type="button" icon="pi pi-trash"
-                    [
-                    (click)="deleteUser(data)"
-                    pTooltip="Delete User"
-                    ></button>
-          </ng-template>
+          <button pButton type="button" icon="pi pi-trash" *ngIf=" data.user_role === 'ROLE_ADMIN'"
+                  [disabled]="true"></button>
+          <button pButton type="button" icon="pi pi-trash" *ngIf="data.user_role !== 'ROLE_ADMIN'" [disabled]="false"
+                  (click)="deleteUser(data)" pTooltip="Delete User"></button>
         </td>
 
       </tr>
-      <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" ></p-confirmDialog>
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>

@@ -105,8 +105,11 @@ table td.p-datepicker-today>span:hover {
     &.pi-trash {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M17.5 4.98332C14.725 4.70832 11.9333 4.56665 9.15 4.56665C7.5 4.56665 5.85 4.64998 4.2 4.81665L2.5 4.98332' stroke='%231E293B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.08325 4.14163L7.26659 3.04996C7.39992 2.25829 7.49992 1.66663 8.90825 1.66663H11.0916C12.4999 1.66663 12.6083 2.29163 12.7333 3.05829L12.9166 4.14163' stroke='%231E293B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M15.7084 7.6167L15.1667 16.0084C15.0751 17.3167 15.0001 18.3334 12.6751 18.3334H7.32508C5.00008 18.3334 4.92508 17.3167 4.83341 16.0084L4.29175 7.6167' stroke='%231E293B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.6084 13.75H11.3834' stroke='%231E293B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.91675 10.4166H12.0834' stroke='%231E293B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
     }
-    &.pi-search {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z' stroke='%23F8FAFC' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M22 22L20 20' stroke='%23F8FAFC' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    &.pi-upload{
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='vuesax/linear/document-upload'%3E%3Cg id='document-upload'%3E%3Cpath id='Vector' d='M9 17V11L7 13' stroke='%23005BAA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath id='Vector_2' d='M9 11L11 13' stroke='%23005BAA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath id='Vector_3' d='M22 10V15C22 20 20 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H14' stroke='%23005BAA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath id='Vector_4' d='M22 10H18C15 10 14 9 14 6V2L22 10Z' stroke='%23005BAA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+    }
+    &.pi-sync {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M18.3333 10C18.3333 14.6 14.6 18.3333 9.99996 18.3333C5.39996 18.3333 2.59163 13.7 2.59163 13.7M2.59163 13.7H6.35829M2.59163 13.7V17.8667M1.66663 10C1.66663 5.4 5.36663 1.66666 9.99996 1.66666C15.5583 1.66666 18.3333 6.3 18.3333 6.3M18.3333 6.3V2.13333M18.3333 6.3H14.6333' stroke='%23334155' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
   };
 }
@@ -366,5 +369,40 @@ table td.p-datepicker-today>span:hover {
   color: #fff;
   border-color: #6c757d;
 }
+
+.flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.content-header {
+  padding: 10px;
+}
+
+.panel-search {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.calendar-container {
+  margin-right: 10px; /* Adjust the margin as needed to separate the calendars */
+}
+
+.p-toolbar-group-right {
+  margin-left: auto; /* Moves the button group to the right side of the toolbar */
+}
+
 
 

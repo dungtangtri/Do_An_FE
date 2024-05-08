@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AdminService} from "./service/admin.service";
 import {GetAllUserWithReservationDto} from "./models/get-all-user-with-reservation-dto";
-import {ConfirmationService, FilterMatchMode, FilterService, MessageService, SelectItem} from "primeng/api";
+import {ConfirmationService, FilterMatchMode, MessageService, SelectItem} from "primeng/api";
 import {BaseSearchForm} from "../shared/BaseSearchForm";
 import {Util} from "../util/util.class";
 import {CONSTANTS} from "../board-user/utils/CONSTANTS";
@@ -46,7 +46,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
       },
     ];
     this.cols = [
-      { field: 'stt', header: 'STT' },
+      { field: 'no', header: 'No' },
       { field: 'reservation_id', header: 'Reservation ID' },
       { field: 'username', header: 'Username' },
       { field: 'email', header: 'Email' },
@@ -97,4 +97,35 @@ export class AdminGetAllReservationsComponent implements OnInit {
         }
       })
     }
+  exportExcel(){
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to export the data?',
+      header:'Export Excel',
+      icon: 'pi pi-exclamation-circle color-red',
+      accept: () => {
+        this.acceptExport();
+      }
+    });
+  }
+  acceptExport(){
+    const searchForm : BaseSearchForm = Util.getDataFormSearch(this.formSearch)
+    this.adminService.exportGetAllReservations(searchForm).subscribe({
+      next: res => {
+        if(res){
+          Util.checkExportFile(res, "All_User_Reservations");
+          this.messageService.add({ severity: 'success', summary: 'Successfully export data', detail: 'Successfully export data from the server.'});
+        }
+        else{
+          this.messageService.add({ severity: 'error', summary: 'Error export data', detail: 'Error exporting data from the server, please try again later.' });
+        }
+      },
+      error: err => {
+        this.messageService.add({ severity: 'error', summary: 'Error export data', detail: 'Error exporting data from the server, please try again later.' });
+      }
+    });
+  }
+  resetForm(){
+    this.formSearch.reset();
+    this.getData();
+  }
 }

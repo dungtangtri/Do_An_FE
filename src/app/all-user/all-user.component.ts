@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
+import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, FilterMatchMode, MessageService, SelectItem} from "primeng/api";
 import {CONSTANTS} from "../board-user/utils/CONSTANTS";
-import {
-  GetAllUserWithReservationDto
-} from "../admin-get-all-users-reservations/models/get-all-user-with-reservation-dto";
 import {FormGroup} from "@angular/forms";
 import {AdminService} from "../admin-get-all-users-reservations/service/admin.service";
 import {Util} from "../util/util.class";
@@ -25,7 +21,7 @@ export class AllUserComponent implements OnInit {
   matchModeOptions: SelectItem[] = [];
   constructor(private adminService: AdminService,
               private confirmationService: ConfirmationService,
-              private messageService : MessageService) {
+              private messageService: MessageService) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME)
   }
 
@@ -50,7 +46,7 @@ export class AllUserComponent implements OnInit {
       },
     ];
     this.cols = [
-      { field: 'stt', header: 'STT' },
+      { field: 'no', header: 'No.' },
       { field: 'user_id', header: 'User ID' },
       { field: 'username', header: 'Username' },
       { field: 'email', header: 'Email' },
@@ -75,7 +71,8 @@ export class AllUserComponent implements OnInit {
   onSearch() {
     this.getData();
   }
-  deleteUser(data : GetAllUserWithReservationDto){
+
+  deleteUser(data: AllUserInformationDto) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this user? This can not be undone.',
       header:'Delete User',
@@ -85,9 +82,10 @@ export class AllUserComponent implements OnInit {
       }
     });
   }
-  acceptDelete(data : GetAllUserWithReservationDto){
-    const id = data.reservation_id;
-    this.adminService.deleteReservation(id).subscribe({
+
+  acceptDelete(data: AllUserInformationDto) {
+    const id = data.user_id;
+    this.adminService.deleteUser(id).subscribe({
       next: res => {
         this.messageService.add({ severity: 'success', summary: 'Delete Successfully', detail: 'You have deleted successfully' });
         this.getData();
@@ -96,5 +94,49 @@ export class AllUserComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Delete Unsuccessfully', detail: 'You have deleted unsuccessfully' });
       }
     })
+  }
+
+  exportExcel() {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to export the data?',
+      header: 'Export Excel',
+      icon: 'pi pi-exclamation-circle color-red',
+      accept: () => {
+        this.acceptExport();
+      }
+    });
+  }
+
+  acceptExport() {
+    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch)
+    this.adminService.exportAllUserInformation(searchForm).subscribe({
+      next: res => {
+        if (res) {
+          Util.checkExportFile(res, "All_User_Information");
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successfully export data',
+            detail: 'Successfully export data from the server.'
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error export data',
+            detail: 'Error exporting data from the server, please try again later.'
+          });
+        }
+      },
+      error: err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error export data',
+          detail: 'Error exporting data from the server, please try again later.'
+        });
+      }
+    });
+  }
+  resetForm(){
+    this.formSearch.reset();
+    this.getData();
   }
 }

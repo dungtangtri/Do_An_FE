@@ -20,5 +20,14 @@ export class AdminService {
   getAllUsersInformation(searchForm: BaseSearchForm) {
     return this.http.post<AllUserInformationDto[]>(API_URL + 'get-all-user', searchForm);
   }
+  exportGetAllReservations(searchForm: BaseSearchForm) {
+    return this.http.post(API_URL + 'export-get-all-user-reservations',searchForm, {responseType: 'blob'});
+  }
+  exportAllUserInformation(searchForm: BaseSearchForm) {
+    return this.http.post(API_URL + 'export-all-user-information',searchForm, {responseType: 'blob'});
+  }
+  deleteUser(id: number){
+    return this.http.post(API_URL + 'delete_user', id,{responseType: 'text'});
+  }
 
 }

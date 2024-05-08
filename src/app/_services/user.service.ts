@@ -23,7 +23,9 @@ export class UserService {
   changeStatusReservation(changeStatusForm: ChangeStatusForm) {
     return this.http.post(API_URL + 'change-status-my-reservation', changeStatusForm,{responseType: 'text'});
   }
-
+  exportGetCurrentUserReservations(searchForm: BaseSearchForm) {
+    return this.http.post(API_URL + 'export-current-user-reservations',searchForm, {responseType: 'blob'});
+  }
   getModeratorBoard(): Observable<any> {
     return this.http.get(API_URL + 'mod', { responseType: 'text' });
   }
