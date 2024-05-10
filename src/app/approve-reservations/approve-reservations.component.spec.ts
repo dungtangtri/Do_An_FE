@@ -8,7 +8,7 @@ describe('ApproveReservationsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ApproveReservationsComponent]
+      declarations: [ApproveReservationsComponent],
     });
     fixture = TestBed.createComponent(ApproveReservationsComponent);
     component = fixture.componentInstance;

@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'formatDate',
-  standalone: true
+  standalone: true,
 })
 export class FormatDatePipe extends DatePipe implements PipeTransform {
   override transform(value: any, args: any = 'dd/MM/yyyy'): any {
@@ -15,7 +15,7 @@ export class FormatDatePipe extends DatePipe implements PipeTransform {
       } else {
         return `${super.transform(date1, args)} - ${super.transform(
           date2,
-          args
+          args,
         )}`;
       }
     }

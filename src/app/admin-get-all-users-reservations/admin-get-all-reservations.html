@@ -1,89 +1,144 @@
-<div class="flex align-items-center justify-content-between flex-wrap content-header">
-  <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
+<div
+  class="flex align-items-center justify-content-between flex-wrap content-header"
+>
+  <form
+    [formGroup]="formSearch"
+    class="flex flex-wrap filter panel-search w-full"
+  >
     <p-toolbar>
       <div class="p-toolbar-group-left">
         <div class="calendar-container">
-          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd.mm.yy" placeholder="Start Date"
-                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+          <p-calendar
+            [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME"
+            dateFormat="dd.mm.yy"
+            placeholder="Start Date"
+            [showIcon]="true"
+            [readonlyInput]="true"
+            selectionMode="single"
+            view="date"
+          >
           </p-calendar>
         </div>
         <div class="calendar-container">
-          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date" dateFormat="dd.mm.yy"
-                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+          <p-calendar
+            [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
+            placeholder="End Date"
+            dateFormat="dd.mm.yy"
+            [showIcon]="true"
+            [readonlyInput]="true"
+            selectionMode="single"
+            view="date"
+          >
           </p-calendar>
         </div>
       </div>
       <div class="p-toolbar-group-right">
-        <button pButton type="button" label="Search" pTooltip="Search"
-                (click)="onSearch()" tooltipPosition="bottom"
-                class="mr-2"></button>
-        <button pButton type="button" icon="pi pi-sync" label="Reset Form" tooltipPosition="bottom"
-                pTooltip="Reset Form" class="mr-2" (click)="resetForm()"></button>
-        <button pButton type="button" icon="pi pi-upload"  pTooltip="Export Excel"
-                label="Export Excel" tooltipPosition="bottom"
-                (click)="exportExcel()"></button>
+        <button
+          pButton
+          type="button"
+          label="Search"
+          pTooltip="Search"
+          (click)="onSearch()"
+          tooltipPosition="bottom"
+          class="mr-2"
+        ></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-sync"
+          label="Reset Form"
+          tooltipPosition="bottom"
+          pTooltip="Reset Form"
+          class="mr-2"
+          (click)="resetForm()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-upload"
+          pTooltip="Export Excel"
+          label="Export Excel"
+          tooltipPosition="bottom"
+          (click)="exportExcel()"
+        ></button>
       </div>
     </p-toolbar>
   </form>
 </div>
 <div>
   <p-toast></p-toast>
-<p-table
-  [columns]="cols"
-  [value]="content"
-  responsiveLayout="scroll"
-  [paginator]="true" [rows]="10">
-  <ng-template pTemplate="header" let-columns>
-    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" ></p-confirmDialog>
-    <tr>
+  <p-table
+    [columns]="cols"
+    [value]="content"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    [rows]="10"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <p-confirmDialog
+        header="Confirmation"
+        icon="pi pi-exclamation-triangle"
+      ></p-confirmDialog>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.header }}</th>
+      </tr>
+      <tr>
         <th *ngFor="let col of columns">
-            {{ col.header }}
-      </th>
-    </tr>
-        <tr>
-          <th *ngFor="let col of columns">
-            <p-columnFilter type="text"
-                            [field]="col.field"
-                            [matchModeOptions]="matchModeOptions">
-              <ng-template pTemplate="header">
-              </ng-template>
-            </p-columnFilter>
-          </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-data let-index="rowIndex">
-    <tr>
-      <td>
-        {{ index + 1 }}
-      </td>
-      <td>{{data.reservation_id}}</td>
-      <td>{{data.username}}</td>
-      <td>{{data.email}}</td>
-      <td>{{data.create_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
-      <td>{{data.reservation_description}}</td>
-      <td>{{data.reservation_start_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
-      <td>{{data.reservation_end_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
-      <td>{{data.room_id}}</td>
-      <td>
-        <p-tag class="custom-tag-installed" *ngIf="data.status === '1'">ACCEPTED</p-tag>
-        <p-tag class="custom-tag-deleted" *ngIf="data.status === '2'">REJECTED</p-tag>
-        <p-tag class="custom-tag-warning" *ngIf="data.status === '0'">PROCESSING</p-tag>
-      </td>
-      <td>
-        <button pButton type="button" icon="pi pi-trash" (click)="deleteReservation(data)" pTooltip="Delete Reservation"
-        class="cp-button"></button>
-      </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="emptymessage">
-    <tr>
-      <td colspan="11">
-        <div class="flex flex-column empty">
-          <p-image src="assets/images/Empty.png" alt="empty"></p-image>
-          <span> No Data </span>
-        </div>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+          <p-columnFilter
+            type="text"
+            [field]="col.field"
+            [matchModeOptions]="matchModeOptions"
+          >
+            <ng-template pTemplate="header"> </ng-template>
+          </p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-index="rowIndex">
+      <tr>
+        <td>{{ index + 1 }}</td>
+        <td>{{data.reservation_id}}</td>
+        <td>{{data.username}}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.create_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{data.reservation_description}}</td>
+        <td>
+          {{data.reservation_start_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}
+        </td>
+        <td>{{data.reservation_end_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{data.room_id}}</td>
+        <td>
+          <p-tag class="custom-tag-installed" *ngIf="data.status === '1'"
+            >ACCEPTED</p-tag
+          >
+          <p-tag class="custom-tag-deleted" *ngIf="data.status === '2'"
+            >REJECTED</p-tag
+          >
+          <p-tag class="custom-tag-warning" *ngIf="data.status === '0'"
+            >PROCESSING</p-tag
+          >
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-trash"
+            (click)="deleteReservation(data)"
+            pTooltip="Delete Reservation"
+            class="cp-button"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="11">
+          <div class="flex flex-column empty">
+            <p-image src="assets/images/Empty.png" alt="empty"></p-image>
+            <span> No Data </span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

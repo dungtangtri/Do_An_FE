@@ -8,7 +8,7 @@ describe('BoardAdminComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AdminGetAllReservationsComponent]
+      declarations: [AdminGetAllReservationsComponent],
     });
     fixture = TestBed.createComponent(AdminGetAllReservationsComponent);
     component = fixture.componentInstance;

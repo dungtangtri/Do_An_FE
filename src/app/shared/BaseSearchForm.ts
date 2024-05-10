@@ -1,4 +1,4 @@
 export interface BaseSearchForm {
-  startDate: number,
-  endDate: number
+  startDate: number;
+  endDate: number;
 }

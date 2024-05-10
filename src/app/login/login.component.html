@@ -14,7 +14,7 @@
       novalidate
     >
       <div class="form-group">
-        <label >Username</label>
+        <label>Username</label>
         <input
           type="text"
           class="form-control"
@@ -48,12 +48,14 @@
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">
-          Login
-        </button>
+        <button class="btn btn-primary btn-block">Login</button>
       </div>
       <div class="form-group">
-        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
+        <div
+          *ngIf="f.submitted && isLoginFailed"
+          class="alert alert-danger"
+          role="alert"
+        >
           Login failed: {{ errorMessage }}
         </div>
       </div>
