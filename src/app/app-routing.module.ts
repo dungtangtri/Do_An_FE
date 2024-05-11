@@ -16,12 +16,15 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'my-reservation', component: UserGetMyReservationsComponent },
   { path: 'all-user', component: AllUserComponent },
-  { path: 'get-all-user-reservation', component: AdminGetAllReservationsComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  {
+    path: 'get-all-user-reservation',
+    component: AdminGetAllReservationsComponent,
+  },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

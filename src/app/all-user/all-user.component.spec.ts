@@ -8,7 +8,7 @@ describe('BoardModeratorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AllUserComponent]
+      declarations: [AllUserComponent],
     });
     fixture = TestBed.createComponent(AllUserComponent);
     component = fixture.componentInstance;

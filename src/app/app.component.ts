@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { AuthService } from './_services/auth.service';
@@ -7,9 +7,9 @@ import { EventBusService } from './_shared/event-bus.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private eventBusService: EventBusService
+    private eventBusService: EventBusService,
   ) {}
 
   ngOnInit(): void {
@@ -44,15 +44,15 @@ export class AppComponent implements OnInit{
 
   logout(): void {
     this.authService.logout().subscribe({
-      next: res => {
+      next: (res) => {
         console.log(res);
         this.storageService.clean();
 
         window.location.reload();
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
-      }
+      },
     });
   }
 }
