@@ -6,22 +6,42 @@
         <a href="/home" class="nav-link" routerLink="home">Home </a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin-dashboard" class="nav-link" routerLink="admin-dashboard">Admin Dashboard</a>
+        <a href="/admin-dashboard" class="nav-link" routerLink="admin-dashboard"
+          >Admin Dashboard</a
+        >
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/get-all-user-reservation" class="nav-link" routerLink="get-all-user-reservation">All Users Reservations</a>
+        <a
+          href="/get-all-user-reservation"
+          class="nav-link"
+          routerLink="get-all-user-reservation"
+          >All Users Reservations</a
+        >
       </li>
       <li class="nav-item" *ngIf="showTeacherBoard">
-        <a href="/teacher" class="nav-link" routerLink="teacher">Teacher Board</a>
+        <a href="/teacher" class="nav-link" routerLink="teacher"
+          >Teacher Board</a
+        >
       </li>
       <li class="nav-item">
-        <a href="/my-reservation" class="nav-link" *ngIf="isLoggedIn" routerLink="my-reservation">My Reservations</a>
+        <a
+          href="/my-reservation"
+          class="nav-link"
+          *ngIf="isLoggedIn"
+          routerLink="my-reservation"
+          >My Reservations</a
+        >
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
         <a href="/all-user" class="nav-link" routerLink="all-user">All Users</a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/all-reservations" class="nav-link" routerLink="all-reservations">All Reservations</a>
+        <a
+          href="/all-reservations"
+          class="nav-link"
+          routerLink="all-reservations"
+          >All Reservations</a
+        >
       </li>
     </ul>
 
@@ -36,7 +56,9 @@
 
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
       <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+        <a href="/profile" class="nav-link" routerLink="profile">{{
+          username
+        }}</a>
       </li>
       <li class="nav-item">
         <a href class="nav-link" (click)="logout()">LogOut</a>
