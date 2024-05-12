@@ -1,0 +1,45 @@
+<p-toast></p-toast>
+<div class="flex align-items-center justify-content-between flex-wrap content-header">
+  <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <div class="calendar-container">
+          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd.mm.yy" placeholder="Start Date"
+                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+          </p-calendar>
+        </div>
+        <div class="calendar-container">
+          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date" dateFormat="dd.mm.yy"
+                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+          </p-calendar>
+        </div>
+      </div>
+      <div class="p-toolbar-group-right">
+        <button pButton type="button" label="Search" pTooltip="Search"
+                 tooltipPosition="bottom"
+                class="mr-2"></button>
+        <button pButton type="button" icon="pi pi-sync" label="Reset Form" tooltipPosition="bottom"
+                pTooltip="Reset Form" class="mr-2" (click)="resetForm()"></button>
+        <button pButton type="button" icon="pi pi-upload"  pTooltip="Export Excel"
+                label="Export Excel" tooltipPosition="bottom"
+                ></button>
+      </div>
+    </p-toolbar>
+  </form>
+</div>
+  <div class="flex">
+    <div class="w-6">
+      <span class="chart-title">Statistics by reservation's status</span>
+      <div class="flex justify-content-center">
+        <p-chart style="width: 360px; height: 360px;" type="pie" [data]="data"
+                 [options]="chartOptions"></p-chart>
+      </div>
+    </div>
+    <div class="w-6">
+      <span class="chart-title">Statistics by </span>
+      <div class="flex justify-content-center">
+        <p-chart style="width: 360px; height: 360px;" type="pie" [data]="data"
+                 [options]="chartOptions"></p-chart>
+      </div>
+    </div>
+  </div>
