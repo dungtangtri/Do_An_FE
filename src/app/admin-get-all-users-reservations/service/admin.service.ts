@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {GetAllUserWithReservationDto} from "../models/get-all-user-with-reservation-dto";
 import {BaseSearchForm} from "../../shared/BaseSearchForm";
 import {AllUserInformationDto} from "../../all-user/models/all-user-information-dto";
+import {SummaryReservationsByStatusDto} from "../../admin-dashboard/models/summary-reservations-by-status-dto";
 const API_URL = 'http://localhost:8080/api/';
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,7 @@ export class AdminService {
   deleteUser(id: number){
     return this.http.post(API_URL + 'delete_user', id,{responseType: 'text'});
   }
-
+  getSummaryReservationsByStatus(searchForm: BaseSearchForm) {
+    return this.http.post<SummaryReservationsByStatusDto>(API_URL + 'get-summary-reservations-by-status', searchForm);
+  }
 }

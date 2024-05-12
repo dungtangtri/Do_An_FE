@@ -37,6 +37,9 @@ import {TooltipModule} from "primeng/tooltip";
 import {DialogModule} from "primeng/dialog";
 import {ToolbarModule} from "primeng/toolbar";
 import {StyleClassModule} from 'primeng/styleclass';
+import {CheckboxModule} from "primeng/checkbox";
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   declarations: [
@@ -50,34 +53,37 @@ import {StyleClassModule} from 'primeng/styleclass';
     UserGetMyReservationsComponent,
     DateFormatPipe,
     ApproveReservationsComponent,
+    AdminDashboardComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        TableModule,
-        ImageModule,
-        ButtonModule,
-        AutoCompleteModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        InputTextModule,
-        TagModule,
-        DropdownModule,
-        ReactiveFormsModule,
-        OverlayPanelModule,
-        TabViewModule,
-        CalendarModule,
-        ConfirmPopupModule,
-        MessagesModule,
-        ToastModule,
-        ConfirmDialogModule,
-        TooltipModule,
-        DialogModule,
-      ToolbarModule,
-      StyleClassModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    TableModule,
+    ImageModule,
+    ButtonModule,
+    AutoCompleteModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    InputTextModule,
+    TagModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    OverlayPanelModule,
+    TabViewModule,
+    CalendarModule,
+    ConfirmPopupModule,
+    MessagesModule,
+    ToastModule,
+    ConfirmDialogModule,
+    TooltipModule,
+    DialogModule,
+    ToolbarModule,
+    StyleClassModule,
+    CheckboxModule,
+    ChartModule
+  ],
   providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]
 
