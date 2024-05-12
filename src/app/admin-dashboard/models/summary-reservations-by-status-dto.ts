@@ -1,5 +1,5 @@
-export interface SummaryReservationsByStatusDto{
-  processing: number,
-  accepted: number,
-  rejected: number
+export interface SummaryReservationsByStatusDto {
+  processing: number;
+  accepted: number;
+  rejected: number;
 }

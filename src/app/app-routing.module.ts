@@ -8,7 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UserGetMyReservationsComponent } from './board-user/user-get-my-reservations.component';
 import { AllUserComponent } from './all-user/all-user.component';
 import { AdminGetAllReservationsComponent } from './admin-get-all-users-reservations/admin-get-all-reservations.component';
-import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,13 +17,16 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'my-reservation', component: UserGetMyReservationsComponent },
   { path: 'all-user', component: AllUserComponent },
-  {path: 'admin-dashboard', component: AdminDashboardComponent },
-  { path: 'get-all-user-reservation', component: AdminGetAllReservationsComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: 'admin-dashboard', component: AdminDashboardComponent },
+  {
+    path: 'get-all-user-reservation',
+    component: AdminGetAllReservationsComponent,
+  },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
