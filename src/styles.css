@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "primeflex/primeflex.css";
 @import "primeng/resources/primeng.css";
 body {
   background-color: ghostwhite;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
 }
 .chart-title {
   display: flex;

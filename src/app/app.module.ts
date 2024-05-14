@@ -41,6 +41,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import {ChartModule} from "primeng/chart";
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -4,7 +4,9 @@ import {HttpClient} from "@angular/common/http";
 import {GetAllUserWithReservationDto} from "../models/get-all-user-with-reservation-dto";
 import {BaseSearchForm} from "../../shared/BaseSearchForm";
 import {AllUserInformationDto} from "../../all-user/models/all-user-information-dto";
-const API_URL = 'http://localhost:8080/api/';
+import {SummaryReservationsByStatusDto} from "../../admin-dashboard/models/summary-reservations-by-status-dto";
+import {API} from "../../shared/API";
+const API_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root'
 })

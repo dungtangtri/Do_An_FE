@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         });
         window.setTimeout(function () {
           window.location.replace('/home');
-        }, 3000);
+        }, 10000);
       },
       error: (err) => {
         this.errorMessage = err.error.message;

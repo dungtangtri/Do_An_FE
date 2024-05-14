@@ -4,18 +4,15 @@ import { Observable } from 'rxjs';
 import { BaseSearchForm } from '../shared/BaseSearchForm';
 import { GetMyReservationsDto } from '../board-user/models/get-my-reservations-dto';
 import { ChangeStatusForm } from '../shared/ChangeStatusForm';
+import {API} from "../shared/API";
 
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = API.GENERAL_API;
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'get-all-user', { responseType: 'json' });
-  }
 
   getMyReservation(searchForm: BaseSearchForm) {
     return this.http.post<GetMyReservationsDto[]>(
@@ -36,8 +33,5 @@ export class UserService {
       searchForm,
       { responseType: 'blob' },
     );
-  }
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
   }
 }
