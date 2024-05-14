@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { BaseSearchForm } from '../shared/BaseSearchForm';
 import { GetMyReservationsDto } from '../board-user/models/get-my-reservations-dto';
 import { ChangeStatusForm } from '../shared/ChangeStatusForm';
-import {API} from "../shared/API";
+import { API } from '../shared/API';
 
 const API_URL = API.GENERAL_API;
 
