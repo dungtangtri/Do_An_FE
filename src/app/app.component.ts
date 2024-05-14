@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-   logout(): void {
+  logout(): void {
     this.authService.logout().subscribe({
       next: (res) => {
         this.storageService.clean();
