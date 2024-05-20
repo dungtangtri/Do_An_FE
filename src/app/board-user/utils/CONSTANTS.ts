@@ -21,6 +21,6 @@ export class CONSTANTS {
       NAME: 'status',
       VALUE: '',
       VALIDATORS: [],
-    }
+    },
   };
 }

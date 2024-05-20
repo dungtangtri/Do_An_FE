@@ -161,8 +161,8 @@
   [modal]="true"
   [(visible)]="isVisible"
   (onHide)="isVisible = false"
-  [style]="{width: '800px', height: '800px'}">
-
+  [style]="{width: '800px', height: '800px'}"
+>
   <div>
     <form class="flex">
       <div class="col-6">
@@ -185,13 +185,19 @@
         <div class="form-group">
           <label>Room ID</label>
           <div>
-          <input pInputText placeholder="Room ID" type="text" required >
+            <input pInputText placeholder="Room ID" type="text" required />
           </div>
         </div>
         <div class="form-group">
           <label>Reservation ID</label>
           <div>
-          <input pInputText [readOnly]="true" [disabled]="true" [ngModel]="reservation_id" [ngModelOptions]="{standalone: true}">
+            <input
+              pInputText
+              [readOnly]="true"
+              [disabled]="true"
+              [ngModel]="reservation_id"
+              [ngModelOptions]="{standalone: true}"
+            />
           </div>
         </div>
       </div>
@@ -207,38 +213,47 @@
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
-            [ngModel]="endTime" [ngModelOptions]="{standalone: true}"
+            [ngModel]="endTime"
+            [ngModelOptions]="{standalone: true}"
           >
           </p-calendar>
         </div>
         <div>
           <label>Status</label>
-          <p-dropdown [options]="status"
-                      [ngModel]="currentStatus" [ngModelOptions]="{standalone: true}"
-                      [style]="{width: '100%'}"
-                      placeholder="Status"
-                      optionLabel="name"
-                      optionValue="id"
-                      class="cp-form-item">
+          <p-dropdown
+            [options]="status"
+            [ngModel]="currentStatus"
+            [ngModelOptions]="{standalone: true}"
+            [style]="{width: '100%'}"
+            placeholder="Status"
+            optionLabel="name"
+            optionValue="id"
+            class="cp-form-item"
+          >
           </p-dropdown>
         </div>
         <div class="form-group">
           <label>Description</label>
           <div>
-            <input pInputText [ngModel]="description" [ngModelOptions]="{standalone: true}" readonly disabled>
+            <input
+              pInputText
+              [ngModel]="description"
+              [ngModelOptions]="{standalone: true}"
+              readonly
+              disabled
+            />
           </div>
         </div>
       </div>
     </form>
   </div>
   <ng-template pTemplate="footer">
+    <p-button label="Save" styleClass="cp-button"> </p-button>
     <p-button
-      label="Save"
-      styleClass="cp-button">
-    </p-button>
-    <p-button (click)="isVisible = false"
-              label="Cancel"
-              styleClass="cp-button outline">
+      (click)="isVisible = false"
+      label="Cancel"
+      styleClass="cp-button outline"
+    >
     </p-button>
   </ng-template>
 </p-dialog>

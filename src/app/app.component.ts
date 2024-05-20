@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { AuthService } from './_services/auth.service';
 import { EventBusService } from './_shared/event-bus.service';
-import {ConfirmationService, MessageService} from "primeng/api";
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -44,11 +44,11 @@ export class AppComponent implements OnInit {
       this.logout();
     });
   }
-   logout(): void {
+  logout(): void {
     this.storageService.clean();
     this.authService.logout().subscribe({
       next: (res) => {
-        if(res.message.includes("Successfully")){
+        if (res.message.includes('Successfully')) {
           this.messageService.add({
             severity: 'success',
             summary: 'Successfully Signed Out',
