@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService} from "primeng/api";
-import {CONSTANTS} from "../board-user/utils/CONSTANTS";
-import {FormGroup} from "@angular/forms";
-import {Util} from "../util/util.class";
-import {AdminService} from "../admin-get-all-users-reservations/service/admin.service";
-import {BaseSearchForm} from "../shared/BaseSearchForm";
+import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { CONSTANTS } from '../board-user/utils/CONSTANTS';
+import { FormGroup } from '@angular/forms';
+import { Util } from '../util/util.class';
+import { AdminService } from '../admin-get-all-users-reservations/service/admin.service';
+import { BaseSearchForm } from '../shared/BaseSearchForm';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class AdminDashboardComponent implements OnInit {
   readonly SEARCH_FORM_CONTROL = CONSTANTS.SEARCH_FORM_CONTROL_NAME;
@@ -18,10 +18,12 @@ export class AdminDashboardComponent implements OnInit {
   data: any;
   chartOptions: any;
   customColor = ['#ffc700', '#0fb215', '#e53131'];
-  constructor(private adminService: AdminService,
-              private messageService: MessageService,
-              private confirmationService: ConfirmationService) {
-    this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME)
+  constructor(
+    private adminService: AdminService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+  ) {
+    this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
   }
 
   statusSummary: any;
@@ -41,15 +43,15 @@ export class AdminDashboardComponent implements OnInit {
       const accepted = result.accepted;
       const processing = result.processing;
       const rejected = result.rejected;
-      this.statusSummary = [processing, accepted, rejected]
+      this.statusSummary = [processing, accepted, rejected];
       this.data = {
         labels: ['Processing', 'Accepted', 'Rejected'],
         datasets: [
           {
             backgroundColor: this.customColor,
             data: this.statusSummary,
-          }
-        ]
+          },
+        ],
       };
     }
     this.chartOptions = {
@@ -58,16 +60,16 @@ export class AdminDashboardComponent implements OnInit {
           position: 'bottom',
           labels: {
             usePointStyle: true,
-          }
-        }
-      }
+          },
+        },
+      },
     };
   }
 
   getSummaryReservationsByStatus() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch)
-    return this.adminService.getSummaryReservationsByStatus(searchForm).toPromise();
+    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    return this.adminService
+      .getSummaryReservationsByStatus(searchForm)
+      .toPromise();
   }
-
-
 }

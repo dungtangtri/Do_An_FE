@@ -1,40 +1,60 @@
 <p-toast></p-toast>
 
 <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6 surface-card">
-  <form *ngIf="!isLoggedIn"
-        name="form"
-        (ngSubmit)="f.form.valid && onSubmit()"
-        #f="ngForm"
-        novalidate>
+  <form
+    *ngIf="!isLoggedIn"
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
     <div class="text-center mb-5">
-      <img src="assets/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3">
+      <img
+        src="assets/images/blocks/logos/hyper.svg"
+        alt="Image"
+        height="50"
+        class="mb-3"
+      />
       <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-      <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
+      <span class="text-600 font-medium line-height-3"
+        >Don't have an account?</span
+      >
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+        >Create today!</a
+      >
     </div>
     <div>
       <div>
         <label class="block text-900 font-medium mb-2">Username</label>
-        <input type="text" placeholder="Username" pInputText class="w-full mb-3 form-control"
-               name="username"
-               [(ngModel)]="form.username"
-               required
-               #username="ngModel"
-               [ngClass]="{ 'is-invalid': f.submitted && username.errors }">
+        <input
+          type="text"
+          placeholder="Username"
+          pInputText
+          class="w-full mb-3 form-control"
+          name="username"
+          [(ngModel)]="form.username"
+          required
+          #username="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+        />
         <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
           Username is required!
         </div>
       </div>
       <div>
         <label class="block text-900 font-medium mb-2">Password</label>
-        <input placeholder="Password" pInputText class="w-full mb-3"
-               type="password"
-               name="password"
-               [(ngModel)]="form.password"
-               required
-               minlength="4"
-               #password="ngModel"
-               [ngClass]="{ 'is-invalid': f.submitted && password.errors }">
+        <input
+          placeholder="Password"
+          pInputText
+          class="w-full mb-3"
+          type="password"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="4"
+          #password="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+        />
         <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
           <div *ngIf="password.errors['required']">Password is required</div>
           <div *ngIf="password.errors['minlength']">
@@ -42,7 +62,13 @@
           </div>
         </div>
       </div>
-      <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+      <button
+        pButton
+        pRipple
+        label="Sign In"
+        icon="pi pi-user"
+        class="w-full"
+      ></button>
       <div class="form-group">
         <div
           *ngIf="f.submitted && isLoginFailed"
@@ -52,7 +78,7 @@
           Login failed: {{ errorMessage }}
         </div>
       </div>
-  </div>
+    </div>
   </form>
   <div class="alert alert-success" *ngIf="isLoggedIn">
     Logged in as {{ roles }}.

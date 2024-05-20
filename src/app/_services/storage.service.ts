@@ -8,7 +8,7 @@ const USER_KEY = 'auth-user';
 export class StorageService {
   constructor() {}
 
-   clean(): void {
+  clean(): void {
     window.localStorage.clear();
   }
 

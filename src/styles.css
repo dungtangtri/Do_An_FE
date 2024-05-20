@@ -167,7 +167,7 @@ input::placeholder {
 
   &:focus,
   &:hover {
-    background-color: #FF7F50 !important;
+    background-color: #ff7f50 !important;
   }
 
   .pi {
