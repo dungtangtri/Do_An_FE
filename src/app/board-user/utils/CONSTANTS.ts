@@ -11,4 +11,16 @@ export class CONSTANTS {
       VALIDATORS: [],
     },
   };
+  static readonly UPDATE_RESERVATION_FORM_CONTROL_NAME = {
+    ID: {
+      NAME: 'id',
+      VALUE: '',
+      VALIDATORS: [],
+    },
+    STATUS: {
+      NAME: 'status',
+      VALUE: '',
+      VALIDATORS: [],
+    }
+  };
 }

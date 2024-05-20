@@ -10,8 +10,10 @@
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME"
-            dateFormat="dd.mm.yy"
+            dateFormat="dd/mm/yy"
             placeholder="Start Date"
+            [showTime]="true"
+            [showSeconds]="true"
             [showIcon]="true"
             [readonlyInput]="true"
             selectionMode="single"
@@ -23,8 +25,10 @@
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
             placeholder="End Date"
-            dateFormat="dd.mm.yy"
+            dateFormat="dd/mm/yy"
             [showIcon]="true"
+            [showTime]="true"
+            [showSeconds]="true"
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
@@ -40,7 +44,7 @@
           pTooltip="Search"
           (click)="onSearch()"
           tooltipPosition="bottom"
-          class="mr-2"
+          class="mr-2 cp-button"
         ></button>
         <button
           pButton
@@ -49,7 +53,7 @@
           label="Reset Form"
           tooltipPosition="bottom"
           pTooltip="Reset Form"
-          class="mr-2"
+          class="mr-2 cp-button"
           (click)="resetForm()"
         ></button>
         <button
@@ -60,6 +64,7 @@
           label="Export Excel"
           tooltipPosition="bottom"
           (click)="exportExcel()"
+          class="cp-button"
         ></button>
       </div>
     </p-toolbar>
@@ -68,6 +73,7 @@
 <div>
   <p-toast></p-toast>
   <p-table
+    [autoLayout]="true"
     [columns]="cols"
     [value]="content"
     responsiveLayout="scroll"
@@ -80,7 +86,7 @@
         icon="pi pi-exclamation-triangle"
       ></p-confirmDialog>
       <tr>
-        <th *ngFor="let col of columns">{{ col.header }}</th>
+        <th *ngFor="let col of columns"><strong>{{ col.header }}</strong></th>
       </tr>
       <tr>
         <th *ngFor="let col of columns">
@@ -127,6 +133,13 @@
             pTooltip="Delete Reservation"
             class="cp-button"
           ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="cp-button"
+            (click)="editReservation(data)"
+          ></button>
         </td>
       </tr>
     </ng-template>
@@ -142,3 +155,90 @@
     </ng-template>
   </p-table>
 </div>
+<p-dialog
+  styleClass="cp-dialog"
+  header="Edit Reservation"
+  [modal]="true"
+  [(visible)]="isVisible"
+  (onHide)="isVisible = false"
+  [style]="{width: '800px', height: '800px'}">
+
+  <div>
+    <form class="flex">
+      <div class="col-6">
+        <div class="form-group">
+          <label>Reservation Start Time</label>
+          <p-calendar
+            placeholder="Start Date"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            [readonlyInput]="true"
+            selectionMode="single"
+            [showTime]="true"
+            [showSeconds]="true"
+            view="date"
+            [ngModel]="startTime"
+            [ngModelOptions]="{standalone: true}"
+          >
+          </p-calendar>
+        </div>
+        <div class="form-group">
+          <label>Room ID</label>
+          <div>
+          <input pInputText placeholder="Room ID" type="text" required >
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Reservation ID</label>
+          <div>
+          <input pInputText [readOnly]="true" [disabled]="true" [ngModel]="reservation_id" [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label>Reservation End Time</label>
+          <p-calendar
+            placeholder="End Date"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+            [readonlyInput]="true"
+            selectionMode="single"
+            view="date"
+            [ngModel]="endTime" [ngModelOptions]="{standalone: true}"
+          >
+          </p-calendar>
+        </div>
+        <div>
+          <label>Status</label>
+          <p-dropdown [options]="status"
+                      [ngModel]="currentStatus" [ngModelOptions]="{standalone: true}"
+                      [style]="{width: '100%'}"
+                      placeholder="Status"
+                      optionLabel="name"
+                      optionValue="id"
+                      class="cp-form-item">
+          </p-dropdown>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <div>
+            <input pInputText [ngModel]="description" [ngModelOptions]="{standalone: true}" readonly disabled>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Save"
+      styleClass="cp-button">
+    </p-button>
+    <p-button (click)="isVisible = false"
+              label="Cancel"
+              styleClass="cp-button outline">
+    </p-button>
+  </ng-template>
+</p-dialog>

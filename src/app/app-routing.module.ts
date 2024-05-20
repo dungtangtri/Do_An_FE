@@ -16,9 +16,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'my-reservation', component: UserGetMyReservationsComponent },
-  { path: 'all-user', component: AllUserComponent },
+  { path: 'manage-user', component: AllUserComponent },
   {path: 'admin-dashboard', component: AdminDashboardComponent },
-  { path: 'get-all-user-reservation', component: AdminGetAllReservationsComponent },
+  { path: 'manage-reservation', component: AdminGetAllReservationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

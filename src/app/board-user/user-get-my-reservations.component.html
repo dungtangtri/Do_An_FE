@@ -10,7 +10,9 @@
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME"
-            dateFormat="dd.mm.yy"
+            [showTime]="true"
+            [showSeconds]="true"
+            dateFormat="dd/mm/yy"
             placeholder="Start Date"
             [showIcon]="true"
             [readonlyInput]="true"
@@ -22,8 +24,10 @@
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
+            [showTime]="true"
+            [showSeconds]="true"
             placeholder="End Date"
-            dateFormat="dd.mm.yy"
+            dateFormat="dd/mm/yy"
             [showIcon]="true"
             [readonlyInput]="true"
             selectionMode="single"
@@ -40,7 +44,7 @@
           pTooltip="Search"
           (click)="onSearch()"
           tooltipPosition="bottom"
-          class="mr-2"
+          class="mr-2 cp-button"
         ></button>
         <button
           pButton
@@ -49,7 +53,7 @@
           label="Reset Form"
           tooltipPosition="bottom"
           pTooltip="Reset Form"
-          class="mr-2"
+          class="mr-2 cp-button"
           (click)="resetForm()"
         ></button>
         <button
@@ -59,6 +63,7 @@
           pTooltip="Export Excel"
           label="Export Excel"
           tooltipPosition="bottom"
+          class="cp-button"
           (click)="exportExcel()"
         ></button>
       </div>
@@ -126,6 +131,7 @@
           <button
             pButton
             type="button"
+            class="cp-button"
             icon="pi pi-trash"
             *ngIf="data.status === '2'"
             [disabled]="true"
@@ -134,6 +140,7 @@
             pButton
             type="button"
             icon="pi pi-trash"
+            class="cp-button"
             *ngIf="data.status === '1' || data.status === '0'"
             [disabled]="false"
             (click)="changeStatusReservation(data)"

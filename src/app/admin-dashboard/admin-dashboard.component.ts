@@ -4,7 +4,6 @@ import {CONSTANTS} from "../board-user/utils/CONSTANTS";
 import {FormGroup} from "@angular/forms";
 import {Util} from "../util/util.class";
 import {AdminService} from "../admin-get-all-users-reservations/service/admin.service";
-import {SummaryReservationsByStatusDto} from "./models/summary-reservations-by-status-dto";
 import {BaseSearchForm} from "../shared/BaseSearchForm";
 
 @Component({
@@ -18,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   formSearch: FormGroup;
   data: any;
   chartOptions: any;
-
+  customColor = ['#ffc700', '#0fb215', '#e53131'];
   constructor(private adminService: AdminService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService) {
@@ -47,6 +46,7 @@ export class AdminDashboardComponent implements OnInit {
         labels: ['Processing', 'Accepted', 'Rejected'],
         datasets: [
           {
+            backgroundColor: this.customColor,
             data: this.statusSummary,
           }
         ]

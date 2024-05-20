@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div id="app">
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a href="#" class="navbar-brand">HUST</a>
@@ -9,7 +10,7 @@
         <a href="/admin-dashboard" class="nav-link" routerLink="admin-dashboard">Admin Dashboard</a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/get-all-user-reservation" class="nav-link" routerLink="get-all-user-reservation">All Users Reservations</a>
+        <a href="/manage-reservation" class="nav-link" routerLink="manage-reservation">Manage Reservations</a>
       </li>
       <li class="nav-item" *ngIf="showTeacherBoard">
         <a href="/teacher" class="nav-link" routerLink="teacher">Teacher Board</a>
@@ -18,7 +19,7 @@
         <a href="/my-reservation" class="nav-link" *ngIf="isLoggedIn" routerLink="my-reservation">My Reservations</a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/all-user" class="nav-link" routerLink="all-user">All Users</a>
+        <a href="/manage-user" class="nav-link" routerLink="manage-user">Manage Users</a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
         <a href="/all-reservations" class="nav-link" routerLink="all-reservations">All Reservations</a>
@@ -43,7 +44,6 @@
       </li>
     </ul>
   </nav>
-
   <div class="container">
     <router-outlet></router-outlet>
   </div>

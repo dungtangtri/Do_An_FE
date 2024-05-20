@@ -24,7 +24,6 @@ import {InputTextModule} from "primeng/inputtext";
 import {DateFormatPipe} from './date-format.pipe';
 import {TagModule} from "primeng/tag";
 import {ApproveReservationsComponent} from './approve-reservations/approve-reservations.component';
-import {DropdownModule} from "primeng/dropdown";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {TabViewModule} from "primeng/tabview";
 import {CalendarModule} from "primeng/calendar";
@@ -40,6 +39,8 @@ import {StyleClassModule} from 'primeng/styleclass';
 import {CheckboxModule} from "primeng/checkbox";
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import {ChartModule} from "primeng/chart";
+import {DropdownModule} from "primeng/dropdown";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -69,7 +70,6 @@ import {ChartModule} from "primeng/chart";
     FormsModule,
     InputTextModule,
     TagModule,
-    DropdownModule,
     ReactiveFormsModule,
     OverlayPanelModule,
     TabViewModule,
@@ -83,7 +83,9 @@ import {ChartModule} from "primeng/chart";
     ToolbarModule,
     StyleClassModule,
     CheckboxModule,
-    ChartModule
+    ChartModule,
+    DropdownModule,
+    RippleModule
   ],
   providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]

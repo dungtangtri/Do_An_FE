@@ -3,11 +3,13 @@ import { Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { AuthService } from './_services/auth.service';
 import { EventBusService } from './_shared/event-bus.service';
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class AppComponent implements OnInit {
   private roles: string[] = [];
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
     private storageService: StorageService,
     private authService: AuthService,
     private eventBusService: EventBusService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -41,14 +44,24 @@ export class AppComponent implements OnInit {
       this.logout();
     });
   }
-
    logout(): void {
+    this.storageService.clean();
     this.authService.logout().subscribe({
       next: (res) => {
-        this.storageService.clean();
+        if(res.message.includes("Successfully")){
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successfully Signed Out',
+          });
+        }
       },
       error: (err) => {
-        console.log(err);
+        const errorMessage = err.error.message;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Unsuccessfully Sign In',
+          detail: errorMessage,
+        });
       },
     });
   }

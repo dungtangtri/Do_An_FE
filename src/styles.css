@@ -1,13 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
-@import "primeflex/primeflex.css";
 @import "primeng/resources/primeng.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeflex/primeflex.css";
 body {
-  background-color: ghostwhite;
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+}
+.container {
+  width: 80%; /* Set the width as needed, e.g., 80% of the parent container */
+  max-width: 1600px; /* Optionally set a maximum width */
 }
 .chart-title {
   display: flex;
@@ -37,23 +40,13 @@ body {
   border: 1px solid #808080;
 }
 
-/* Text color */
-.p-datatable .p-datatable-tbody > tr > td {
-  color: #000000;
-}
-
 /* Text alignment */
 .p-datatable .p-datatable-tbody > tr > td,
 .p-datatable .p-datatable-thead > tr > th {
   text-align: center;
   vertical-align: middle;
 }
-/* Add a border to the filter */
-.p-column-filter-row-item {
-  border: 1px solid #808080;
-  background-color: #f0f0f0;
-  text-align: center;
-}
+
 .custom-tag-installed {
   .p-tag {
     background-color: #e8fff3;
@@ -76,32 +69,105 @@ body {
   }
 }
 
-:host ::ng-deep .p-calendar {
-  border: 2px solid green;
-  border-radius: 10px;
+.cp-button {
+  background: $ primary;
+  border-radius: 6px;
+  padding: 12px;
+  font-weight: 600;
+  border: 1px solid $ primary;
+  min-width: 44px !important;
 }
 
-.p-calendar,
-.p-datepicker table td.p-datepicker-today > span,
 .p-calendar .p-datepicker,
 table td.p-datepicker-today > span:hover {
   background-color: #a2d2ff;
   color: black;
   font-weight: bold;
 }
+.cp-dialog {
+  box-shadow: $ shadow-1;
+
+  .p-dialog-header {
+    color: $ white;
+    overflow: hidden;
+    background: $ primary;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    padding: $ spacing-s $ spacing-m;
+
+    .p-dialog-title {
+      font-weight: 700;
+    }
+
+    .p-dialog-header-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+  }
+  .p-dialog-footer {
+    overflow: hidden;
+    padding: $ spacing-s $ spacing-m;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+
+    button {
+      margin-left: 12px;
+      margin-right: 0;
+      width: 108px;
+    }
+  }
+}
+.p-calendar {
+  &:not(.p-inputtextarea) {
+    height: 44px;
+  }
+
+  &.p-inputtextarea {
+    min-height: 103px;
+  }
+
+  border-radius: 6px !important;
+  border: 1px solid $neutral-200;
+
+  .p-multiselect-label,
+  .p-dropdown-label {
+    font-size: 14px;
+
+    &.p-placeholder {
+      color: $neutral-500;
+    }
+  }
+
+  &:enabled:focus,
+  &:not(.p-disabled).p-focus {
+    box-shadow: none;
+    border: 1px solid $primary;
+  }
+
+  &:enabled:focus {
+    &.ng-invalid.ng-dirty {
+      box-shadow: none;
+    }
+  }
+}
+
+&::placeholder,
+input::placeholder {
+  color: $neutral-500;
+}
+
+&:focus {
+  box-shadow: none;
+  border: 1px solid $neutral-100;
+}
 
 .p-button {
-  /*width: 26px;*/
-  /*height: 26px;*/
-  /*margin: 0 auto;*/
-  /*min-width: unset;*/
-  /*border-radius: 6px;*/
-  /*padding: $ spacing-xxs;*/
-  background-color: white;
+  background-color: #1abc9c;
 
   &:focus,
   &:hover {
-    background-color: $ neutral-300;
+    background-color: #FF7F50 !important;
   }
 
   .pi {
@@ -123,6 +189,9 @@ table td.p-datepicker-today > span:hover {
     }
     &.pi-sync {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M18.3333 10C18.3333 14.6 14.6 18.3333 9.99996 18.3333C5.39996 18.3333 2.59163 13.7 2.59163 13.7M2.59163 13.7H6.35829M2.59163 13.7V17.8667M1.66663 10C1.66663 5.4 5.36663 1.66666 9.99996 1.66666C15.5583 1.66666 18.3333 6.3 18.3333 6.3M18.3333 6.3V2.13333M18.3333 6.3H14.6333' stroke='%23334155' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+    &.pi-pencil {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M9.16602 1.66797H7.49935C3.33268 1.66797 1.66602 3.33464 1.66602 7.5013V12.5013C1.66602 16.668 3.33268 18.3346 7.49935 18.3346H12.4993C16.666 18.3346 18.3327 16.668 18.3327 12.5013V10.8346' stroke='%23366CF9' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M13.3675 2.51639L6.80088 9.08306C6.55088 9.33306 6.30088 9.82472 6.25088 10.1831L5.89254 12.6914C5.75921 13.5997 6.40088 14.2331 7.30921 14.1081L9.81754 13.7497C10.1675 13.6997 10.6592 13.4497 10.9175 13.1997L17.4842 6.63306C18.6175 5.49972 19.1509 4.18306 17.4842 2.51639C15.8175 0.849722 14.5009 1.38306 13.3675 2.51639Z' stroke='%23366CF9' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12.4258 3.45703C12.9841 5.4487 14.5424 7.00703 16.5424 7.5737' stroke='%23366CF9' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
   }
 }
@@ -339,7 +408,6 @@ table td.p-datepicker-today > span:hover {
 
 /* Dialog container */
 .p-dialog {
-  max-width: 600px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -423,4 +491,27 @@ table td.p-datepicker-today > span:hover {
 
 .p-toolbar-group-right {
   margin-left: auto; /* Moves the button group to the right side of the toolbar */
+}
+.p-dropdown-panel {
+  transform: translateY(4px);
+  box-shadow: $shadow-1;
+
+  .p-multiselect-items-wrapper,
+  .p-dropdown-items-wrapper {
+    padding: 12px 0;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $ neutral-300;
+      border-radius: 200px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.5);
+      border-radius: 200px;
+    }
+  }
 }

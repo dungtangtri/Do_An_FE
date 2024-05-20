@@ -1,16 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AdminService } from './service/admin.service';
-import { GetAllUserWithReservationDto } from './models/get-all-user-with-reservation-dto';
-import {
-  ConfirmationService,
-  FilterMatchMode,
-  MessageService,
-  SelectItem,
-} from 'primeng/api';
-import { BaseSearchForm } from '../shared/BaseSearchForm';
-import { Util } from '../util/util.class';
-import { CONSTANTS } from '../board-user/utils/CONSTANTS';
-import { FormGroup } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {AdminService} from './service/admin.service';
+import {GetAllUserWithReservationDto} from './models/get-all-user-with-reservation-dto';
+import {ConfirmationService, FilterMatchMode, MessageService, SelectItem,} from 'primeng/api';
+import {BaseSearchForm} from '../shared/BaseSearchForm';
+import {Util} from '../util/util.class';
+import {CONSTANTS} from '../board-user/utils/CONSTANTS';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-get-all-users-reservations',
@@ -20,10 +15,18 @@ import { FormGroup } from '@angular/forms';
 })
 export class AdminGetAllReservationsComponent implements OnInit {
   readonly SEARCH_FORM_CONTROL = CONSTANTS.SEARCH_FORM_CONTROL_NAME;
+  readonly UPDATE_FORM_CONTROL = CONSTANTS.UPDATE_RESERVATION_FORM_CONTROL_NAME;
   content: GetAllUserWithReservationDto[] = [];
   cols: any[] = [];
+  reservation_id: any;
+  startTime: any;
+  endTime: any;
+  status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
+  description: any;
+  currentStatus: any;
   formSearch: FormGroup;
   matchModeOptions: SelectItem[] = [];
+  isVisible = false;
   constructor(
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
@@ -165,4 +168,17 @@ export class AdminGetAllReservationsComponent implements OnInit {
     this.formSearch.reset();
     this.getData();
   }
+
+  editReservation(data: GetAllUserWithReservationDto) {
+    this.isVisible = true;
+    this.updateReservation(data)
+  }
+  updateReservation(data: GetAllUserWithReservationDto) {
+    this.reservation_id = data.reservation_id;
+    this.startTime = new Date(data.reservation_start_time);
+    this.endTime = new Date(data.reservation_end_time)
+    this.currentStatus = this.status.find(s => s.id === data.status).id;
+    this.description = data.reservation_description
+  }
+
 }
