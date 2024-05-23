@@ -84,9 +84,9 @@ body {
   cursor: not-allowed; /* Indicate that it's not clickable */
   opacity: 90%; /* Optional: Adjust opacity to make it look more disabled */
 }
-.p-datepicker td>span {
-    width: 20px !important;
-    height: 20px !important;
+.p-datepicker td > span {
+  width: 20px !important;
+  height: 20px !important;
 }
 .cp-dialog {
   box-shadow: $ shadow-1;
@@ -171,7 +171,7 @@ input::placeholder {
 
   &:focus,
   &:hover {
-    background-color: #FF7F50 !important;
+    background-color: #ff7f50 !important;
   }
 
   .pi {
