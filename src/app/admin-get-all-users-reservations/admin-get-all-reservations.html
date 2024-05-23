@@ -138,6 +138,7 @@
             type="button"
             icon="pi pi-pencil"
             class="cp-button"
+            pTooltip="Edit Reservation"
             (click)="editReservation(data)"
           ></button>
         </td>
@@ -164,7 +165,7 @@
   [style]="{width: '800px', height: '800px'}">
 
   <div>
-    <form class="flex">
+    <form class="formgrid grid">
       <div class="col-6">
         <div class="form-group">
           <label>Reservation Start Time</label>
@@ -172,26 +173,31 @@
             placeholder="Start Date"
             dateFormat="dd/mm/yy"
             [showIcon]="true"
-            [readonlyInput]="true"
             selectionMode="single"
+            (onClose)="validateTime()"
             [showTime]="true"
             [showSeconds]="true"
+            [showButtonBar]="true"
             view="date"
-            [ngModel]="startTime"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [(ngModel)]="startTime"
             [ngModelOptions]="{standalone: true}"
+            [required]="true"
           >
           </p-calendar>
+          <div *ngIf="!isValid" class="error-validation-message">Start time must be smaller than end time! </div>
         </div>
         <div class="form-group">
           <label>Room ID</label>
           <div>
-          <input pInputText placeholder="Room ID" type="text" required >
+          <input pInputText  [(ngModel)]="roomId" [ngModelOptions]="{standalone: true}" required>
           </div>
         </div>
         <div class="form-group">
           <label>Reservation ID</label>
           <div>
-          <input pInputText [readOnly]="true" [disabled]="true" [ngModel]="reservation_id" [ngModelOptions]="{standalone: true}">
+          <input pInputText [readOnly]="true" [disabled]="true" [ngModel]="reservation_id" [ngModelOptions]="{standalone: true}" readonly>
           </div>
         </div>
       </div>
@@ -201,32 +207,38 @@
           <p-calendar
             placeholder="End Date"
             dateFormat="dd/mm/yy"
+            (onClose)="validateTime()"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [showButtonBar]="true"
             [showIcon]="true"
             [showTime]="true"
             [showSeconds]="true"
-            [readonlyInput]="true"
             selectionMode="single"
+            [required]="true"
             view="date"
-            [ngModel]="endTime" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="endTime" [ngModelOptions]="{standalone: true}"
           >
           </p-calendar>
+          <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
         </div>
         <div>
           <label>Status</label>
           <p-dropdown [options]="status"
-                      [ngModel]="currentStatus" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="currentStatus" [ngModelOptions]="{standalone: true}"
                       [style]="{width: '100%'}"
+                      [required]="true"
                       placeholder="Status"
                       optionLabel="name"
                       optionValue="id"
                       class="cp-form-item">
           </p-dropdown>
         </div>
-        <div class="form-group">
-          <label>Description</label>
-          <div>
-            <input pInputText [ngModel]="description" [ngModelOptions]="{standalone: true}" readonly disabled>
-          </div>
+      </div>
+      <div class="col-12 field">
+        <label>Description</label>
+        <div>
+          <textarea id="address" type="text" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" readonly disabled rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
     </form>
@@ -234,11 +246,13 @@
   <ng-template pTemplate="footer">
     <p-button
       label="Save"
+      (onClick)="updateReservationDetail()"
+      [disabled]="!isValid"
       styleClass="cp-button">
     </p-button>
     <p-button (click)="isVisible = false"
               label="Cancel"
-              styleClass="cp-button outline">
+              styleClass="cp-button">
     </p-button>
   </ng-template>
 </p-dialog>

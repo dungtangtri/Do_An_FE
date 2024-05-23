@@ -21,8 +21,8 @@
       <li class="nav-item" *ngIf="showAdminBoard">
         <a href="/manage-user" class="nav-link" routerLink="manage-user">Manage Users</a>
       </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/all-reservations" class="nav-link" routerLink="all-reservations">All Reservations</a>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a href="/place-reservation" class="nav-link" routerLink="place-reservation">Place Reservation</a>
       </li>
     </ul>
 

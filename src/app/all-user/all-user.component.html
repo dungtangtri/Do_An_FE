@@ -118,6 +118,7 @@
             type="button"
             icon="pi pi-trash"
             *ngIf="data.user_role === 'ROLE_ADMIN'"
+            pTooltip="You can't delete Admin Users"
             [disabled]="true"
             class="cp-button"
           ></button>

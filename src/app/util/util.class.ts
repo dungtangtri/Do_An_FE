@@ -52,4 +52,5 @@ export class Util {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+
 }

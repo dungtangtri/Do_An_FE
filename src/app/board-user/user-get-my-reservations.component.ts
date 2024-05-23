@@ -25,7 +25,7 @@ export class UserGetMyReservationsComponent implements OnInit {
   cols: any[] = [];
   formSearch: FormGroup;
   matchModeOptions: SelectItem[] = [];
-  options = ['PROCESSING', 'ACCEPTED', 'REJECTED'];
+
 
   constructor(
     private userService: UserService,

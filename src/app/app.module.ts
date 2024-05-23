@@ -23,7 +23,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InputTextModule} from "primeng/inputtext";
 import {DateFormatPipe} from './date-format.pipe';
 import {TagModule} from "primeng/tag";
-import {ApproveReservationsComponent} from './approve-reservations/approve-reservations.component';
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {TabViewModule} from "primeng/tabview";
 import {CalendarModule} from "primeng/calendar";
@@ -41,6 +40,8 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import {ChartModule} from "primeng/chart";
 import {DropdownModule} from "primeng/dropdown";
 import {RippleModule} from "primeng/ripple";
+import { PlaceReservationComponent } from './place-reservation/place-reservation.component';
+import {PanelModule} from "primeng/panel";
 
 
 @NgModule({
@@ -54,8 +55,8 @@ import {RippleModule} from "primeng/ripple";
     AllUserComponent,
     UserGetMyReservationsComponent,
     DateFormatPipe,
-    ApproveReservationsComponent,
     AdminDashboardComponent,
+    PlaceReservationComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +86,8 @@ import {RippleModule} from "primeng/ripple";
     CheckboxModule,
     ChartModule,
     DropdownModule,
-    RippleModule
+    RippleModule,
+    PanelModule
   ],
   providers: [httpInterceptorProviders,ConfirmationService],
   bootstrap: [AppComponent]
