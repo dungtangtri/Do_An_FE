@@ -59,7 +59,7 @@
         <button
           pButton
           type="button"
-          icon="pi pi-upload"
+          icon="pi pi-file-export"
           pTooltip="Export Excel"
           label="Export Excel"
           tooltipPosition="bottom"
@@ -88,17 +88,6 @@
       <tr>
         <th *ngFor="let col of columns">
           {{ col.header }}
-        </th>
-      </tr>
-      <tr>
-        <th *ngFor="let col of columns">
-          <p-columnFilter
-            type="text"
-            [field]="col.field"
-            [matchModeOptions]="matchModeOptions"
-          >
-            <ng-template pTemplate="header"> </ng-template>
-          </p-columnFilter>
         </th>
       </tr>
     </ng-template>

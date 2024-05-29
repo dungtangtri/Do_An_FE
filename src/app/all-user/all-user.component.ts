@@ -23,7 +23,6 @@ export class AllUserComponent implements OnInit {
   content: AllUserInformationDto[] = [];
   cols: any[] = [];
   formSearch: FormGroup;
-  matchModeOptions: SelectItem[] = [];
   constructor(
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
@@ -34,24 +33,6 @@ export class AllUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
-    this.matchModeOptions = [
-      {
-        label: 'Starts With',
-        value: FilterMatchMode.STARTS_WITH,
-      },
-      {
-        label: 'Contains',
-        value: FilterMatchMode.CONTAINS,
-      },
-      {
-        label: 'Ends With',
-        value: FilterMatchMode.ENDS_WITH,
-      },
-      {
-        label: 'Equals',
-        value: FilterMatchMode.EQUALS,
-      },
-    ];
     this.cols = [
       { field: 'no', header: 'No.' },
       { field: 'user_id', header: 'User ID' },

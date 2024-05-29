@@ -36,7 +36,9 @@
           </p-calendar>
         </div>
       </div>
-      <div class="p-toolbar-group-right">
+      <p-multiSelect [options]="status" [filter]="true" placeholder="Status"
+                     optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.STATUS.NAME"
+                    ></p-multiSelect>
         <button
           pButton
           type="button"
@@ -46,6 +48,7 @@
           tooltipPosition="bottom"
           class="mr-2 cp-button"
         ></button>
+      <div class="p-toolbar-group-right">
         <button
           pButton
           type="button"
@@ -59,20 +62,26 @@
         <button
           pButton
           type="button"
-          icon="pi pi-upload"
+          icon="pi pi-file-export"
           pTooltip="Export Excel"
           label="Export Excel"
           tooltipPosition="bottom"
           (click)="exportExcel()"
-          class="cp-button"
+          class="cp-button mr-2"
         ></button>
+        <button pButton label="Calendar View"
+                type="button" icon="pi pi-calendar"
+                (click)="isVisibleCalendar=true"
+                pTooltip="View all ACCEPTED reservations in calendar view"
+                class="cp-button mr-2">
+        </button>
       </div>
     </p-toolbar>
   </form>
 </div>
 <div>
   <p-toast></p-toast>
-  <p-table
+  <p-table [responsive]="true"
     [autoLayout]="true"
     [columns]="cols"
     [value]="content"
@@ -87,17 +96,6 @@
       ></p-confirmDialog>
       <tr>
         <th *ngFor="let col of columns"><strong>{{ col.header }}</strong></th>
-      </tr>
-      <tr>
-        <th *ngFor="let col of columns">
-          <p-columnFilter
-            type="text"
-            [field]="col.field"
-            [matchModeOptions]="matchModeOptions"
-          >
-            <ng-template pTemplate="header"> </ng-template>
-          </p-columnFilter>
-        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-index="rowIndex">
@@ -160,10 +158,10 @@
   styleClass="cp-dialog"
   header="Edit Reservation"
   [modal]="true"
-  [(visible)]="isVisible"
-  (onHide)="isVisible = false"
-  [style]="{width: '800px', height: '800px'}"
->
+  [(visible)]="isVisibleEdit"
+  (onHide)="isVisibleEdit = false"
+  [style]="{width: '800px', height: '800px'}">
+
   <div>
     <form class="formgrid grid">
       <div class="col-6">
@@ -186,32 +184,18 @@
             [required]="true"
           >
           </p-calendar>
-          <div *ngIf="!isValid" class="error-validation-message">
-            Start time must be smaller than end time!
-          </div>
+          <div *ngIf="!isValid" class="error-validation-message">Start time must be smaller than end time! </div>
         </div>
         <div class="form-group">
           <label>Room ID</label>
           <div>
-            <input
-              pInputText
-              [(ngModel)]="roomId"
-              [ngModelOptions]="{standalone: true}"
-              required
-            />
+          <input pInputText  [(ngModel)]="roomId" [ngModelOptions]="{standalone: true}" required>
           </div>
         </div>
         <div class="form-group">
           <label>Reservation ID</label>
           <div>
-            <input
-              pInputText
-              [readOnly]="true"
-              [disabled]="true"
-              [ngModel]="reservation_id"
-              [ngModelOptions]="{standalone: true}"
-              readonly
-            />
+          <input pInputText [readOnly]="true" [disabled]="true" [ngModel]="reservation_id" [ngModelOptions]="{standalone: true}" readonly>
           </div>
         </div>
       </div>
@@ -231,43 +215,28 @@
             selectionMode="single"
             [required]="true"
             view="date"
-            [(ngModel)]="endTime"
-            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="endTime" [ngModelOptions]="{standalone: true}"
           >
           </p-calendar>
-          <div *ngIf="!isValid" class="error-validation-message">
-            End time must be greater than start time!
-          </div>
+          <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
         </div>
         <div>
           <label>Status</label>
-          <p-dropdown
-            [options]="status"
-            [(ngModel)]="currentStatus"
-            [ngModelOptions]="{standalone: true}"
-            [style]="{width: '100%'}"
-            [required]="true"
-            placeholder="Status"
-            optionLabel="name"
-            optionValue="id"
-            class="cp-form-item"
-          >
+          <p-dropdown [options]="status"
+                      [(ngModel)]="currentStatus" [ngModelOptions]="{standalone: true}"
+                      [style]="{width: '100%'}"
+                      [required]="true"
+                      placeholder="Status"
+                      optionLabel="name"
+                      optionValue="id"
+                      class="cp-form-item">
           </p-dropdown>
         </div>
       </div>
       <div class="col-12 field">
         <label>Description</label>
         <div>
-          <textarea
-            id="address"
-            type="text"
-            [(ngModel)]="description"
-            [ngModelOptions]="{standalone: true}"
-            readonly
-            disabled
-            rows="4"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          ></textarea>
+          <textarea id="address" type="text" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" readonly disabled rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
     </form>
@@ -277,10 +246,46 @@
       label="Save"
       (onClick)="updateReservationDetail()"
       [disabled]="!isValid"
-      styleClass="cp-button"
-    >
+      styleClass="cp-button">
     </p-button>
-    <p-button (click)="isVisible = false" label="Cancel" styleClass="cp-button">
+    <p-button (click)="isVisibleEdit = false"
+              label="Cancel"
+              styleClass="cp-button">
     </p-button>
   </ng-template>
+</p-dialog>
+<p-dialog
+  [style]="{width: '1300px', height: '1100px'}"
+  styleClass="cp-dialog"
+  header="Calendar View"
+  [modal]="true"
+  [(visible)]="isVisibleCalendar"
+  (onHide)="isVisibleCalendar = false">
+  <div>
+    <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+    </mwl-demo-utils-calendar-header>
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="'month'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [activeDayIsOpen]="true"
+        (dayClicked)="dayClicked($event.day)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="'week'"
+        [viewDate]="viewDate"
+        [events]="events"
+        (dayHeaderClicked)="changeDay($event.day.date)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="'day'"
+        [viewDate]="viewDate"
+        [events]="events"
+      >
+      </mwl-calendar-day-view>
+    </div>
+  </div>
 </p-dialog>

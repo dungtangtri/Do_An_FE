@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
-import {
-  ConfirmationService,
-  FilterMatchMode,
-  MessageService,
-  SelectItem,
-} from 'primeng/api';
-import { GetMyReservationsDto } from './models/get-my-reservations-dto';
-import { FormGroup } from '@angular/forms';
-import { CONSTANTS } from './utils/CONSTANTS';
-import { Util } from '../util/util.class';
-import { BaseSearchForm } from '../shared/BaseSearchForm';
-import { ChangeStatusForm } from '../shared/ChangeStatusForm';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../_services/user.service';
+import {ConfirmationService, MessageService,} from 'primeng/api';
+import {GetMyReservationsDto} from './models/get-my-reservations-dto';
+import {FormGroup} from '@angular/forms';
+import {CONSTANTS} from './utils/CONSTANTS';
+import {Util} from '../util/util.class';
+import {BaseSearchForm} from '../shared/BaseSearchForm';
+import {ChangeStatusForm} from '../shared/ChangeStatusForm';
+import {CalendarEvent, CalendarView} from "angular-calendar";
+import {isSameDay, isSameMonth} from "date-fns";
 
 @Component({
   selector: 'app-board-user',
@@ -24,7 +21,19 @@ export class UserGetMyReservationsComponent implements OnInit {
   content: GetMyReservationsDto[] = [];
   cols: any[] = [];
   formSearch: FormGroup;
-  matchModeOptions: SelectItem[] = [];
+  isVisibleCalendar = false;
+  view: CalendarView = CalendarView.Month;
+  activeDayIsOpen: boolean = true;
+  viewDate: Date = new Date();
+  startTime: any;
+  endTime: any;
+  isValid = true;
+  events: CalendarEvent[] = [];
+
+  changeDay(date: Date) {
+    this.viewDate = date;
+    this.view = CalendarView.Day;
+  }
 
   constructor(
     private userService: UserService,
@@ -32,28 +41,11 @@ export class UserGetMyReservationsComponent implements OnInit {
     private confirmationService: ConfirmationService,
   ) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
+
   }
 
   ngOnInit(): void {
     this.getData();
-    this.matchModeOptions = [
-      {
-        label: 'Starts With',
-        value: FilterMatchMode.STARTS_WITH,
-      },
-      {
-        label: 'Contains',
-        value: FilterMatchMode.CONTAINS,
-      },
-      {
-        label: 'Ends With',
-        value: FilterMatchMode.ENDS_WITH,
-      },
-      {
-        label: 'Equals',
-        value: FilterMatchMode.EQUALS,
-      },
-    ];
     this.cols = [
       { field: 'no', header: 'No.' },
       { field: 'reservation_id', header: 'Reservation ID' },
@@ -71,6 +63,13 @@ export class UserGetMyReservationsComponent implements OnInit {
     this.userService.getMyReservation(searchForm).subscribe({
       next: (data) => {
         this.content = data;
+        // Filter all accepted reservations
+        const filteredReservations = data.filter(reservation => reservation.status === '1');
+        this.events = filteredReservations.map(reservation => ({
+          start: new Date(reservation.reservation_start_time),
+          end: new Date(reservation.reservation_end_time),
+          title: 'Room : ' + reservation.room_id.toString() + " is reserved from: " + new Date(reservation.reservation_start_time) + " to " + new Date(reservation.reservation_end_time),
+        }));
         this.messageService.add({
           severity: 'success',
           summary: 'Successfully retrieving data',
@@ -170,5 +169,31 @@ export class UserGetMyReservationsComponent implements OnInit {
   resetForm() {
     this.formSearch.reset();
     this.getData();
+  }
+
+  validateTime() {
+    if (this.startTime < this.endTime) {
+      this.isValid = true;
+    } else {
+      this.isValid = false;
+    }
+  }
+
+  dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
+  }
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
   }
 }
