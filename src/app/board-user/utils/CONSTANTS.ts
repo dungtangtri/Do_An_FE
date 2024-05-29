@@ -21,7 +21,7 @@ export class CONSTANTS {
       NAME: 'status',
       VALUE: '',
       VALIDATORS: [],
-    }
+    },
   };
   static readonly RESERVATION_FORM_CONTROL_NAME = {
     DATE_OPTION: {
@@ -43,6 +43,6 @@ export class CONSTANTS {
       NAME: 'roomId',
       VALUE: '',
       VALIDATORS: [],
-    }
+    },
   };
 }

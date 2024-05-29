@@ -1,12 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {AdminService} from './service/admin.service';
-import {GetAllUserWithReservationDto} from './models/get-all-user-with-reservation-dto';
-import {ConfirmationService, FilterMatchMode, MessageService, SelectItem,} from 'primeng/api';
-import {BaseSearchForm} from '../shared/BaseSearchForm';
-import {Util} from '../util/util.class';
-import {CONSTANTS} from '../board-user/utils/CONSTANTS';
-import {FormGroup} from '@angular/forms';
-import {UpdateReservationDetailForm} from "./models/update-reservation-detail-form";
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from './service/admin.service';
+import { GetAllUserWithReservationDto } from './models/get-all-user-with-reservation-dto';
+import {
+  ConfirmationService,
+  FilterMatchMode,
+  MessageService,
+  SelectItem,
+} from 'primeng/api';
+import { BaseSearchForm } from '../shared/BaseSearchForm';
+import { Util } from '../util/util.class';
+import { CONSTANTS } from '../board-user/utils/CONSTANTS';
+import { FormGroup } from '@angular/forms';
+import { UpdateReservationDetailForm } from './models/update-reservation-detail-form';
 
 @Component({
   selector: 'app-admin-get-all-users-reservations',
@@ -23,7 +28,11 @@ export class AdminGetAllReservationsComponent implements OnInit {
   startTime: any;
   endTime: any;
   roomId: any;
-  status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
+  status: any[] = [
+    { id: '1', name: 'ACCEPTED' },
+    { id: '2', name: 'REJECTED' },
+    { id: '0', name: 'PROCESSING' },
+  ];
   description: any;
   currentStatus: any;
   formSearch: FormGroup;
@@ -40,7 +49,11 @@ export class AdminGetAllReservationsComponent implements OnInit {
   ) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
     this.today = new Date();
-    this.maxDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()+7);
+    this.maxDate = new Date(
+      this.today.getFullYear(),
+      this.today.getMonth(),
+      this.today.getDate() + 7,
+    );
     this.minDate = this.today;
   }
 
@@ -180,35 +193,41 @@ export class AdminGetAllReservationsComponent implements OnInit {
 
   editReservation(data: GetAllUserWithReservationDto) {
     this.isVisible = true;
-    this.updateReservation(data)
+    this.updateReservation(data);
   }
   updateReservation(data: GetAllUserWithReservationDto) {
     this.reservation_id = data.reservation_id;
     this.startTime = new Date(data.reservation_start_time);
-    this.endTime = new Date(data.reservation_end_time)
-    this.currentStatus = this.status.find(s => s.id === data.status).id;
+    this.endTime = new Date(data.reservation_end_time);
+    this.currentStatus = this.status.find((s) => s.id === data.status).id;
     this.description = data.reservation_description;
     this.roomId = data.room_id;
   }
-  updateReservationDetail(){
-      this.confirmationService.confirm({
-        message: 'Are you sure that you want to update this reservation?',
-        header: 'Update Reservation',
-        icon: 'pi pi-exclamation-circle color-red',
-        accept: () => {
-          this.acceptUpdateReservation();
-        },
-      });
+  updateReservationDetail() {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to update this reservation?',
+      header: 'Update Reservation',
+      icon: 'pi pi-exclamation-circle color-red',
+      accept: () => {
+        this.acceptUpdateReservation();
+      },
+    });
   }
-  validateTime(){
-    if(this.startTime < this.endTime){
+  validateTime() {
+    if (this.startTime < this.endTime) {
       this.isValid = true;
-    }else{
+    } else {
       this.isValid = false;
     }
   }
-  acceptUpdateReservation(){
-    let updateForm: UpdateReservationDetailForm = {roomId: this.roomId, status: this.currentStatus, endTime: Util.convertDateToTimeStamp(this.endTime), startTime:Util.convertDateToTimeStamp(this.startTime), reservationId: this.reservation_id };
+  acceptUpdateReservation() {
+    let updateForm: UpdateReservationDetailForm = {
+      roomId: this.roomId,
+      status: this.currentStatus,
+      endTime: Util.convertDateToTimeStamp(this.endTime),
+      startTime: Util.convertDateToTimeStamp(this.startTime),
+      reservationId: this.reservation_id,
+    };
     this.adminService.updateReservationDetail(updateForm).subscribe({
       next: (res) => {
         console.log(res);
@@ -224,8 +243,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error updating reservation detail',
-          detail:
-            'Error updating reservation detail, please try again later.',
+          detail: 'Error updating reservation detail, please try again later.',
         });
       },
     });

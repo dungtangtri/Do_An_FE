@@ -26,7 +26,6 @@ export class UserGetMyReservationsComponent implements OnInit {
   formSearch: FormGroup;
   matchModeOptions: SelectItem[] = [];
 
-
   constructor(
     private userService: UserService,
     private messageService: MessageService,

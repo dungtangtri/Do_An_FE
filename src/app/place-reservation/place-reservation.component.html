@@ -1,5 +1,9 @@
 <p-panel>
-  <ng-template pTemplate="header"><span class="text-primary font-semibold text-4xl mr-auto justify-content-center ">Place your Reservation</span>
+  <ng-template pTemplate="header"
+    ><span
+      class="text-primary font-semibold text-4xl mr-auto justify-content-center"
+      >Place your Reservation</span
+    >
   </ng-template>
   <div class="formgrid grid">
     <div class="field col-12 md:col-6">
@@ -12,42 +16,46 @@
           [showIcon]="true"
           selectionMode="single"
           [showButtonBar]="true"
-          [required]="true">
+          [required]="true"
+        >
         </p-calendar>
       </div>
     </div>
     <div class="field col-12 md:col-6">
       <label>Shift</label>
       <div>
-        <p-dropdown
-          [options]="time"
-          optionLabel="name"
-          optionValue="id">
+        <p-dropdown [options]="time" optionLabel="name" optionValue="id">
         </p-dropdown>
       </div>
     </div>
     <div class="field col-12 md:col-6">
       <label>City</label>
-      <input type="text"
-             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+      <input
+        type="text"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
     </div>
     <div class="field col-12 md:col-3">
       <label>State</label>
       <select
         class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
-        style="appearance: auto">
-
-      </select>
+        style="appearance: auto"
+      ></select>
     </div>
     <div class="field col-12 md:col-3">
       <label>Zip</label>
-      <input type="text"
-             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+      <input
+        type="text"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
     </div>
     <div class="field col-12">
       <label>Note</label>
-      <textarea type="text" rows="4"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+      <textarea
+        type="text"
+        rows="4"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      ></textarea>
     </div>
   </div>
   <ng-template pTemplate="footer">
