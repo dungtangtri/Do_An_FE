@@ -18,8 +18,11 @@
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
+            (onClose)="validateTime()"
+            [ngClass]="{'ng-dirty ng-invalid': !isValid}"
           >
           </p-calendar>
+          <div *ngIf="!isValid" class="error-validation-message">Start time must be smaller than end time! </div>
         </div>
         <div class="calendar-container">
           <p-calendar
@@ -32,9 +35,15 @@
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
+            (onClose)="validateTime()"
+            [ngClass]="{'ng-dirty ng-invalid': !isValid}"
           >
           </p-calendar>
+          <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
         </div>
+        <p-multiSelect [options]="role" [filter]="true" placeholder="User Role"
+                       optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.USER_ROLE.NAME"
+        ></p-multiSelect>
       </div>
       <div class="p-toolbar-group-right">
         <button
@@ -44,6 +53,7 @@
           pTooltip="Search"
           (click)="onSearch()"
           tooltipPosition="bottom"
+          [disabled]="!isValid"
           class="mr-2 cp-button"
         ></button>
         <button

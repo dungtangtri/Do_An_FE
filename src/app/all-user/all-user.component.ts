@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  ConfirmationService,
-  FilterMatchMode,
-  MessageService,
-  SelectItem,
-} from 'primeng/api';
-import { CONSTANTS } from '../board-user/utils/CONSTANTS';
-import { FormGroup } from '@angular/forms';
-import { AdminService } from '../admin-get-all-users-reservations/service/admin.service';
-import { Util } from '../util/util.class';
-import { BaseSearchForm } from '../shared/BaseSearchForm';
-import { AllUserInformationDto } from './models/all-user-information-dto';
+import {Component, OnInit} from '@angular/core';
+import {ConfirmationService, MessageService,} from 'primeng/api';
+import {CONSTANTS} from '../board-user/utils/CONSTANTS';
+import {FormGroup} from '@angular/forms';
+import {AdminService} from '../admin-get-all-users-reservations/service/admin.service';
+import {Util} from '../util/util.class';
+import {BaseSearchForm} from '../shared/BaseSearchForm';
+import {AllUserInformationDto} from './models/all-user-information-dto';
+import {UserSearchForm} from "./models/user-search-form";
 
 @Component({
   selector: 'app-board-moderator',
@@ -23,6 +19,7 @@ export class AllUserComponent implements OnInit {
   content: AllUserInformationDto[] = [];
   cols: any[] = [];
   formSearch: FormGroup;
+  isValid = true;
   constructor(
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
@@ -30,7 +27,7 @@ export class AllUserComponent implements OnInit {
   ) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
   }
-
+  role = [{id:'ROLE_ADMIN', name:'ROLE_ADMIN'},{id:'ROLE_STUDENT', name:'ROLE_STUDENT'},{id:'ROLE_TEACHER',name:'ROLE_TEACHER'}]
   ngOnInit(): void {
     this.getData();
     this.cols = [
@@ -44,7 +41,7 @@ export class AllUserComponent implements OnInit {
     ];
   }
   getData() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    const searchForm: UserSearchForm = Util.getDataFormSearch(this.formSearch);
     this.adminService.getAllUsersInformation(searchForm).subscribe({
       next: (data) => {
         this.content = data;
@@ -145,5 +142,13 @@ export class AllUserComponent implements OnInit {
   resetForm() {
     this.formSearch.reset();
     this.getData();
+    this.isValid = true;
+  }
+  validateTime() {
+    if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
+      this.isValid = true;
+    } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
+      this.isValid = false;
+    }
   }
 }

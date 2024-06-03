@@ -7,6 +7,7 @@ import { AllUserInformationDto } from '../../all-user/models/all-user-informatio
 import { SummaryReservationsByStatusDto } from '../../admin-dashboard/models/summary-reservations-by-status-dto';
 import { API } from '../../shared/API';
 import { UpdateReservationDetailForm } from '../models/update-reservation-detail-form';
+import {UserSearchForm} from "../../all-user/models/user-search-form";
 const API_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class AdminService {
       responseType: 'text',
     });
   }
-  getAllUsersInformation(searchForm: BaseSearchForm) {
+  getAllUsersInformation(searchForm: UserSearchForm) {
     return this.http.post<AllUserInformationDto[]>(
       API_URL + 'get-all-user',
       searchForm,

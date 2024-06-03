@@ -5,6 +5,7 @@ import { BaseSearchForm } from '../shared/BaseSearchForm';
 import { GetMyReservationsDto } from '../board-user/models/get-my-reservations-dto';
 import { ChangeStatusForm } from '../shared/ChangeStatusForm';
 import {API} from "../shared/API";
+import {PlaceReservationForm} from "../place-reservation/models/place-reservation-form";
 
 const API_URL = API.GENERAL_API;
 
@@ -32,6 +33,13 @@ export class UserService {
       API_URL + 'export-current-user-reservations',
       searchForm,
       { responseType: 'blob' },
+    );
+  }
+  placeReservation(searchForm: PlaceReservationForm){
+    return this.http.post(
+      API_URL + 'placeReservation',
+      searchForm,
+      { responseType: 'text' },
     );
   }
 }

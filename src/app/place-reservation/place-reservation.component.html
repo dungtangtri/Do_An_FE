@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-panel>
   <ng-template pTemplate="header"
     ><span
@@ -5,17 +6,20 @@
       >Place your Reservation</span
     >
   </ng-template>
+  <form [formGroup]="formSearch">
   <div class="formgrid grid">
     <div class="field col-12 md:col-6">
       <label>Reservation Date</label>
       <div class="w-full">
         <p-calendar
+          [formControlName]="SEARCH_FORM_CONTROL.DAY.NAME"
           view="date"
           placeholder="Choose Date"
           dateFormat="dd/mm/yy"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
           [showIcon]="true"
           selectionMode="single"
-          [showButtonBar]="true"
           [required]="true"
         >
         </p-calendar>
@@ -24,42 +28,54 @@
     <div class="field col-12 md:col-6">
       <label>Shift</label>
       <div>
-        <p-dropdown [options]="time" optionLabel="name" optionValue="id">
+        <p-dropdown [options]="time" optionLabel="name" optionValue="id" placeholder="Choose Shift"
+                    [formControlName]="SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true">
         </p-dropdown>
       </div>
     </div>
     <div class="field col-12 md:col-6">
-      <label>City</label>
-      <input
-        type="text"
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-      />
+      <label>Room</label>
+      <div>
+        <p-dropdown [options]="class" optionLabel="name" optionValue="id"
+                    placeholder="Choose Room" [required]="true"
+                    [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME">
+        </p-dropdown>
+      </div>
     </div>
-    <div class="field col-12 md:col-3">
-      <label>State</label>
-      <select
-        class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
-        style="appearance: auto"
-      ></select>
-    </div>
-    <div class="field col-12 md:col-3">
-      <label>Zip</label>
-      <input
-        type="text"
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-      />
-    </div>
+    <!--    <div class="field col-12 md:col-6">-->
+    <!--      <label>City</label>-->
+    <!--      <input-->
+    <!--        type="text"-->
+    <!--        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"-->
+    <!--      />-->
+    <!--    </div>-->
+    <!--    <div class="field col-12 md:col-3">-->
+    <!--      <label>State</label>-->
+    <!--      <select-->
+    <!--        class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"-->
+    <!--        style="appearance: auto"-->
+    <!--      ></select>-->
+    <!--    </div>-->
+    <!--    <div class="field col-12 md:col-3">-->
+    <!--      <label>Zip</label>-->
+    <!--      <input-->
+    <!--        type="text"-->
+    <!--        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"-->
+    <!--      />-->
+    <!--    </div>-->
     <div class="field col-12">
       <label>Note</label>
       <textarea
+        [formControlName]="SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME"
         type="text"
         rows="4"
         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
       ></textarea>
     </div>
   </div>
+  </form>
   <ng-template pTemplate="footer">
-    <p-button styleClass="cp-button">Button 1</p-button>
-    <p-button styleClass="cp-button">Button 2</p-button>
+    <p-button styleClass="cp-button" (onClick)="placeReservation()" type="submit"
+              label="Place Reservation"></p-button>
   </ng-template>
 </p-panel>

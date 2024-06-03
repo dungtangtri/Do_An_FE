@@ -14,28 +14,31 @@ export class CONSTANTS {
       NAME: 'status',
       VALUE: '',
       VALIDATORS: [],
-    }
-  };
-  static readonly UPDATE_RESERVATION_FORM_CONTROL_NAME = {
-    ID: {
-      NAME: 'id',
+    },
+    USER_ROLE: {
+      NAME: 'userRole',
       VALUE: '',
       VALIDATORS: [],
     },
-    STATUS: {
-      NAME: 'status',
+    USERNAME:{
+      NAME: 'username',
       VALUE: '',
       VALIDATORS: [],
-    }
+    },
+    ROOM_ID: {
+      NAME: 'roomId',
+      VALUE: '',
+      VALIDATORS: [],
+    },
+    RESERVATION_DATE: {
+      NAME: 'reservationDate',
+      VALUE: '',
+      VALIDATORS: [],
+    },
   };
   static readonly RESERVATION_FORM_CONTROL_NAME = {
-    DATE_OPTION: {
-      NAME: 'dateOption',
-      VALUE: '',
-      VALIDATORS: [],
-    },
-    STATUS: {
-      NAME: 'status',
+    DAY: {
+      NAME: 'day',
       VALUE: '',
       VALIDATORS: [],
     },
@@ -48,6 +51,11 @@ export class CONSTANTS {
       NAME: 'roomId',
       VALUE: '',
       VALIDATORS: [],
-    }
+    },
+    SHIFT_OPTION: {
+      NAME: 'shiftOption',
+      VALUE: '',
+      VALIDATORS: [],
+    },
   };
 }

@@ -1,30 +1,42 @@
 <div
   class="flex align-items-center justify-content-between flex-wrap content-header"
->
+  xmlns="http://www.w3.org/1999/html">
   <form
     [formGroup]="formSearch"
     class="flex flex-wrap filter panel-search w-full"
   >
     <p-toolbar>
-      <div class="p-toolbar-group-left">
+      <div class="p-toolbar-group-start">
+        <div class="calendar-container">
+          <p-calendar placeholder="Reservation Date" [showIcon]="true"
+                      [readonlyInput]="true"
+                      selectionMode="single"
+                      view="date"
+                      [formControlName]="SEARCH_FORM_CONTROL.RESERVATION_DATE.NAME"
+                      dateFormat="dd/mm/yy"
+          ></p-calendar>
+        </div>
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME"
             dateFormat="dd/mm/yy"
-            placeholder="Start Date"
+            placeholder="Create time start date"
             [showTime]="true"
             [showSeconds]="true"
             [showIcon]="true"
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
+            (onClose)="validateTime()"
+            [ngClass]="{'ng-dirty ng-invalid': !isValid}"
           >
           </p-calendar>
+          <div *ngIf="!isValid" class="error-validation-message">Start time must be smaller than end time! </div>
         </div>
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
-            placeholder="End Date"
+            placeholder="Create time end date"
             dateFormat="dd/mm/yy"
             [showIcon]="true"
             [showTime]="true"
@@ -32,23 +44,31 @@
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
+            (onClose)="validateTime()"
+            [ngClass]="{'ng-dirty ng-invalid': !isValid}"
           >
           </p-calendar>
+          <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
         </div>
-      </div>
-      <p-multiSelect [options]="status" [filter]="true" placeholder="Status"
+        <input pInputText placeholder="Username" [formControlName]="SEARCH_FORM_CONTROL.USERNAME.NAME" class="mr-2">
+        <p-multiSelect [options]="status" [filter]="true" placeholder="Status"
                      optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.STATUS.NAME"
-                    ></p-multiSelect>
+                       class="mr-2"
+        ></p-multiSelect>
+        <p-dropdown [options]="class" optionLabel="name" optionValue="id"
+                    placeholder="Room ID"
+                    [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME">
+        </p-dropdown>
         <button
           pButton
           type="button"
           label="Search"
           pTooltip="Search"
+          [disabled]="!isValid"
           (click)="onSearch()"
           tooltipPosition="bottom"
-          class="mr-2 cp-button"
+          class="cp-button mr-2 ml-2"
         ></button>
-      <div class="p-toolbar-group-right">
         <button
           pButton
           type="button"
@@ -59,10 +79,13 @@
           class="mr-2 cp-button"
           (click)="resetForm()"
         ></button>
+      </div>
+      <div class="p-toolbar-group-end">
         <button
           pButton
           type="button"
           icon="pi pi-file-export"
+          [disabled]="!isValid"
           pTooltip="Export Excel"
           label="Export Excel"
           tooltipPosition="bottom"
@@ -81,7 +104,7 @@
 </div>
 <div>
   <p-toast></p-toast>
-  <p-table [responsive]="true"
+  <p-table
     [autoLayout]="true"
     [columns]="cols"
     [value]="content"
@@ -98,7 +121,7 @@
         <th *ngFor="let col of columns"><strong>{{ col.header }}</strong></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-data let-index="rowIndex">
+    <ng-template pTemplate="body" let-data let-index="rowIndex" class="align-content-center">
       <tr>
         <td>{{ index + 1 }}</td>
         <td>{{data.reservation_id}}</td>

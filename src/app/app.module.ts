@@ -48,6 +48,7 @@ import { DemoUtilsModule } from './demo-utils/module';
 import {MultiSelectModule} from "primeng/multiselect";
 import {PasswordModule} from "primeng/password";
 import {BadgeModule} from "primeng/badge";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import {BadgeModule} from "primeng/badge";
     MultiSelectModule,
     PasswordModule,
     BadgeModule,
+    NgOptimizedImage,
 
   ],
   providers: [httpInterceptorProviders,ConfirmationService],

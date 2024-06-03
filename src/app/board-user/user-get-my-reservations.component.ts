@@ -25,11 +25,9 @@ export class UserGetMyReservationsComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   activeDayIsOpen: boolean = true;
   viewDate: Date = new Date();
-  startTime: any;
-  endTime: any;
   isValid = true;
   events: CalendarEvent[] = [];
-
+  status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
   changeDay(date: Date) {
     this.viewDate = date;
     this.view = CalendarView.Day;
@@ -58,6 +56,14 @@ export class UserGetMyReservationsComponent implements OnInit {
       { field: 'action', header: 'Action' },
     ];
   }
+  // TODO: tạo api lấy danh sách phoòng học
+  class: any =
+    [
+      {id: 101, name: 'D8-101'},
+      {id: 102, name: 'D8-102'},
+      {id: 103, name: 'D8-103'},
+      {id: 104, name: 'D8-104'}
+    ]
   getData() {
     const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
     this.userService.getMyReservation(searchForm).subscribe({
@@ -169,14 +175,15 @@ export class UserGetMyReservationsComponent implements OnInit {
   resetForm() {
     this.formSearch.reset();
     this.getData();
+    this.isValid = true;
   }
 
   validateTime() {
-    if (this.startTime < this.endTime) {
-      this.isValid = true;
-    } else {
-      this.isValid = false;
-    }
+      if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
+        this.isValid = true;
+      } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
+        this.isValid = false;
+      }
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {

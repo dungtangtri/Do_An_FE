@@ -5,14 +5,15 @@
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
-body {
+
+body{
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .container {
   width: 100%; /* Set the width as needed, e.g., 80% of the parent container */
- max-width: 1700px/* Optionally set a maximum width */
+ max-width: 1800px/* Optionally set a maximum width */
 }
 .chart-title {
   display: flex;
@@ -24,7 +25,9 @@ body {
   font-weight: 600;
   margin-bottom: 8px;
 }
-
+.p-datatable .p-datatable-tbody > tr > td{
+  text-align: center;
+}
 p-treetable,
 p-table {
   &.p-treetable,
@@ -371,7 +374,7 @@ input::placeholder {
 
   &:focus,
   &:hover {
-    background-color: #0486fb !important;
+    background-color: #43a8f8 !important;
   }
 
   .pi {
@@ -681,9 +684,6 @@ input::placeholder {
 .p-multiselect-label-container{
   max-width: 100px;
 }
-.p-toolbar-group-right {
-  margin-left: 50px; /* Moves the button group to the right side of the toolbar */
-}
 .p-dropdown-panel {
   transform: translateY(4px);
   box-shadow: $shadow-1;
@@ -900,3 +900,4 @@ div.p-multiselect-panel,
     }
   }
 }
+

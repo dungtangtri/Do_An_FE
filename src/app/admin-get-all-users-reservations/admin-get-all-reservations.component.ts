@@ -9,6 +9,7 @@ import {FormGroup} from '@angular/forms';
 import {UpdateReservationDetailForm} from "./models/update-reservation-detail-form";
 import {CalendarEvent, CalendarView} from "angular-calendar";
 import {isSameDay, isSameMonth,} from 'date-fns';
+import {GetAllReservationSearchForm} from "./models/get-all-reservation-search-form";
 
 @Component({
   selector: 'app-admin-get-all-users-reservations',
@@ -72,8 +73,16 @@ export class AdminGetAllReservationsComponent implements OnInit {
       { field: 'action', header: 'Action' },
     ];
   }
+  // TODO: tạo api lấy danh sách phoòng học
+  class: any =
+    [
+      {id: 101, name: 'D8-101'},
+      {id: 102, name: 'D8-102'},
+      {id: 103, name: 'D8-103'},
+      {id: 104, name: 'D8-104'}
+    ]
   getData() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    const searchForm: GetAllReservationSearchForm = Util.getDataFormSearch(this.formSearch);
     this.adminService.getAllReservations(searchForm).subscribe({
       next: (data) => {
         this.content = data;
@@ -145,7 +154,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
     });
   }
   acceptExport() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    const searchForm: GetAllReservationSearchForm = Util.getDataFormSearch(this.formSearch);
     this.adminService.exportGetAllReservations(searchForm).subscribe({
       next: (res) => {
         if (res) {
@@ -201,10 +210,10 @@ export class AdminGetAllReservationsComponent implements OnInit {
         },
       });
   }
-  validateTime(){
-    if(this.startTime < this.endTime){
+  validateTime() {
+    if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
       this.isValid = true;
-    }else{
+    } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
       this.isValid = false;
     }
   }
