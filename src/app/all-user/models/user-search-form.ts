@@ -1,5 +1,8 @@
 import {BaseSearchForm} from "../../shared/BaseSearchForm";
 
 export interface UserSearchForm extends BaseSearchForm{
-  userRole: string[];
+  status: string[];
+  roomId: number;
+  reservationDate: number;
+  username: string;
 }

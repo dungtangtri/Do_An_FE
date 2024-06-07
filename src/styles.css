@@ -682,7 +682,7 @@ input::placeholder {
   margin-right: 10px; /* Adjust the margin as needed to separate the calendars */
 }
 .p-multiselect-label-container{
-  max-width: 100px;
+  max-width: 80px;
 }
 .p-dropdown-panel {
   transform: translateY(4px);

@@ -3,7 +3,7 @@
   xmlns="http://www.w3.org/1999/html">
   <form
     [formGroup]="formSearch"
-    class="flex flex-wrap filter panel-search w-full"
+    class="flex flex-wrap filter panel-search w-full "
   >
     <p-toolbar>
       <div class="p-toolbar-group-start">
@@ -20,7 +20,7 @@
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME"
             dateFormat="dd/mm/yy"
-            placeholder="Create time start date"
+            placeholder="Create Time Start Date"
             [showTime]="true"
             [showSeconds]="true"
             [showIcon]="true"
@@ -36,7 +36,7 @@
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
-            placeholder="Create time end date"
+            placeholder="Create Time End Date"
             dateFormat="dd/mm/yy"
             [showIcon]="true"
             [showTime]="true"
@@ -102,6 +102,11 @@
     </p-toolbar>
   </form>
 </div>
+<div class="flex flex-wrap justify-content-end">
+      <button pButton label="Multiple Approve" class="cp-button" icon="pi pi-check-square" [disabled]="selectedIds.length === 0" (click)="approveMultipleReservation()">
+
+      </button>
+</div>
 <div>
   <p-toast></p-toast>
   <p-table
@@ -123,6 +128,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-data let-index="rowIndex" class="align-content-center">
       <tr>
+        <td>
+          <p-checkbox [binary]="true" inputId="reservation_id" [ngModel]="selectedIds" (onChange)="checked($event, data)" [disabled]="data.status === '1' || data.status === '2' ">
+
+          </p-checkbox>
+        </td>
         <td>{{ index + 1 }}</td>
         <td>{{data.reservation_id}}</td>
         <td>{{data.username}}</td>
@@ -189,7 +199,7 @@
     <form class="formgrid grid">
       <div class="col-6">
         <div class="form-group">
-          <label>Reservation Start Time</label>
+          <label class="font-bold text-xl">Reservation Start Time</label>
           <p-calendar
             placeholder="Start Date"
             dateFormat="dd/mm/yy"
@@ -210,13 +220,13 @@
           <div *ngIf="!isValid" class="error-validation-message">Start time must be smaller than end time! </div>
         </div>
         <div class="form-group">
-          <label>Room ID</label>
+          <label class="font-bold text-xl">Room ID</label>
           <div>
           <input pInputText  [(ngModel)]="roomId" [ngModelOptions]="{standalone: true}" required>
           </div>
         </div>
         <div class="form-group">
-          <label>Reservation ID</label>
+          <label class="font-bold text-xl">Reservation ID</label>
           <div>
           <input pInputText [readOnly]="true" [disabled]="true" [ngModel]="reservation_id" [ngModelOptions]="{standalone: true}" readonly>
           </div>
@@ -224,7 +234,7 @@
       </div>
       <div class="col-6">
         <div class="form-group">
-          <label>Reservation End Time</label>
+          <label class="font-bold text-xl">Reservation End Time</label>
           <p-calendar
             placeholder="End Date"
             dateFormat="dd/mm/yy"
@@ -244,7 +254,7 @@
           <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
         </div>
         <div>
-          <label>Status</label>
+          <label class="font-bold text-xl">Status</label>
           <p-dropdown [options]="status"
                       [(ngModel)]="currentStatus" [ngModelOptions]="{standalone: true}"
                       [style]="{width: '100%'}"
@@ -257,7 +267,7 @@
         </div>
       </div>
       <div class="col-12 field">
-        <label>Description</label>
+        <label class="font-bold text-xl">Description</label>
         <div>
           <textarea id="address" type="text" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" readonly disabled rows="4" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>

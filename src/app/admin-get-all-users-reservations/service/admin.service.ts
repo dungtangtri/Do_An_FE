@@ -8,6 +8,8 @@ import { SummaryReservationsByStatusDto } from '../../admin-dashboard/models/sum
 import { API } from '../../shared/API';
 import { UpdateReservationDetailForm } from '../models/update-reservation-detail-form';
 import {UserSearchForm} from "../../all-user/models/user-search-form";
+import {UserRegisterForm} from "../../all-user/models/user-register-form";
+import {UpdateUserInformationDto} from "../../all-user/models/update-user-information-dto";
 const API_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root',
@@ -38,7 +40,7 @@ export class AdminService {
       { responseType: 'blob' },
     );
   }
-  exportAllUserInformation(searchForm: BaseSearchForm) {
+  exportAllUserInformation(searchForm: UserSearchForm) {
     return this.http.post(API_URL + 'export-all-user-information', searchForm, {
       responseType: 'blob',
     });
@@ -58,5 +60,25 @@ export class AdminService {
     return this.http.post(API_URL + 'update-reservation-detail', form, {
       responseType: 'text',
     });
+  }
+  approveMultipleReservation(ids: number[]){
+    return this.http.post(API_URL + 'multiple-approve' , ids , {
+      responseType: 'text'
+    })
+  }
+  registerAdmin(form : UserRegisterForm): Observable<any>{
+    return this.http.post(
+      API.AUTH_API + 'signup',
+      form,
+    );
+  }
+  updateUserInformation(form: UpdateUserInformationDto){
+    return this.http.post(
+      API_URL + 'edit-user',
+      form,
+      {
+        responseType: 'text'
+      }
+    )
   }
 }

@@ -6,6 +6,7 @@ import { GetMyReservationsDto } from '../board-user/models/get-my-reservations-d
 import { ChangeStatusForm } from '../shared/ChangeStatusForm';
 import {API} from "../shared/API";
 import {PlaceReservationForm} from "../place-reservation/models/place-reservation-form";
+import {UserSearchForm} from "../all-user/models/user-search-form";
 
 const API_URL = API.GENERAL_API;
 
@@ -15,7 +16,7 @@ const API_URL = API.GENERAL_API;
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getMyReservation(searchForm: BaseSearchForm) {
+  getMyReservation(searchForm: UserSearchForm) {
     return this.http.post<GetMyReservationsDto[]>(
       API_URL + 'get_user_profile',
       searchForm,
@@ -28,7 +29,7 @@ export class UserService {
       { responseType: 'text' },
     );
   }
-  exportGetCurrentUserReservations(searchForm: BaseSearchForm) {
+  exportGetCurrentUserReservations(searchForm: UserSearchForm) {
     return this.http.post(
       API_URL + 'export-current-user-reservations',
       searchForm,

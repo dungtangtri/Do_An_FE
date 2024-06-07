@@ -5,10 +5,10 @@ import {GetMyReservationsDto} from './models/get-my-reservations-dto';
 import {FormGroup} from '@angular/forms';
 import {CONSTANTS} from './utils/CONSTANTS';
 import {Util} from '../util/util.class';
-import {BaseSearchForm} from '../shared/BaseSearchForm';
 import {ChangeStatusForm} from '../shared/ChangeStatusForm';
 import {CalendarEvent, CalendarView} from "angular-calendar";
 import {isSameDay, isSameMonth} from "date-fns";
+import {UserSearchForm} from "../all-user/models/user-search-form";
 
 @Component({
   selector: 'app-board-user',
@@ -28,6 +28,7 @@ export class UserGetMyReservationsComponent implements OnInit {
   isValid = true;
   events: CalendarEvent[] = [];
   status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
+  invalidCancel = false;
   changeDay(date: Date) {
     this.viewDate = date;
     this.view = CalendarView.Day;
@@ -65,7 +66,7 @@ export class UserGetMyReservationsComponent implements OnInit {
       {id: 104, name: 'D8-104'}
     ]
   getData() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    const searchForm: UserSearchForm = Util.getDataFormSearch(this.formSearch);
     this.userService.getMyReservation(searchForm).subscribe({
       next: (data) => {
         this.content = data;
@@ -97,15 +98,22 @@ export class UserGetMyReservationsComponent implements OnInit {
   }
 
   changeStatusReservation(data: GetMyReservationsDto) {
-    this.confirmationService.confirm({
-      message:
-        'Are you sure that you want to cancel this reservation? This can not be undone.',
-      header: 'Cancel Reservation',
-      icon: 'pi pi-exclamation-circle color-red',
-      accept: () => {
-        this.acceptChangeStatusReservation(data);
-      },
-    });
+    let currentDate = new Date();
+    let thirtyMinutesAgo = new Date(currentDate.getTime() - (30 * 60000));
+
+    if (thirtyMinutesAgo < new Date(data.reservation_start_time)) {
+      this.confirmationService.confirm({
+        message:
+          'Are you sure that you want to cancel this reservation? This can not be undone.',
+        header: 'Cancel Reservation',
+        icon: 'pi pi-exclamation-circle color-red',
+        accept: () => {
+          this.acceptChangeStatusReservation(data);
+        },
+      });
+    } else {
+      this.invalidCancel = true;
+    }
   }
   // TODO: Thay icon xóa thành đổi trạng thái cho người dùng
   acceptChangeStatusReservation(data: GetMyReservationsDto) {
@@ -143,7 +151,7 @@ export class UserGetMyReservationsComponent implements OnInit {
     });
   }
   acceptExport() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    const searchForm: UserSearchForm = Util.getDataFormSearch(this.formSearch);
     this.userService.exportGetCurrentUserReservations(searchForm).subscribe({
       next: (res) => {
         if (res) {

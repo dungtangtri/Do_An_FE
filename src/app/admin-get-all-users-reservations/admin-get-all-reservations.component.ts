@@ -36,6 +36,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   isVisibleCalendar = false;
   isVisibleEdit = false;
   isValid = true;
+  selectedIds: number[] = [];
   view: CalendarView = CalendarView.Month;
   activeDayIsOpen: boolean = true;
   viewDate: Date = new Date();
@@ -60,6 +61,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   ngOnInit(): void {
     this.getData();
     this.cols = [
+      { field: 'select', header: 'Select'},
       { field: 'no', header: 'No' },
       { field: 'reservation_id', header: 'Reservation ID' },
       { field: 'username', header: 'Username' },
@@ -258,4 +260,50 @@ export class AdminGetAllReservationsComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+  checked(event: any, data: GetAllUserWithReservationDto ): void {
+    if (event.checked) {
+      // Add reservation_id to the selectedIds array if checked
+      if (!this.selectedIds.includes(data.reservation_id)) {
+        this.selectedIds.push(data.reservation_id);
+      }
+    } else {
+      // Remove reservation_id from the selectedIds array if unchecked
+      const index = this.selectedIds.indexOf(data.reservation_id);
+      if (index > -1) {
+        this.selectedIds.splice(index, 1);
+      }
+    }
+  }
+  approveMultipleReservation(){
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to approve multiple reservations?',
+      header: 'Approve Multiple Reservations',
+      icon: 'pi pi-exclamation-circle color-red',
+      accept: () => {
+        this.acceptApproveMultipleReservation();
+      },
+    });
+  }
+  acceptApproveMultipleReservation(){
+    this.adminService.approveMultipleReservation(this.selectedIds).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successfully approve reservations.',
+        });
+        this.getData();
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error approving reservations',
+          detail:
+            'Error approving reservations, please try again later.',
+        });
+      },
+    });
+  }
+
 }

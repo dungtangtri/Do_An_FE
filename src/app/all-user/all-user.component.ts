@@ -4,9 +4,11 @@ import {CONSTANTS} from '../board-user/utils/CONSTANTS';
 import {FormGroup} from '@angular/forms';
 import {AdminService} from '../admin-get-all-users-reservations/service/admin.service';
 import {Util} from '../util/util.class';
-import {BaseSearchForm} from '../shared/BaseSearchForm';
 import {AllUserInformationDto} from './models/all-user-information-dto';
 import {UserSearchForm} from "./models/user-search-form";
+import {UserRegisterForm} from "./models/user-register-form";
+import {UpdateReservationDetailForm} from "../admin-get-all-users-reservations/models/update-reservation-detail-form";
+import {UpdateUserInformationDto} from "./models/update-user-information-dto";
 
 @Component({
   selector: 'app-board-moderator',
@@ -16,16 +18,32 @@ import {UserSearchForm} from "./models/user-search-form";
 })
 export class AllUserComponent implements OnInit {
   readonly SEARCH_FORM_CONTROL = CONSTANTS.SEARCH_FORM_CONTROL_NAME;
+  readonly REGISTRATION_FORM_CONTROL = CONSTANTS.REGISTRATION_FORM_CONTROL_NAME;
   content: AllUserInformationDto[] = [];
   cols: any[] = [];
   formSearch: FormGroup;
-  isValid = true;
+  formRegister: FormGroup;
+  isValidSearchForm = true;
+  isAddNewUser = false;
+  isValidAddUserForm = true;
+  isMatchPassword = true;
+  isVisibleEditUser = false;
+  currentUsername: any;
+  currentEmail: any;
+  newPassword: any;
+  currentUserRole: any;
+  currentUserId: any;
+  confirmPassword:any;
+  confirmPasswordError: boolean = false;
+  isConfirm = false;
+  blockSpace: RegExp = /[^\s]/;
   constructor(
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
   ) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
+    this.formRegister = Util.createFormGroup(CONSTANTS.REGISTRATION_FORM_CONTROL_NAME);
   }
   role = [{id:'ROLE_ADMIN', name:'ROLE_ADMIN'},{id:'ROLE_STUDENT', name:'ROLE_STUDENT'},{id:'ROLE_TEACHER',name:'ROLE_TEACHER'}]
   ngOnInit(): void {
@@ -110,7 +128,7 @@ export class AllUserComponent implements OnInit {
   }
 
   acceptExport() {
-    const searchForm: BaseSearchForm = Util.getDataFormSearch(this.formSearch);
+    const searchForm: UserSearchForm = Util.getDataFormSearch(this.formSearch);
     this.adminService.exportAllUserInformation(searchForm).subscribe({
       next: (res) => {
         if (res) {
@@ -119,13 +137,6 @@ export class AllUserComponent implements OnInit {
             severity: 'success',
             summary: 'Successfully export data',
             detail: 'Successfully export data from the server.',
-          });
-        } else {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error export data',
-            detail:
-              'Error exporting data from the server, please try again later.',
           });
         }
       },
@@ -142,13 +153,91 @@ export class AllUserComponent implements OnInit {
   resetForm() {
     this.formSearch.reset();
     this.getData();
-    this.isValid = true;
+    this.isValidSearchForm = true;
   }
   validateTime() {
     if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
-      this.isValid = true;
+      this.isValidSearchForm = true;
     } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
-      this.isValid = false;
+      this.isValidSearchForm = false;
     }
+  }
+
+  validatePassword() {
+    if (this.formRegister.get('password')?.value === this.formRegister.get('confirmPassword')?.value) {
+      this.isMatchPassword = true;
+      this.isValidAddUserForm = true;
+    } else if (this.formRegister.get('password')?.value !== this.formRegister.get('confirmPassword')?.value) {
+      this.isMatchPassword = false;
+      this.isValidAddUserForm = false;
+    }
+  }
+
+  submitForm() {
+    const registerForm: UserRegisterForm = Util.getDataFormSearch(this.formRegister);
+    this.adminService.registerAdmin(registerForm).subscribe({
+      next: (data) => {
+        this.formRegister.reset();
+        this.isAddNewUser = false;
+        this.getData()
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successfully Sign Up ',
+        });
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+        });
+      },
+    });
+  }
+
+  editUser(data: AllUserInformationDto) {
+    this.isVisibleEditUser = true;
+    this.updateUserData(data)
+  }
+
+  updateUserData(data: AllUserInformationDto) {
+    this.currentUserId = data.user_id;
+    this.currentUserRole = data.user_role;
+    this.currentEmail = data.email;
+    this.currentUsername = data.username;
+  }
+  updateUser(){
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to update this user information?',
+      header: 'Update Reservation',
+      icon: 'pi pi-exclamation-circle color-red',
+      accept: () => {
+        this.acceptUpdateUser();
+      },
+    });
+  }
+  validatePasswordEditUser() {
+    this.confirmPasswordError = this.newPassword !== this.confirmPassword;
+  }
+  acceptUpdateUser(){
+    let updateForm: UpdateUserInformationDto = {username:this.currentUsername, password: this.newPassword, role:this.currentUserRole};
+    this.adminService.updateUserInformation(updateForm).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.isVisibleEditUser = false;
+        this.isConfirm = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successfully updating user information',
+        });
+        this.getData();
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error updating user information',
+        });
+      },
+    });
   }
 }

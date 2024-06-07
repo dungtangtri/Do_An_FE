@@ -19,10 +19,11 @@
             selectionMode="single"
             view="date"
             (onClose)="validateTime()"
-            [ngClass]="{'ng-dirty ng-invalid': !isValid}"
+            [ngClass]="{'ng-dirty ng-invalid': !isValidSearchForm}"
           >
           </p-calendar>
-          <div *ngIf="!isValid" class="error-validation-message">Start time must be smaller than end time! </div>
+          <div *ngIf="!isValidSearchForm" class="error-validation-message">Start time must be smaller than end time!
+          </div>
         </div>
         <div class="calendar-container">
           <p-calendar
@@ -36,11 +37,13 @@
             selectionMode="single"
             view="date"
             (onClose)="validateTime()"
-            [ngClass]="{'ng-dirty ng-invalid': !isValid}"
+            [ngClass]="{'ng-dirty ng-invalid': !isValidSearchForm}"
           >
           </p-calendar>
-          <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
+          <div *ngIf="!isValidSearchForm" class="error-validation-message">End time must be greater than start time!
+          </div>
         </div>
+        <input pInputText placeholder="Username" [formControlName]="SEARCH_FORM_CONTROL.USERNAME.NAME" class="mr-2">
         <p-multiSelect [options]="role" [filter]="true" placeholder="User Role"
                        optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.USER_ROLE.NAME"
         ></p-multiSelect>
@@ -53,7 +56,7 @@
           pTooltip="Search"
           (click)="onSearch()"
           tooltipPosition="bottom"
-          [disabled]="!isValid"
+          [disabled]="!isValidSearchForm"
           class="mr-2 cp-button"
         ></button>
         <button
@@ -80,7 +83,11 @@
     </p-toolbar>
   </form>
 </div>
+<div class="flex flex-wrap justify-content-end">
+  <button pButton label="Create User" class="cp-button" icon="pi pi-user-plus" (click)="this.isAddNewUser = true">
 
+  </button>
+</div>
 <div>
   <p-toast></p-toast>
   <p-table
@@ -130,6 +137,24 @@
             pTooltip="Delete User"
             class="cp-button"
           ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            *ngIf="data.user_role !== 'ROLE_ADMIN'"
+            class="cp-button"
+            pTooltip="Edit User"
+            (click)="editUser(data)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            *ngIf="data.user_role === 'ROLE_ADMIN'"
+            pTooltip="You can't edit Admin Users"
+            [disabled]="true"
+            class="cp-button"
+          ></button>
         </td>
       </tr>
     </ng-template>
@@ -138,10 +163,187 @@
         <td colspan="11">
           <div class="flex flex-column empty">
             <p-image src="assets/images/Empty.png" alt="empty"></p-image>
-            <span> Không có dữ liệu </span>
+            <span> No data </span>
           </div>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+<p-dialog
+  styleClass="cp-dialog"
+  header="Add new User"
+  [modal]="true"
+  [(visible)]="isAddNewUser"
+  (onHide)="isAddNewUser = false"
+  [style]="{width: '800px', height: '600px'}">
+  <form [formGroup]="formRegister">
+    <div class="grid p-fluid">
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Username</label>
+        <div>
+          <input pInputText placeholder="Username" required [formControlName]="REGISTRATION_FORM_CONTROL.USERNAME.NAME">
+          <div *ngIf="formRegister.get('username')?.touched && formRegister.get('username')?.invalid">
+            <small class="p-error" *ngIf="formRegister.get('username')?.errors?.['required']">Username is
+              required.</small>
+            <small class="p-error" *ngIf="formRegister.get('username')?.errors?.['minlength']">Username must be at least
+              3 characters long.</small>
+            <small class="p-error" *ngIf="formRegister.get('username')?.errors?.['maxlength']">Username cannot be more
+              than 20 characters long.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">User Role</label>
+        <div>
+          <p-dropdown [options]="role" optionValue="id" optionLabel="name" placeholder="User Role"
+                      [required]="true" [formControlName]="REGISTRATION_FORM_CONTROL.ROLE.NAME"></p-dropdown>
+          <div *ngIf="formRegister.get('role')?.touched && formRegister.get('role')?.invalid">
+            <small class="p-error" *ngIf="formRegister.get('role')?.errors?.['required']">User role is required.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Password</label>
+        <div>
+          <input pInputText type="password" placeholder="Password" required
+                 [formControlName]="REGISTRATION_FORM_CONTROL.PASSWORD.NAME" (change)="validatePassword()">
+          <div *ngIf="formRegister.get('password')?.touched && formRegister.get('password')?.invalid">
+            <small class="p-error" *ngIf="formRegister.get('password')?.errors?.['required']">Password is
+              required.</small>
+            <small class="p-error" *ngIf="formRegister.get('password')?.errors?.['minlength']">Password must be at least
+              5 characters long.</small>
+            <small class="p-error" *ngIf="formRegister.get('password')?.errors?.['maxlength']">Password cannot be more
+              than 40 characters long.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Email Address</label>
+        <div>
+          <input pInputText type="email" placeholder="Email Address" required
+                 [formControlName]="REGISTRATION_FORM_CONTROL.EMAIL.NAME">
+          <div *ngIf="formRegister.get('email')?.touched && formRegister.get('email')?.invalid">
+            <small class="p-error" *ngIf="formRegister.get('email')?.errors?.['required']">Email address is
+              required.</small>
+            <small class="p-error" *ngIf="formRegister.get('email')?.errors?.['email']">Invalid email address.</small>
+            <small class="p-error" *ngIf="formRegister.get('email')?.errors?.['maxlength']">Email address cannot be more
+              than 50 characters long.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Re-enter Password</label>
+        <div>
+          <input pInputText type="password" placeholder="Re-enter Password" required
+                 [formControlName]="REGISTRATION_FORM_CONTROL.CONFIRM_PASSWORD.NAME" (change)="validatePassword()">
+          <small class="p-error" *ngIf="!isMatchPassword">Passwords do not match.</small>
+          <div *ngIf="formRegister.get('confirmPassword')?.touched && formRegister.get('confirmPassword')?.invalid">
+            <small class="p-error" *ngIf="formRegister.get('confirmPassword')?.errors?.['required']">Re-entering the
+              password is required.</small>
+            <small class="p-error" *ngIf="formRegister.get('confirmPassword')?.errors?.['minlength']">Password must be
+              at least 5 characters long.</small>
+            <small class="p-error" *ngIf="formRegister.get('confirmPassword')?.errors?.['maxlength']">Password cannot be
+              more than 40 characters long.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Save"
+      (onClick)="submitForm()"
+      [disabled]="!isValidAddUserForm || formRegister.invalid"
+      styleClass="cp-button">
+    </p-button>
+    <p-button (click)="isAddNewUser = false"
+              label="Cancel"
+              styleClass="cp-button">
+    </p-button>
+  </ng-template>
+</p-dialog>
+<p-dialog
+  styleClass="cp-dialog"
+  header="Edit User"
+  [modal]="true"
+  [(visible)]="isVisibleEditUser"
+  (onHide)="isVisibleEditUser = false"
+  [style]="{width: '850px', height: '600px'}">
+  <ng-template pTemplate="body">
+    <div>
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.5rem"></span>
+      <small class="font-bold underline">You can only edit user role and change user password.</small>
+    </div>
+    <div>
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.5rem"></span>
+      <small class="font-bold underline">You can leave the new password field and confirm new password field empty if you don't want to change user's password.</small>
+    </div>
+    <div class="grid p-fluid">
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Username</label>
+        <div>
+          <input pInputText placeholder="Username" required disabled [ngModel]="currentUsername">
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">User Role</label>
+        <div>
+          <p-dropdown [options]="role" optionValue="id" optionLabel="name" placeholder="User Role"
+                      [required]="true" [(ngModel)]="currentUserRole"></p-dropdown>
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">New Password</label>
+        <div>
+          <input pInputText type="password" placeholder="New Password" [(ngModel)]="newPassword" [pKeyFilter]="blockSpace"
+                 #newPasswordField="ngModel" minlength="5" maxlength="40" (change)="validatePasswordEditUser() ">
+        </div>
+        <div *ngIf="newPasswordField.touched && newPasswordField.invalid">
+          <small class="p-error" *ngIf="newPasswordField.errors?.['minlength']">
+            New Password must be at least 5 characters long.
+          </small>
+          <small class="p-error" *ngIf="newPasswordField.errors?.['maxlength']">
+            New Password cannot be more than 40 characters long.
+          </small>
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Email Address</label>
+        <div>
+          <input pInputText type="email" placeholder="Email Address" required [disabled]="true"
+                 [ngModel]="currentEmail">
+        </div>
+      </div>
+      <div class="col-6 field">
+        <label class="font-bold text-xl">Re-enter New Password</label>
+        <div>
+          <input pInputText type="password" placeholder="Re-enter New Password" [(ngModel)]="confirmPassword" [pKeyFilter]="blockSpace"
+                 #confirmPasswordField="ngModel" (change)="validatePasswordEditUser()">
+        </div>
+        <div *ngIf="confirmPasswordField.touched && confirmPasswordField.invalid || confirmPasswordError">
+          <div>
+            <small class="p-error" *ngIf="confirmPasswordField.errors?.['required']">
+              Re-enter New Password is required.
+            </small>
+          </div>
+          <div>
+            <small class="p-error" *ngIf="confirmPasswordError">
+              Passwords do not match.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row-reverse">
+      <button pButton class="cp-button" label="Confirm Editing"
+              [disabled]="newPasswordField.invalid || confirmPasswordField.invalid || confirmPasswordError"
+              (click)="updateUser()"></button>
+      <button (click)="isVisibleEditUser = false"
+              label="Cancel"
+              pButton
+              class="cp-button">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
