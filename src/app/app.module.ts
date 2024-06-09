@@ -51,6 +51,7 @@ import {BadgeModule} from "primeng/badge";
 import {NgOptimizedImage} from "@angular/common";
 import {TriStateCheckboxModule} from "primeng/tristatecheckbox";
 import {KeyFilterModule} from "primeng/keyfilter";
+import {CardModule} from "primeng/card";
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import {KeyFilterModule} from "primeng/keyfilter";
         NgOptimizedImage,
         TriStateCheckboxModule,
         KeyFilterModule,
+        CardModule,
 
     ],
   providers: [httpInterceptorProviders,ConfirmationService],

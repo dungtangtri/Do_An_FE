@@ -1,52 +1,35 @@
 <p-toast></p-toast>
-<div class="flex align-items-center justify-content-between flex-wrap content-header">
-  <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
-    <p-toolbar>
-      <div class="p-toolbar-group-left">
-        <div class="calendar-container">
-          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd/mm/yy" placeholder="Start Date"
-                      [showTime]="true"
-                      [showSeconds]="true"
-                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
-          </p-calendar>
-        </div>
-        <div class="calendar-container">
-          <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date"
-                      dateFormat="dd/mm/yy"
-                      [showTime]="true"
-                      [showSeconds]="true"
-                      [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
-          </p-calendar>
-        </div>
-      </div>
-      <div class="p-toolbar-group-right">
-        <button pButton type="button" label="Search" pTooltip="Search"
-                 tooltipPosition="bottom"
-                class="mr-2 cp-button"></button>
-        <button pButton type="button" icon="pi pi-sync" label="Reset Form" tooltipPosition="bottom"
-                pTooltip="Reset Form" class="mr-2 cp-button" (click)="resetForm()"></button>
-        <button pButton type="button" icon="pi pi-file-export"  pTooltip="Export Excel"
-                label="Export Excel" tooltipPosition="bottom" class="cp-button"
-                ></button>
-      </div>
-    </p-toolbar>
-  </form>
-</div>
 <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
   <div class="grid">
     <div class="col-12 md:col-6 lg:col-3">
       <div class="surface-card shadow-2 p-3 border-round">
         <div class="flex justify-content-between mb-3">
           <div>
-            <span class="block text-500 font-medium mb-3">Reservations</span>
-            <div class="text-900 font-medium text-xl">152</div>
+            <span class="block text-500 font-medium mb-3">Total Reservations</span>
+            <div class="text-900 font-medium text-xl">{{ totalReservation }}</div>
           </div>
           <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width:2.5rem;height:2.5rem">
             <i class="pi pi-book text-blue-500 text-xl"></i>
           </div>
         </div>
-        <span class="text-green-500 font-medium">24 new </span>
-        <span class="text-500">since last visit</span>
+        <span class="text-green-500 font-medium">{{ totalReservationToday }}</span>
+        <span class="text-500"> new reservations today</span>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3">
+      <div class="surface-card shadow-2 p-3 border-round">
+        <div class="flex justify-content-between mb-3">
+          <div>
+            <span class="block text-500 font-medium mb-3">Accepted Reservations</span>
+            <div class="text-900 font-medium text-xl">{{ acceptedReservation }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-green-100 border-round"
+               style="width:2.5rem;height:2.5rem">
+            <i class="pi pi-check text-yellow-500 text-xl"></i>
+          </div>
+        </div>
+        <span class="text-green-500 font-medium">{{ acceptedReservationToday }} </span>
+        <span class="text-500">today</span>
       </div>
     </div>
     <div class="col-12 md:col-6 lg:col-3">
@@ -54,14 +37,14 @@
         <div class="flex justify-content-between mb-3">
           <div>
             <span class="block text-500 font-medium mb-3">Unprocessed Reservations</span>
-            <div class="text-900 font-medium text-xl">2.100</div>
+            <div class="text-900 font-medium text-xl">{{ unprocessedReservation }}</div>
           </div>
           <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width:2.5rem;height:2.5rem">
             <i class="pi pi-clock text-orange-500 text-xl"></i>
           </div>
         </div>
-        <span class="text-green-500 font-medium">%52+ </span>
-        <span class="text-500">since last week</span>
+        <span class="text-green-500 font-medium">{{ unprocessReservationToday }} </span>
+        <span class="text-500"> new today</span>
       </div>
     </div>
     <div class="col-12 md:col-6 lg:col-3">
@@ -69,37 +52,53 @@
         <div class="flex justify-content-between mb-3">
           <div>
             <span class="block text-500 font-medium mb-3">Users</span>
-            <div class="text-900 font-medium text-xl">28441</div>
+            <div class="text-900 font-medium text-xl">{{ totalUser }}</div>
           </div>
           <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width:2.5rem;height:2.5rem">
             <i class="pi pi-users text-cyan-500 text-xl"></i>
           </div>
         </div>
-        <span class="text-green-500 font-medium">520  </span>
-        <span class="text-500">newly registered</span>
-      </div>
-    </div>
-    <div class="col-12 md:col-6 lg:col-3">
-      <div class="surface-card shadow-2 p-3 border-round">
-        <div class="flex justify-content-between mb-3">
-          <div>
-            <span class="block text-500 font-medium mb-3">Comments</span>
-            <div class="text-900 font-medium text-xl">152 Unread</div>
-          </div>
-          <div class="flex align-items-center justify-content-center bg-purple-100 border-round" style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-comment text-purple-500 text-xl"></i>
-          </div>
-        </div>
-        <span class="text-green-500 font-medium">85 </span>
-        <span class="text-500">responded</span>
+        <span class="text-green-500 font-medium">{{ newUserThisMonth }}  </span>
+        <span class="text-500">newly registered this month</span>
       </div>
     </div>
   </div>
 </div>
+<br>
+<p-card class="border-blue-500 border-50">
+  <div class="flex align-items-center justify-content-between flex-wrap content-header">
+    <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
+      <p-toolbar>
+        <div class="p-toolbar-group-left">
+          <div class="calendar-container">
+            <p-calendar [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME" dateFormat="dd/mm/yy"
+                        placeholder="Start Date"
+                        [showTime]="true"
+                        [showSeconds]="true"
+                        [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+            </p-calendar>
+          </div>
+          <div class="calendar-container">
+            <p-calendar [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME" placeholder="End Date"
+                        dateFormat="dd/mm/yy"
+                        [showTime]="true"
+                        [showSeconds]="true"
+                        [showIcon]="true" [readonlyInput]="true" selectionMode="single" view="date">
+            </p-calendar>
+          </div>
+        </div>
+        <div class="p-toolbar-group-right">
+          <button pButton type="button" label="Search" pTooltip="Search"
+                  tooltipPosition="bottom" (click)="onSearch()"
+                  class="mr-2 cp-button"></button>
+          <button pButton type="button" icon="pi pi-sync" label="Reset Form" tooltipPosition="bottom"
+                  pTooltip="Reset Form" class="mr-2 cp-button" (click)="resetForm()"></button>
+        </div>
+      </p-toolbar>
+    </form>
+  </div>
 <p-panel>
   <ng-template pTemplate="header">
-    <span class="text-primary font-semibold text-3xl ml-auto align-content-center"
-    >Statistics by number of reservations</span>
   </ng-template>
   <ng-template pTemplate="body">
   <div class="flex">
@@ -111,12 +110,26 @@
       </div>
     </div>
     <div class="w-6">
-      <span class="chart-title">Statistics by </span>
+      <span class="chart-title">User's Role </span>
       <div class="flex justify-content-center">
-        <p-chart style="width: 360px; height: 360px;" type="pie" [data]="data"
+        <p-chart style="width: 360px; height: 360px;" type="pie" [data]="data2"
                  [options]="chartOptions"></p-chart>
       </div>
     </div>
   </div>
   </ng-template>
 </p-panel>
+</p-card>
+<br>
+<p-card>
+  <p-panel>
+    <ng-template pTemplate="header">
+    <span class="text-primary font-semibold text-3xl ml-auto align-content-center"
+    >Reservation Number</span>
+    </ng-template>
+    <ng-template pTemplate="body">
+      <p-chart style="width: 360px; height: 360px;" type="line" [data]="data3"
+               [options]="option3"></p-chart>
+    </ng-template>
+  </p-panel>
+</p-card>

@@ -42,7 +42,7 @@ export class CONSTANTS {
     DAY: {
       NAME: 'day',
       VALUE: '',
-      VALIDATORS: [],
+      VALIDATORS: [Validators.required],
     },
     RESERVATION_DESCRIPTION: {
       NAME: 'reservationDescription',
@@ -52,12 +52,12 @@ export class CONSTANTS {
     ROOM_ID: {
       NAME: 'roomId',
       VALUE: '',
-      VALIDATORS: [],
+      VALIDATORS: [Validators.required],
     },
     SHIFT_OPTION: {
       NAME: 'shiftOption',
       VALUE: '',
-      VALIDATORS: [],
+      VALIDATORS: [Validators.required],
     },
   };
   static readonly REGISTRATION_FORM_CONTROL_NAME = {

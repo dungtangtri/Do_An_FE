@@ -10,6 +10,7 @@ import { UpdateReservationDetailForm } from '../models/update-reservation-detail
 import {UserSearchForm} from "../../all-user/models/user-search-form";
 import {UserRegisterForm} from "../../all-user/models/user-register-form";
 import {UpdateUserInformationDto} from "../../all-user/models/update-user-information-dto";
+import {SummaryUserRoleDto} from "../../admin-dashboard/models/summary-user-role-dto";
 const API_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,13 @@ export class AdminService {
       searchForm,
     );
   }
+  getSummaryUserRole(searchForm: BaseSearchForm) {
+    return this.http.post<SummaryUserRoleDto>(
+      API_URL + 'get-summary-user-by-role',
+      searchForm,
+    );
+  }
+
   updateReservationDetail(form: UpdateReservationDetailForm) {
     return this.http.post(API_URL + 'update-reservation-detail', form, {
       responseType: 'text',

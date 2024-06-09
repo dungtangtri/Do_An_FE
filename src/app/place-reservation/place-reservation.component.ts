@@ -21,10 +21,10 @@ export class PlaceReservationComponent {
     this.today = new Date();
     this.maxDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 7);
     this.minDate = this.today;
-    this.formSearch = Util.createFormGroup(CONSTANTS.RESERVATION_FORM_CONTROL_NAME);
+    this.formReservation = Util.createFormGroup(CONSTANTS.RESERVATION_FORM_CONTROL_NAME);
   }
 
-  formSearch: FormGroup;
+  formReservation: FormGroup;
   today: any;
   maxDate: any;
   minDate: any;
@@ -47,7 +47,7 @@ export class PlaceReservationComponent {
     ]
 
   placeReservation() {
-    const searchForm: PlaceReservationForm = Util.getDataFormSearch(this.formSearch)
+    const searchForm: PlaceReservationForm = Util.getDataFormSearch(this.formReservation)
     this.userService.placeReservation(searchForm).subscribe({
       next: (data) => {
         this.messageService.add({
@@ -58,7 +58,7 @@ export class PlaceReservationComponent {
       error: (err) => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Error reserving classroom. Please try again later!',
+          summary: err.error,
         });
       },
     });

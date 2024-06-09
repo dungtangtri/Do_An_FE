@@ -6,7 +6,7 @@
       >Place your Reservation</span
     >
   </ng-template>
-  <form [formGroup]="formSearch">
+  <form [formGroup]="formReservation">
   <div class="formgrid grid">
     <div class="field col-12 md:col-6">
       <label>Reservation Date</label>
@@ -23,6 +23,10 @@
           [required]="true"
         >
         </p-calendar>
+        <div *ngIf="formReservation.get('day')?.touched && formReservation.get('day')?.invalid">
+          <small class="p-error" *ngIf="formReservation.get('day')?.errors?.['required']">Select a day is
+            required.</small>
+        </div>
       </div>
     </div>
     <div class="field col-12 md:col-6">
@@ -31,6 +35,10 @@
         <p-dropdown [options]="time" optionLabel="name" optionValue="id" placeholder="Choose Shift"
                     [formControlName]="SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true">
         </p-dropdown>
+        <div *ngIf="formReservation.get('shiftOption')?.touched && formReservation.get('shiftOption')?.invalid">
+          <small class="p-error" *ngIf="formReservation.get('shiftOption')?.errors?.['required']">Select a shift is
+            required.</small>
+        </div>
       </div>
     </div>
     <div class="field col-12 md:col-6">
@@ -40,6 +48,10 @@
                     placeholder="Choose Room" [required]="true"
                     [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME">
         </p-dropdown>
+        <div *ngIf="formReservation.get('roomId')?.touched && formReservation.get('roomId')?.invalid">
+          <small class="p-error" *ngIf="formReservation.get('roomId')?.errors?.['required']">Select a room is
+            required.</small>
+        </div>
       </div>
     </div>
     <!--    <div class="field col-12 md:col-6">-->
@@ -70,12 +82,13 @@
         type="text"
         rows="4"
         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        placeholder="Optional"
       ></textarea>
     </div>
   </div>
   </form>
   <ng-template pTemplate="footer">
     <p-button styleClass="cp-button" (onClick)="placeReservation()" type="submit"
-              label="Place Reservation"></p-button>
+              label="Place Reservation" [disabled]="formReservation.invalid"></p-button>
   </ng-template>
 </p-panel>
