@@ -1,8 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AdminService} from './service/admin.service';
 import {GetAllUserWithReservationDto} from './models/get-all-user-with-reservation-dto';
-import {ConfirmationService, FilterMatchMode, MessageService, SelectItem,} from 'primeng/api';
-import {BaseSearchForm} from '../shared/BaseSearchForm';
+import {ConfirmationService, MessageService,} from 'primeng/api';
 import {Util} from '../util/util.class';
 import {CONSTANTS} from '../board-user/utils/CONSTANTS';
 import {FormGroup} from '@angular/forms';
@@ -36,6 +35,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   isVisibleCalendar = false;
   isVisibleEdit = false;
   isValid = true;
+  isValidDateEdit = true;
   selectedIds: number[] = [];
   view: CalendarView = CalendarView.Month;
   activeDayIsOpen: boolean = true;
@@ -75,14 +75,8 @@ export class AdminGetAllReservationsComponent implements OnInit {
       { field: 'action', header: 'Action' },
     ];
   }
-  // TODO: tạo api lấy danh sách phoòng học
-  class: any =
-    [
-      {id: 101, name: 'D8-101'},
-      {id: 102, name: 'D8-102'},
-      {id: 103, name: 'D8-103'},
-      {id: 104, name: 'D8-104'}
-    ]
+
+  class: any;
   getData() {
     const searchForm: GetAllReservationSearchForm = Util.getDataFormSearch(this.formSearch);
     this.adminService.getAllReservations(searchForm).subscribe({
@@ -219,6 +213,14 @@ export class AdminGetAllReservationsComponent implements OnInit {
       this.isValid = false;
     }
   }
+
+  validateTimeEditForm() {
+    if (this.startTime < this.endTime) {
+      this.isValidDateEdit = true;
+    } else if ((this.startTime > this.endTime && this.endTime != '')) {
+      this.isValidDateEdit = false;
+    }
+  }
   acceptUpdateReservation(){
     let updateForm: UpdateReservationDetailForm = {roomId: this.roomId, status: this.currentStatus, endTime: Util.convertDateToTimeStamp(this.endTime), startTime:Util.convertDateToTimeStamp(this.startTime), reservationId: this.reservation_id };
     this.adminService.updateReservationDetail(updateForm).subscribe({
@@ -304,6 +306,10 @@ export class AdminGetAllReservationsComponent implements OnInit {
         });
       },
     });
+  }
+
+  getRoomList() {
+
   }
 
 }

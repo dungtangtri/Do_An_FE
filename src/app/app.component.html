@@ -46,8 +46,8 @@
           >Place Reservation</a
         >
       </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a href="/calendar-view" class="nav-link" routerLink="calendar-view">Calendar View</a>
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/manage-classroom" class="nav-link" routerLink="manage-classroom">Manage Classroom</a>
       </li>
     </ul>
 
@@ -61,9 +61,6 @@
     </ul>
 
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <i class="pi pi-bell text-3xl p-text-secondary mr-2" pBadge value="200" style="font-size: 2rem"></i>
-      </li>
       <li class="nav-item">
         <a href="/profile" class="nav-link" routerLink="profile">{{
           username

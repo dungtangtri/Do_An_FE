@@ -29,7 +29,7 @@
           </div>
         </div>
         <span class="text-green-500 font-medium">{{ acceptedReservationToday }} </span>
-        <span class="text-500">today</span>
+        <span class="text-500">new today</span>
       </div>
     </div>
     <div class="col-12 md:col-6 lg:col-3">
@@ -67,7 +67,7 @@
 <br>
 <p-card class="border-blue-500 border-50">
   <div class="flex align-items-center justify-content-between flex-wrap content-header">
-    <form [formGroup]="formSearch" class="flex flex-wrap filter panel-search w-full">
+    <form [formGroup]="formSearch" class="flex flex-wrap w-full">
       <p-toolbar>
         <div class="p-toolbar-group-left">
           <div class="calendar-container">
@@ -124,12 +124,13 @@
 <p-card>
   <p-panel>
     <ng-template pTemplate="header">
-    <span class="text-primary font-semibold text-3xl ml-auto align-content-center"
-    >Reservation Number</span>
     </ng-template>
     <ng-template pTemplate="body">
+      <p-dropdown [options]="years" [(ngModel)]="selectedYear"
+      placeholder="Select a year" (onChange)="generateLineChart()"></p-dropdown>
+      <span class="chart-title text-primary-500 text-2xl">Number of reservations by month</span>
       <p-chart style="width: 360px; height: 360px;" type="line" [data]="data3"
-               [options]="option3"></p-chart>
+              ></p-chart>
     </ng-template>
   </p-panel>
 </p-card>

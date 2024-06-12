@@ -7,7 +7,6 @@ import {Util} from '../util/util.class';
 import {AllUserInformationDto} from './models/all-user-information-dto';
 import {UserSearchForm} from "./models/user-search-form";
 import {UserRegisterForm} from "./models/user-register-form";
-import {UpdateReservationDetailForm} from "../admin-get-all-users-reservations/models/update-reservation-detail-form";
 import {UpdateUserInformationDto} from "./models/update-user-information-dto";
 
 @Component({

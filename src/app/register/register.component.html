@@ -23,6 +23,7 @@
           required
           minlength="3"
           maxlength="20"
+          [pKeyFilter]="blockSpace"
           #username="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
         />
@@ -44,6 +45,7 @@
           name="email"
           [(ngModel)]="form.email"
           required
+          [pKeyFilter]="blockSpace"
           email
           #email="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
@@ -63,19 +65,30 @@
           name="password"
           [(ngModel)]="form.password"
           required
-          minlength="6"
+          [pKeyFilter]="blockSpace"
+          minlength="5"
           #password="ngModel"
+          (change)="validatePassword()"
           [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
         />
         <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors['required']">Password is required</div>
           <div *ngIf="password.errors['minlength']">
-            Password must be at least 6 characters
+            Password must be at least 5 characters
           </div>
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
+        <label>Re-enter your password</label>
+        <input type="password" required class="form-control" [(ngModel)]="form.confirmPassword" name="confirmPassword" [pKeyFilter]="blockSpace"
+               #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': (f.submitted && confirmPassword.errors) || isSamePassword}" (change)="validatePassword()">
+        <div class="invalid-feedback" *ngIf="confirmPassword.errors && f.submitted">
+          <div *ngIf="confirmPassword.errors['required']">Re-enter Password is required</div>
+        </div>
+        <div class="invalid-feedback" *ngIf="isSamePassword">Passwords do not match.</div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" [disabled]="isSamePassword">Sign Up</button>
       </div>
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
         Signup failed!<br />{{ errorMessage }}

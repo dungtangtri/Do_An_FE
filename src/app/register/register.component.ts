@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import {Component} from '@angular/core';
+import {AuthService} from '../_services/auth.service';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -13,11 +13,13 @@ export class RegisterComponent {
     username: null,
     email: null,
     password: null,
+    confirmPassword: null
   };
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-
+  isSamePassword = false
+  blockSpace: RegExp = /[^\s]/;
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
@@ -51,5 +53,9 @@ export class RegisterComponent {
         });
       },
     });
+  }
+
+  validatePassword() {
+    this.isSamePassword = this.form.password !== this.form.confirmPassword;
   }
 }

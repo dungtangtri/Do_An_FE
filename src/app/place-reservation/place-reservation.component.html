@@ -33,7 +33,7 @@
       <label>Shift</label>
       <div>
         <p-dropdown [options]="time" optionLabel="name" optionValue="id" placeholder="Choose Shift"
-                    [formControlName]="SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true">
+                    [formControlName]="SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true" >
         </p-dropdown>
         <div *ngIf="formReservation.get('shiftOption')?.touched && formReservation.get('shiftOption')?.invalid">
           <small class="p-error" *ngIf="formReservation.get('shiftOption')?.errors?.['required']">Select a shift is

@@ -22,7 +22,7 @@ export class CONSTANTS {
       VALUE: '',
       VALIDATORS: [],
     },
-    USERNAME:{
+    USERNAME: {
       NAME: 'username',
       VALUE: '',
       VALIDATORS: [],
@@ -84,7 +84,19 @@ export class CONSTANTS {
     CONFIRM_PASSWORD: {
       NAME: 'confirmPassword',
       VALUE: '',
-      VALIDATORS:  [Validators.required, Validators.minLength(5), Validators.maxLength(40)],
+      VALIDATORS: [Validators.required, Validators.minLength(5), Validators.maxLength(40)],
     },
   };
+  static readonly CLASSROOM_FORM_CONTROL_NAME = {
+    CLASS_LOCATION: {
+      NAME: 'classLocation',
+      VALUE: '',
+      VALIDATORS: [],
+    },
+    HAS_POWER_OUTLET: {
+      NAME: 'powerOutlet',
+      VALUE: '',
+      VALIDATORS: [],
+    }
+  }
 }

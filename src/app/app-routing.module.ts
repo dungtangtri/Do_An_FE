@@ -10,6 +10,7 @@ import { AllUserComponent } from './all-user/all-user.component';
 import { AdminGetAllReservationsComponent } from './admin-get-all-users-reservations/admin-get-all-reservations.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { PlaceReservationComponent } from './place-reservation/place-reservation.component';
+import {ManageClassroomComponent} from "./manage-classroom/manage-classroom.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'admin-dashboard', component: AdminDashboardComponent },
   { path: 'manage-reservation', component: AdminGetAllReservationsComponent },
   { path: 'place-reservation', component: PlaceReservationComponent },
+  { path: 'manage-classroom', component: ManageClassroomComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 

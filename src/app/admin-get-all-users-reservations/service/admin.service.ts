@@ -11,6 +11,11 @@ import {UserSearchForm} from "../../all-user/models/user-search-form";
 import {UserRegisterForm} from "../../all-user/models/user-register-form";
 import {UpdateUserInformationDto} from "../../all-user/models/update-user-information-dto";
 import {SummaryUserRoleDto} from "../../admin-dashboard/models/summary-user-role-dto";
+import {GetNumberOfReservationsByYearSearchForm} from "../models/get-number-of-reservations-by-year-search-form";
+import {GetNumberOfReservationsByYearDto} from "../models/get-number-of-reservations-by-year-dto";
+import {GetAllClassroomSearchForm} from "../../manage-classroom/models/GetAllClassroomSearchForm";
+import {GetAllClassroomDTO} from "../../manage-classroom/models/GetAllClassroomDTO";
+import {UpdateClassroomDetailsRequest} from "../../admin-dashboard/models/update-classroom-details-request";
 const API_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root',
@@ -83,6 +88,36 @@ export class AdminService {
   updateUserInformation(form: UpdateUserInformationDto){
     return this.http.post(
       API_URL + 'edit-user',
+      form,
+      {
+        responseType: 'text'
+      }
+    )
+  }
+  getNumberOfReservationByYear(form: GetNumberOfReservationsByYearSearchForm): Observable<GetNumberOfReservationsByYearDto[]>{
+    return this.http.post<GetNumberOfReservationsByYearDto[]>(
+      API_URL + 'get-number-of-reservations',
+      form
+    )
+  }
+  getAllClassroom(form: GetAllClassroomSearchForm){
+    return this.http.post<GetAllClassroomDTO>(
+      API_URL + 'get-all-classroom',
+      form
+    )
+  }
+  deleteClassroom(id: number){
+    return this.http.post(
+      API_URL + 'delete-room-by-id',
+      id,
+      {
+        responseType: 'text'
+      }
+    )
+  }
+  updateClassroomDetail(form: UpdateClassroomDetailsRequest){
+    return this.http.post(
+      API_URL + 'edit-room',
       form,
       {
         responseType: 'text'
