@@ -1,0 +1,167 @@
+<p-toast></p-toast>
+<div class="flex align-items-center justify-content-between flex-wrap content-header">
+  <p-toolbar class="w-full">
+    <form [formGroup]="formSearch">
+      <div>
+        <input pInputText placeholder="Classroom Location" [pKeyFilter]="blockSpace"
+               [formControlName]="CLASSROOM_FORM_CONTROL.CLASS_LOCATION.NAME">
+        <p-dropdown [options]="havePowerOutlet" optionLabel="name" optionValue="id" placeholder="Has power outlet?"
+                    [formControlName]="CLASSROOM_FORM_CONTROL.HAS_POWER_OUTLET.NAME" class="ml-8"></p-dropdown>
+      </div>
+    </form>
+    <div style="margin-right: 32rem" class="align-content-center">
+      <div>
+        <label class="text-primary">Select Classroom Capacity Range</label>
+      </div>
+      <input type="text" pInputText disabled [(ngModel)]="rangeValue" [ngModelOptions]="{standalone: true}"
+             class="w-full mb-3"/>
+      <p-slider [range]="true" [(ngModel)]="rangeValue" [ngModelOptions]="{standalone: true}"
+                class="w-5"></p-slider>
+    </div>
+    <div class="p-toolbar-group-right">
+      <button pButton type="button" label="Search" pTooltip="Search"
+              tooltipPosition="bottom" (click)="getData()"
+              class="mr-2 cp-button"></button>
+      <button pButton type="button" icon="pi pi-sync" label="Reset Form" tooltipPosition="bottom"
+              pTooltip="Reset Form" class="mr-2 cp-button" (click)="resetForm()"></button>
+    </div>
+  </p-toolbar>
+</div>
+<div class="flex flex-wrap justify-content-end">
+  <button pButton label="Add New Classroom" class="cp-button" icon="pi pi-plus" (click)="addNewClassroom()">
+  </button>
+</div>
+<div>
+  <p-table
+    [autoLayout]="true"
+    [columns]="cols"
+    [value]="data"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    [rows]="10"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <p-confirmDialog
+        header="Confirmation"
+        icon="pi pi-exclamation-triangle"
+      ></p-confirmDialog>
+      <tr>
+        <th *ngFor="let col of columns"><strong>{{ col.header }}</strong></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-index="rowIndex" class="align-content-center">
+      <tr>
+        <td>{{ index + 1 }}</td>
+        <td>{{ data.id }}</td>
+        <td>{{ data.class_location }}</td>
+        <td>{{ data.class_capacity }}</td>
+        <td>
+          <p-tag class="custom-tag-installed" *ngIf="data.power_outlet === 1"
+          >YES
+          </p-tag
+          >
+          <p-tag class="custom-tag-deleted" *ngIf="data.power_outlet === 0"
+          >NO
+          </p-tag
+          >
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-trash"
+            (click)="deleteRoom(data)"
+            pTooltip="Delete Room"
+            class="cp-button"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="cp-button"
+            pTooltip="Edit Room Detail"
+            (click)="editRoom(data)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="11">
+          <div class="flex flex-column empty">
+            <p-image src="assets/images/Empty.png" alt="empty"></p-image>
+            <span> No Data </span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<p-dialog
+  styleClass="cp-dialog"
+  header="Edit Room"
+  [modal]="true"
+  [(visible)]="isEditRoom"
+  (onHide)="isEditRoom = false"
+  [style]="{width: '800px', height: '450px'}">
+  <ng-template pTemplate="body">
+    <div class="formgrid flex p-fluid">
+      <div class="col-6 w-full">
+        <div class="form-group">
+          <label class="font-bold text-xl">Classroom ID</label>
+          <div>
+            <input pInputText disabled [ngModel]="roomID">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="font-bold text-xl">Class Location</label>
+          <div>
+            <input pInputText [(ngModel)]="classLocation" required #classLocationField="ngModel"
+                   [pKeyFilter]="blockSpace">
+          </div>
+          <div *ngIf="classLocationField.touched && classLocationField.invalid">
+            <small class="p-error" *ngIf="classLocationField.errors?.['required']">
+              Class Location is required.
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="font-bold text-xl">Class Capacity</label>
+          <div>
+            <input type="text" pInputText [(ngModel)]="classCapacity" required #classCapacityField="ngModel"
+                   [pKeyFilter]="'money'">
+          </div>
+          <div *ngIf="classCapacityField.touched && classCapacityField.invalid">
+            <small class="p-error" *ngIf="classCapacityField.errors?.['required']">
+              Class Capacity is required.
+            </small>
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-xl">Has Power Outlet?</label>
+          <p-dropdown [options]="havePowerOutlet"
+                      [(ngModel)]="changePowerOutlet"
+                      [style]="{width: '100%'}"
+                      [required]="true"
+                      placeholder="Has Power Outlet?"
+                      optionLabel="name"
+                      optionValue="id"
+                      class="cp-form-item">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row-reverse">
+      <button pButton class="cp-button" label="Save"
+              [disabled]="classLocationField.invalid || classCapacityField.invalid"
+              (click)="updateRoomData()"></button>
+      <button (click)="isEditRoom = false"
+              label="Cancel"
+              pButton
+              class="cp-button">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
