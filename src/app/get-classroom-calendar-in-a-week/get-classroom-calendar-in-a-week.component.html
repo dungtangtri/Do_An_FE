@@ -1,0 +1,22 @@
+<p-toast></p-toast>
+<p-panel>
+  <ng-template pTemplate="header">
+    <span
+      class="text-primary font-semibold text-5xl ml-auto justify-content-center">View the Classroom Calendar in the next 7 days</span>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <div>
+      <label class="font-bold text-xl">Choose a room</label>
+      <div>
+        <p-dropdown [options]="classroomList" optionLabel="name" optionValue="id"
+                    placeholder="Room Location" [filter]="true" [(ngModel)]="roomId" (onChange)="getData()">
+        </p-dropdown>
+      </div>
+    </div>
+    <br>
+    <div>
+      <mwl-calendar-week-view [viewDate]="viewDate" [daysInWeek]="daysInWeek" [events]="events">
+      </mwl-calendar-week-view>
+    </div>
+  </ng-template>
+</p-panel>

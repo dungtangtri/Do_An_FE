@@ -5,4 +5,5 @@ export interface GetAllReservationSearchForm extends BaseSearchForm{
   username: string;
   roomId: number;
   reservationDate: number;
+  userRole: string[];
 }

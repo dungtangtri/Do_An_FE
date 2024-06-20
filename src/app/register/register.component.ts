@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 
+const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   providers: [ConfirmationService, MessageService],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   form: any = {
     username: null,
     email: null,
@@ -24,6 +25,12 @@ export class RegisterComponent {
     private authService: AuthService,
     private messageService: MessageService,
   ) {}
+  // redirect user to home page if the user is logged in
+  ngOnInit() {
+    if(this.isLoggedIn()){
+      window.location.replace('/home');
+    }
+  }
 
   onSubmit(): void {
     const { username, email, password } = this.form;
@@ -57,5 +64,13 @@ export class RegisterComponent {
 
   validatePassword() {
     this.isSamePassword = this.form.password !== this.form.confirmPassword;
+  }
+
+  public isLoggedIn(): boolean {
+    const user = window.localStorage.getItem(USER_KEY);
+    if (user) {
+      return true;
+    }
+    return false;
   }
 }

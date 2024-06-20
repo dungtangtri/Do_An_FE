@@ -1,6 +1,6 @@
 <div
   class="flex align-items-center justify-content-between flex-wrap content-header"
-  xmlns="http://www.w3.org/1999/html">
+  xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
   <form
     [formGroup]="formSearch"
     class="flex flex-wrap filter panel-search w-full "
@@ -24,6 +24,7 @@
             [showTime]="true"
             [showSeconds]="true"
             [showIcon]="true"
+            [maxDate]="today"
             [readonlyInput]="true"
             selectionMode="single"
             view="date"
@@ -42,6 +43,7 @@
             [showTime]="true"
             [showSeconds]="true"
             [readonlyInput]="true"
+            [maxDate]="today"
             selectionMode="single"
             view="date"
             (onClose)="validateTime()"
@@ -51,12 +53,16 @@
           <div *ngIf="!isValid" class="error-validation-message">End time must be greater than start time! </div>
         </div>
         <input pInputText placeholder="Username" [formControlName]="SEARCH_FORM_CONTROL.USERNAME.NAME" class="mr-2">
+        <p-multiSelect [options]="userRole" [filter]="true" placeholder="Role"
+                       optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.USER_ROLE.NAME"
+                       class="mr-2"
+        ></p-multiSelect>
         <p-multiSelect [options]="status" [filter]="true" placeholder="Status"
                      optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.STATUS.NAME"
                        class="mr-2"
         ></p-multiSelect>
-        <p-dropdown [options]="class" optionLabel="name" optionValue="id"
-                    placeholder="Room ID"
+        <p-dropdown [options]="classroomList" optionLabel="name" optionValue="id"
+                    placeholder="Room Location" [filter]="true"
                     [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME">
         </p-dropdown>
         <button
@@ -69,6 +75,8 @@
           tooltipPosition="bottom"
           class="cp-button mr-2 ml-2"
         ></button>
+      </div>
+      <div class="p-toolbar-group-end">
         <button
           pButton
           type="button"
@@ -79,18 +87,23 @@
           class="mr-2 cp-button"
           (click)="resetForm()"
         ></button>
-      </div>
-      <div class="p-toolbar-group-end">
         <button
           pButton
           type="button"
           icon="pi pi-file-export"
           [disabled]="!isValid"
-          pTooltip="Export Excel"
+          pTooltip="Export All Reservations to Excel file"
           label="Export Excel"
           tooltipPosition="bottom"
           (click)="exportExcel()"
           class="cp-button mr-2"
+        ></button>
+        <button pButton icon="pi pi-file-import"
+                pTooltip="Import Reservations using Excel file"
+                label="Import Excel"
+                (click)="isVisibleImportExcel=true"
+                tooltipPosition="bottom"
+                class="cp-button mr-2"
         ></button>
         <button pButton label="Calendar View"
                 type="button" icon="pi pi-calendar"
@@ -127,7 +140,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-index="rowIndex" class="align-content-center">
-      <tr>
+      <tr [ngClass]="{'processing-reservations': data.status === '0'}">
         <td>
           <p-checkbox [binary]="true" inputId="reservation_id" [ngModel]="selectedIds" (onChange)="checked($event, data)" [disabled]="data.status === '1' || data.status === '2' ">
 
@@ -136,6 +149,7 @@
         <td>{{ index + 1 }}</td>
         <td>{{data.reservation_id}}</td>
         <td>{{data.username}}</td>
+        <td>{{ data.user_role }}</td>
         <td>{{data.email}}</td>
         <td>{{data.create_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
         <td>{{data.reservation_description}}</td>
@@ -143,7 +157,7 @@
           {{data.reservation_start_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}
         </td>
         <td>{{data.reservation_end_time|dateFormat: 'dd/MM/yyyy HH:mm:ss'}}</td>
-        <td>{{data.room_id}}</td>
+        <td>{{ data.class_location }}</td>
         <td>
           <p-tag class="custom-tag-installed" *ngIf="data.status === '1'"
             >ACCEPTED</p-tag
@@ -221,9 +235,9 @@
           <div *ngIf="!isValidDateEdit" class="error-validation-message">Start time must be smaller than end time! </div>
         </div>
         <div class="form-group">
-          <label class="font-bold text-xl">Room ID</label>
+          <label class="font-bold text-xl">Room Location</label>
           <div>
-          <input pInputText  [(ngModel)]="roomId" [ngModelOptions]="{standalone: true}" required>
+            <input pInputText [(ngModel)]="roomLocation" [ngModelOptions]="{standalone: true}" required disabled>
           </div>
         </div>
         <div class="form-group">
@@ -323,4 +337,19 @@
       </mwl-calendar-day-view>
     </div>
   </div>
+</p-dialog>
+<p-dialog [style]="{width: '400px', height: '300px'}"
+          styleClass="cp-dialog"
+          header="Import Excel"
+          [modal]="true"
+          [(visible)]="isVisibleImportExcel"
+          (onHide)="isVisibleImportExcel = false">
+  <div class="flex align-content-center">
+    <button pButton icon="pi pi-download"
+            pTooltip="Download Excel Template for Import Excel"
+            label="Download Excel Template"
+            class="cp-button ">
+    </button>
+  </div>
+
 </p-dialog>

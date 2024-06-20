@@ -26,9 +26,11 @@ export class UserGetMyReservationsComponent implements OnInit {
   activeDayIsOpen: boolean = true;
   viewDate: Date = new Date();
   isValid = true;
+  today: any;
   events: CalendarEvent[] = [];
   status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
   invalidCancel = false;
+  classroomList: any;
   changeDay(date: Date) {
     this.viewDate = date;
     this.view = CalendarView.Day;
@@ -44,6 +46,8 @@ export class UserGetMyReservationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.today = new Date();
+    this.getClassroomList();
     this.getData();
     this.cols = [
       { field: 'no', header: 'No.' },
@@ -52,19 +56,12 @@ export class UserGetMyReservationsComponent implements OnInit {
       { field: 'reservation_description', header: 'Reservation Description' },
       { field: 'reservation_start_time', header: 'Reservation Start Time' },
       { field: 'reservation_end_time', header: 'Reservation End Time' },
-      { field: 'room_id', header: 'Room ID' },
+      { field: 'classLocation', header: 'Room Location' },
       { field: 'status', header: 'Status' },
       { field: 'action', header: 'Action' },
     ];
   }
-  // TODO: tạo api lấy danh sách phoòng học
-  class: any =
-    [
-      {id: 101, name: 'D8-101'},
-      {id: 102, name: 'D8-102'},
-      {id: 103, name: 'D8-103'},
-      {id: 104, name: 'D8-104'}
-    ]
+
   getData() {
     const searchForm: UserSearchForm = Util.getDataFormSearch(this.formSearch);
     this.userService.getMyReservation(searchForm).subscribe({
@@ -75,7 +72,7 @@ export class UserGetMyReservationsComponent implements OnInit {
         this.events = filteredReservations.map(reservation => ({
           start: new Date(reservation.reservation_start_time),
           end: new Date(reservation.reservation_end_time),
-          title: 'Room : ' + reservation.room_id.toString() + " is reserved from: " + new Date(reservation.reservation_start_time) + " to " + new Date(reservation.reservation_end_time),
+          title: 'Room : ' + reservation.class_location + " is reserved from: " + new Date(reservation.reservation_start_time) + " to " + new Date(reservation.reservation_end_time),
         }));
         this.messageService.add({
           severity: 'success',
@@ -210,5 +207,22 @@ export class UserGetMyReservationsComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+// Lấy list phòng học
+  getClassroomList() {
+    this.userService.getClassroomList().subscribe({
+      next: (res) => {
+        this.classroomList = res.map(classroom => ({
+          id: classroom.id,
+          name: classroom.classLocation
+        }));
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'An error happened when retrieving classroom list. Please try again later',
+        });
+      },
+    });
   }
 }

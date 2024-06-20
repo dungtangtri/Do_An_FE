@@ -17,8 +17,9 @@
         <label>Username</label>
         <input
           type="text"
-          class="form-control"
+          class="w-full mb-3"
           name="username"
+          pInputText
           [(ngModel)]="form.username"
           required
           minlength="3"
@@ -41,8 +42,9 @@
         <label>Email</label>
         <input
           type="email"
-          class="form-control"
+          class="w-full mb-3"
           name="email"
+          pInputText
           [(ngModel)]="form.email"
           required
           [pKeyFilter]="blockSpace"
@@ -61,7 +63,8 @@
         <label>Password</label>
         <input
           type="password"
-          class="form-control"
+          pInputText
+          class="w-full mb-3"
           name="password"
           [(ngModel)]="form.password"
           required
@@ -80,7 +83,8 @@
       </div>
       <div class="form-group">
         <label>Re-enter your password</label>
-        <input type="password" required class="form-control" [(ngModel)]="form.confirmPassword" name="confirmPassword" [pKeyFilter]="blockSpace"
+        <input type="password" required class="w-full mb-3" [(ngModel)]="form.confirmPassword" name="confirmPassword"
+               [pKeyFilter]="blockSpace" pInputText
                #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': (f.submitted && confirmPassword.errors) || isSamePassword}" (change)="validatePassword()">
         <div class="invalid-feedback" *ngIf="confirmPassword.errors && f.submitted">
           <div *ngIf="confirmPassword.errors['required']">Re-enter Password is required</div>

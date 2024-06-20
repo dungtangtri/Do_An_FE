@@ -22,6 +22,7 @@
             [showTime]="true"
             [showSeconds]="true"
             dateFormat="dd/mm/yy"
+            [maxDate]="today"
             placeholder="Create Time Start Date"
             [showIcon]="true"
             [readonlyInput]="true"
@@ -38,6 +39,7 @@
             [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
             [showTime]="true"
             [showSeconds]="true"
+            [maxDate]="today"
             placeholder="Create Time End Date"
             dateFormat="dd/mm/yy"
             [showIcon]="true"
@@ -54,8 +56,8 @@
                        optionValue="id" optionLabel="name" [formControlName]="SEARCH_FORM_CONTROL.STATUS.NAME"
                        class="mr-2"
         ></p-multiSelect>
-        <p-dropdown [options]="class" optionLabel="name" optionValue="id"
-                    placeholder="Room ID"
+        <p-dropdown [options]="classroomList" optionLabel="name" optionValue="id"
+                    placeholder="Room Location" [filter]="true"
                     [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME">
         </p-dropdown>
       </div>
@@ -104,6 +106,7 @@
 <div class="element-below-calendar">
   <p-toast></p-toast>
   <p-table
+    [autoLayout]="true"
     [columns]="cols"
     [value]="content"
     responsiveLayout="scroll"
@@ -122,7 +125,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-index="rowIndex">
-      <tr>
+      <tr [ngClass]="{'processing-reservations': data.status === '0'}">
         <td>
           {{ index + 1 }}
         </td>
@@ -135,7 +138,7 @@
         <td>
           {{ data.reservation_end_time | dateFormat: "dd/MM/yyyy HH:mm:ss" }}
         </td>
-        <td>{{ data.room_id }}</td>
+        <td>{{ data.class_location }}</td>
         <td>
           <p-tag class="custom-tag-installed" *ngIf="data.status === '1'"
             >ACCEPTED</p-tag

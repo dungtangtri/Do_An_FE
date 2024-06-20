@@ -11,6 +11,10 @@ import { AdminGetAllReservationsComponent } from './admin-get-all-users-reservat
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { PlaceReservationComponent } from './place-reservation/place-reservation.component';
 import {ManageClassroomComponent} from "./manage-classroom/manage-classroom.component";
+import {NotFoundPageComponent} from "./not-found-page/not-found-page.component";
+import {
+  GetClassroomCalendarInAWeekComponent
+} from "./get-classroom-calendar-in-a-week/get-classroom-calendar-in-a-week.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,7 +27,9 @@ const routes: Routes = [
   { path: 'manage-reservation', component: AdminGetAllReservationsComponent },
   { path: 'place-reservation', component: PlaceReservationComponent },
   { path: 'manage-classroom', component: ManageClassroomComponent },
+  { path: 'view-classroom-calendar', component: GetClassroomCalendarInAWeekComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', component: NotFoundPageComponent }
 ];
 
 @NgModule({

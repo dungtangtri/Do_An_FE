@@ -1,15 +1,172 @@
 <p-toast></p-toast>
+<br>
+<p-card>
+<p-panel>
+  <ng-template pTemplate="header">
+    <span
+    class="text-primary font-semibold text-4xl ml-auto justify-content-center">Find an Available Room</span>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <form [formGroup]="formRoomSuggestion">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-6">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Reservation Date</label>
+          <div class="w-full">
+            <p-calendar
+              [formControlName]="SUGGESTION_FORM_CONTROL.DAY.NAME"
+              view="date"
+              placeholder="Choose your desired Date"
+              dateFormat="dd/mm/yy"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
+              [showIcon]="true"
+              selectionMode="single"
+              [required]="true"
+              [ngClass]="{'ng-dirty ng-invalid': formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.DAY.NAME)?.touched && formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.DAY.NAME)?.invalid}"
+            >
+            </p-calendar>
+            <div *ngIf="formRoomSuggestion.get('day')?.touched && formRoomSuggestion.get('day')?.invalid">
+              <small class="p-error" *ngIf="formRoomSuggestion.get('day')?.errors?.['required']">Select a day is
+                required.</small>
+            </div>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Shift</label>
+          <div>
+            <p-dropdown [options]="time" optionLabel="name" optionValue="id" placeholder="Choose Shift"
+                        [formControlName]="SUGGESTION_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true"
+                        [ngClass]="{'ng-dirty ng-invalid': formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.SHIFT_OPTION.NAME)?.touched && formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.SHIFT_OPTION.NAME)?.invalid}">
+            </p-dropdown>
+            <div
+              *ngIf="formRoomSuggestion.get('shiftOption')?.touched && formRoomSuggestion.get('shiftOption')?.invalid">
+              <small class="p-error" *ngIf="formRoomSuggestion.get('shiftOption')?.errors?.['required']">Select a shift
+                is
+                required.</small>
+            </div>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Minimum Classroom Capacity</label>
+          <div>
+            <input pInputText type="number" placeholder="Minimum Classroom Capacity."
+                   [formControlName]="SUGGESTION_FORM_CONTROL.CLASS_CAPACITY.NAME" min="0" max="150"
+                   [ngClass]="{'ng-dirty ng-invalid': formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.CLASS_CAPACITY.NAME)?.touched && formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.CLASS_CAPACITY.NAME)?.invalid}">
+            <div
+              *ngIf="formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.CLASS_CAPACITY.NAME)?.touched && formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.CLASS_CAPACITY.NAME)?.invalid">
+              <small class="p-error"
+                     *ngIf="formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.CLASS_CAPACITY.NAME)?.errors?.['required']">Minimum Classroom Capacity is required.</small>
+            </div>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Have Power Outlet?</label>
+          <div>
+            <p-dropdown [options]="havePowerOutlet" optionLabel="name" optionValue="id" placeholder="Have Power Outlet?"
+                        [formControlName]="SUGGESTION_FORM_CONTROL.HAS_POWER_OUTLET.NAME"
+                        [ngClass]="{'ng-dirty ng-invalid': formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.HAS_POWER_OUTLET.NAME)?.touched && formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.HAS_POWER_OUTLET.NAME)?.invalid}">
+            </p-dropdown>
+            <div
+              *ngIf="formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.HAS_POWER_OUTLET.NAME)?.touched && formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.HAS_POWER_OUTLET.NAME)?.invalid">
+              <small class="p-error"
+                     *ngIf="formRoomSuggestion.get(SUGGESTION_FORM_CONTROL.HAS_POWER_OUTLET.NAME)?.errors?.['required']">Select
+                Power Outlet Option is required.</small>
+            </div>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <div>
+            <span class="pi pi-exclamation-triangle" style="color: red;font-size: 1.25rem"></span>
+            <small class="font-bold underline">Will only suggest rooms without a power outlet when no other available
+              rooms with a power outlet match your requirements.</small>
+          </div>
+          <label class="font-bold text-xl">Can take rooms without Power Outlet?</label>
+          <div>
+            <p-checkbox [binary]="true" [formControlName]="SUGGESTION_FORM_CONTROL.CAN_ACCEPT_NO_POWER_OUTLET.NAME">
+            </p-checkbox>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button styleClass="cp-button" (onClick)="getRoomSuggestion()" type="submit"
+              label="Find available rooms" [disabled]="formRoomSuggestion.invalid"></p-button>
+  </ng-template>
+</p-panel>
+  <br>
+  <div *ngIf="isSubmitFormSuggestion">
+    <p-table
+      [autoLayout]="true"
+      [columns]="cols"
+      [value]="dataRoomSuggestion"
+      responsiveLayout="scroll"
+      [paginator]="true"
+      [rows]="3"
+    >
+      <ng-template pTemplate="caption" > Result </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <p-confirmDialog
+          header="Confirmation"
+          icon="pi pi-exclamation-triangle"
+        ></p-confirmDialog>
+        <tr>
+          <th *ngFor="let col of columns"><strong>{{ col.header }}</strong></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-data let-index="rowIndex" class="align-content-center">
+        <tr>
+          <td>{{ index + 1 }}</td>
+          <td>{{ data.classLocation }}</td>
+          <td>{{ data.classCapacity }}</td>
+          <td>
+            <p-tag class="custom-tag-installed" *ngIf="data.powerOutlet === 1">YES</p-tag>
+            <p-tag class="custom-tag-deleted" *ngIf="data.powerOutlet === 0">NO</p-tag>
+          </td>
+          <td>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-calendar-plus"
+              pTooltip="Place Reservation"
+              (click)="placeReservationRoomSuggestion(data)"
+              class="cp-button"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="11">
+            <div class="flex flex-column empty">
+              <p-image src="assets/images/Empty.png" alt="empty"></p-image>
+              <span> No available classrooms fit your requirements.</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-card>
+<br>
+<p-card>
 <p-panel>
   <ng-template pTemplate="header"
     ><span
       class="text-primary font-semibold text-4xl ml-auto justify-content-center"
-      >Place your Reservation</span
+      >Place Room Reservation</span
     >
   </ng-template>
+  <ng-template pTemplate="body">
   <form [formGroup]="formReservation">
   <div class="formgrid grid">
     <div class="field col-12 md:col-6">
-      <label>Reservation Date</label>
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+      <label class="font-bold text-xl">Reservation Date</label>
       <div class="w-full">
         <p-calendar
           [formControlName]="SEARCH_FORM_CONTROL.DAY.NAME"
@@ -21,7 +178,7 @@
           [showIcon]="true"
           selectionMode="single"
           [required]="true"
-        >
+          [ngClass]="{'ng-dirty ng-invalid': formReservation.get(SEARCH_FORM_CONTROL.DAY.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.DAY.NAME)?.invalid}">
         </p-calendar>
         <div *ngIf="formReservation.get('day')?.touched && formReservation.get('day')?.invalid">
           <small class="p-error" *ngIf="formReservation.get('day')?.errors?.['required']">Select a day is
@@ -30,10 +187,12 @@
       </div>
     </div>
     <div class="field col-12 md:col-6">
-      <label>Shift</label>
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+      <label class="font-bold text-xl">Shift</label>
       <div>
         <p-dropdown [options]="time" optionLabel="name" optionValue="id" placeholder="Choose Shift"
-                    [formControlName]="SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true" >
+                    [formControlName]="SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME" [required]="true"
+                    [ngClass]="{'ng-dirty ng-invalid': formReservation.get(SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME)?.invalid}">
         </p-dropdown>
         <div *ngIf="formReservation.get('shiftOption')?.touched && formReservation.get('shiftOption')?.invalid">
           <small class="p-error" *ngIf="formReservation.get('shiftOption')?.errors?.['required']">Select a shift is
@@ -42,11 +201,14 @@
       </div>
     </div>
     <div class="field col-12 md:col-6">
-      <label>Room</label>
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+      <label class="font-bold text-xl">Room Location</label>
       <div>
-        <p-dropdown [options]="class" optionLabel="name" optionValue="id"
-                    placeholder="Choose Room" [required]="true"
-                    [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME">
+        <p-dropdown [options]="classroomList" optionLabel="name" optionValue="id"
+                    placeholder="Choose Room" [filter]="true"
+                    [formControlName]="SEARCH_FORM_CONTROL.ROOM_ID.NAME"
+                    [ngClass]="{'ng-dirty ng-invalid': formReservation.get(SEARCH_FORM_CONTROL.ROOM_ID.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.ROOM_ID.NAME)?.invalid}"
+        >
         </p-dropdown>
         <div *ngIf="formReservation.get('roomId')?.touched && formReservation.get('roomId')?.invalid">
           <small class="p-error" *ngIf="formReservation.get('roomId')?.errors?.['required']">Select a room is
@@ -54,30 +216,17 @@
         </div>
       </div>
     </div>
-    <!--    <div class="field col-12 md:col-6">-->
-    <!--      <label>City</label>-->
-    <!--      <input-->
-    <!--        type="text"-->
-    <!--        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"-->
-    <!--      />-->
-    <!--    </div>-->
-    <!--    <div class="field col-12 md:col-3">-->
-    <!--      <label>State</label>-->
-    <!--      <select-->
-    <!--        class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"-->
-    <!--        style="appearance: auto"-->
-    <!--      ></select>-->
-    <!--    </div>-->
-    <!--    <div class="field col-12 md:col-3">-->
-    <!--      <label>Zip</label>-->
-    <!--      <input-->
-    <!--        type="text"-->
-    <!--        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"-->
-    <!--      />-->
-    <!--    </div>-->
+    <div class="field col-12 md:col-6">
+      <label class="font-bold text-xl">Classroom Capacity</label>
+      <div>
+        <input pInputText type="text" placeholder="Classroom Capacity"
+               [formControlName]="SEARCH_FORM_CONTROL.ROOM_CAPACITY.NAME" readonly>
+      </div>
+    </div>
     <div class="field col-12">
-      <label>Note</label>
+      <label class="font-bold text-xl">Note</label>
       <textarea
+        #noteInput
         [formControlName]="SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME"
         type="text"
         rows="4"
@@ -87,8 +236,10 @@
     </div>
   </div>
   </form>
+  </ng-template>
   <ng-template pTemplate="footer">
     <p-button styleClass="cp-button" (onClick)="placeReservation()" type="submit"
               label="Place Reservation" [disabled]="formReservation.invalid"></p-button>
   </ng-template>
 </p-panel>
+</p-card>

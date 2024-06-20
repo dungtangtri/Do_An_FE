@@ -36,11 +36,13 @@ export class AllUserComponent implements OnInit {
   confirmPasswordError: boolean = false;
   isConfirm = false;
   blockSpace: RegExp = /[^\s]/;
+  today: any;
   constructor(
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
   ) {
+    this.today = new Date();
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
     this.formRegister = Util.createFormGroup(CONSTANTS.REGISTRATION_FORM_CONTROL_NAME);
   }
@@ -239,4 +241,5 @@ export class AllUserComponent implements OnInit {
       },
     });
   }
+
 }

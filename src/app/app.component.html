@@ -38,16 +38,24 @@
           >Manage Users</a
         >
       </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/manage-classroom" class="nav-link" routerLink="manage-classroom">Manage Classroom</a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/view-classroom-calendar"
+          class="nav-link"
+          routerLink="view-classroom-calendar"
+        >View Classroom Calendar</a
+        >
+      </li>
+      <li class="nav-item">
         <a
           href="/place-reservation"
           class="nav-link"
           routerLink="place-reservation"
-          >Place Reservation</a
+        >Place Reservation</a
         >
-      </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/manage-classroom" class="nav-link" routerLink="manage-classroom">Manage Classroom</a>
       </li>
     </ul>
 
@@ -75,3 +83,14 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+<!-- //TODO : footer page-->
+<!--<footer class="footer">-->
+<!--  <div class="container">-->
+<!--    <p>&copy; 2024 Your Company Name. All rights reserved.</p>-->
+<!--    <nav>-->
+<!--      <a routerLink="/about">About Us</a> |-->
+<!--      <a routerLink="/contact">Contact</a> |-->
+<!--      <a routerLink="/privacy">Privacy Policy</a>-->
+<!--    </nav>-->
+<!--  </div>-->
+<!--</footer>-->

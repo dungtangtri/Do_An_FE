@@ -382,7 +382,7 @@ input::placeholder {
     background-repeat: no-repeat;
 
     &:before {
-      width: 20px;
+      width: 30px;
       height: 20px;
       display: inline-block;
     }
@@ -900,4 +900,6 @@ div.p-multiselect-panel,
     }
   }
 }
-
+.processing-reservations {
+  background-color: lightgoldenrodyellow !important;
+}

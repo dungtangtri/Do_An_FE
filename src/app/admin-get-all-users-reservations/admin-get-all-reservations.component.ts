@@ -9,6 +9,7 @@ import {UpdateReservationDetailForm} from "./models/update-reservation-detail-fo
 import {CalendarEvent, CalendarView} from "angular-calendar";
 import {isSameDay, isSameMonth,} from 'date-fns';
 import {GetAllReservationSearchForm} from "./models/get-all-reservation-search-form";
+import {UserService} from "../_services/user.service";
 
 @Component({
   selector: 'app-admin-get-all-users-reservations',
@@ -24,7 +25,8 @@ export class AdminGetAllReservationsComponent implements OnInit {
   reservation_id: any;
   startTime: any;
   endTime: any;
-  roomId: any;
+  roomLocation: any;
+  userRole: any[] = [{id:'ROLE_ADMIN', name:'ROLE_ADMIN'},{id:'ROLE_STUDENT', name:'ROLE_STUDENT'},{id:'ROLE_TEACHER',name:'ROLE_TEACHER'}];
   status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
   description: any;
   currentStatus: any;
@@ -32,6 +34,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   today: any;
   maxDate: any;
   minDate: any;
+  isVisibleImportExcel = false;
   isVisibleCalendar = false;
   isVisibleEdit = false;
   isValid = true;
@@ -51,6 +54,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private userService: UserService
   ) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME);
     this.today = new Date();
@@ -60,23 +64,25 @@ export class AdminGetAllReservationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    this.getClassroomList();
     this.cols = [
       { field: 'select', header: 'Select'},
       { field: 'no', header: 'No' },
       { field: 'reservation_id', header: 'Reservation ID' },
       { field: 'username', header: 'Username' },
+      { field: 'userRole', header: 'User Role'},
       { field: 'email', header: 'Email' },
       { field: 'create_time', header: 'Create Time' },
       { field: 'reservation_description', header: 'Reservation Description' },
       { field: 'reservation_start_time', header: 'Reservation Start Time' },
       { field: 'reservation_end_time', header: 'Reservation End Time' },
-      { field: 'room_id', header: 'Room ID' },
+      { field: 'classLocation', header: 'Room Location'},
       { field: 'status', header: 'Status' },
       { field: 'action', header: 'Action' },
     ];
   }
 
-  class: any;
+  classroomList: any;
   getData() {
     const searchForm: GetAllReservationSearchForm = Util.getDataFormSearch(this.formSearch);
     this.adminService.getAllReservations(searchForm).subscribe({
@@ -87,7 +93,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
         this.events = filteredReservations.map(reservation => ({
           start: new Date(reservation.reservation_start_time),
           end: new Date(reservation.reservation_end_time),
-          title: 'Room : ' + reservation.room_id.toString() + " is reserved from: " + new Date(reservation.reservation_start_time) + " to " + new Date(reservation.reservation_end_time) + " by username: " + reservation.username,
+          title: 'Room : ' + reservation.class_location + " is reserved from: " + new Date(reservation.reservation_start_time) + " to " + new Date(reservation.reservation_end_time) + " by username: " + reservation.username,
         }));
         this.messageService.add({
           severity: 'success',
@@ -194,7 +200,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
     this.endTime = new Date(data.reservation_end_time)
     this.currentStatus = this.status.find(s => s.id === data.status).id;
     this.description = data.reservation_description;
-    this.roomId = data.room_id;
+    this.roomLocation = data.class_location;
   }
   updateReservationDetail(){
       this.confirmationService.confirm({
@@ -222,7 +228,13 @@ export class AdminGetAllReservationsComponent implements OnInit {
     }
   }
   acceptUpdateReservation(){
-    let updateForm: UpdateReservationDetailForm = {roomId: this.roomId, status: this.currentStatus, endTime: Util.convertDateToTimeStamp(this.endTime), startTime:Util.convertDateToTimeStamp(this.startTime), reservationId: this.reservation_id };
+    let updateForm: UpdateReservationDetailForm = {
+      roomId: this.roomLocation,
+      status: this.currentStatus,
+      endTime: Util.convertDateToTimeStamp(this.endTime),
+      startTime: Util.convertDateToTimeStamp(this.startTime),
+      reservationId: this.reservation_id
+    };
     this.adminService.updateReservationDetail(updateForm).subscribe({
       next: (res) => {
         console.log(res);
@@ -308,8 +320,22 @@ export class AdminGetAllReservationsComponent implements OnInit {
     });
   }
 
-  getRoomList() {
-
+  // Lấy list phòng học
+  getClassroomList() {
+    this.userService.getClassroomList().subscribe({
+      next: (res) => {
+        this.classroomList = res.map(classroom => ({
+          id: classroom.id,
+          name: classroom.classLocation
+        }));
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'An error happened when retrieving classroom list. Please try again later',
+        });
+      },
+    });
   }
 
 }

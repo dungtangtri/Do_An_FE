@@ -20,6 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   formSearch: FormGroup;
   data: any;
   data2: any;
+  today: any;
   data3: any;
   chartOptions: any;
   totalReservation: any;
@@ -31,7 +32,8 @@ export class AdminDashboardComponent implements OnInit {
   unprocessReservationToday: any;
   acceptedReservationToday: any;
   acceptedReservation: any;
-  years: any = [2024, 2025];
+  isValidDate = true;
+  years: any = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
   lineChartData: any;
   customColor = ['#ffc700', '#0fb215', '#e53131'];
   customColorUserRole = ['#6A1B9A', '#E64A19', '#00838F']
@@ -44,6 +46,7 @@ export class AdminDashboardComponent implements OnInit {
   statusSummary: any;
   userSummary: any
   ngOnInit(): void {
+    this.today = new Date();
     this.getDataToday();
     this.getDataNumberOfReservations();
     this.getDataNumberOfAcceptedReservations();
@@ -62,6 +65,7 @@ export class AdminDashboardComponent implements OnInit {
   }
   resetForm() {
     this.formSearch.reset();
+    this.isValidDate = true;
     this.generatePieChart1();
     this.generatePieChart2();
   }
@@ -253,6 +257,12 @@ export class AdminDashboardComponent implements OnInit {
         });
       },
     })
-
+  }
+  validateTime() {
+    if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
+      this.isValidDate = true;
+    } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
+      this.isValidDate = false;
+    }
   }
 }

@@ -28,7 +28,7 @@
   </p-toolbar>
 </div>
 <div class="flex flex-wrap justify-content-end">
-  <button pButton label="Add New Classroom" class="cp-button" icon="pi pi-plus" (click)="addNewClassroom()">
+  <button pButton label="Add New Classroom" class="cp-button" icon="pi pi-plus" (click)="openAddNewClassroom()">
   </button>
 </div>
 <div>
@@ -163,5 +163,71 @@
               class="cp-button">
       </button>
     </div>
+  </ng-template>
+</p-dialog>
+<p-dialog
+  styleClass="cp-dialog"
+  header="Add new Classroom"
+  [modal]="true"
+  [(visible)]="isAddNewClassroom"
+  (onHide)="isAddNewClassroom = false"
+  [style]="{width: '800px', height: '600px'}">
+  <form [formGroup]="formAddNew">
+    <div class="formgrid flex p-fluid">
+      <div class="col-6 w-full">
+        <div class="form-group">
+          <label class="font-bold text-xl">Class Location</label>
+          <div>
+            <input pInputText [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.CLASS_LOCATION.NAME"
+                   [pKeyFilter]="blockSpace" [ngClass]="{'ng-dirty ng-invalid': formAddNew.get('classLocation')?.touched && formAddNew.get('classLocation')?.invalid}">
+          </div>
+          <div *ngIf="formAddNew.get('classLocation')?.touched && formAddNew.get('classLocation')?.invalid">
+            <small class="p-error" *ngIf="formAddNew.get('classLocation')?.errors?.['required']">Classroom Location is
+              required.</small>
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-xl">Has Power Outlet?</label>
+          <p-dropdown [options]="havePowerOutlet"
+                      [style]="{width: '100%'}"
+                      [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.HAS_POWER_OUTLET.NAME"
+                      placeholder="Has Power Outlet?"
+                      optionLabel="name"
+                      optionValue="id"
+                      class="cp-form-item"
+                      [ngClass]="{'ng-dirty ng-invalid': formAddNew.get('powerOutlet')?.touched && formAddNew.get('powerOutlet')?.invalid}">
+          </p-dropdown>
+          <div *ngIf="formAddNew.get('powerOutlet')?.touched && formAddNew.get('powerOutlet')?.invalid">
+            <small class="p-error" *ngIf="formAddNew.get('powerOutlet')?.errors?.['required']">Power Outlet Option is
+              required.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="font-bold text-xl">Class Capacity</label>
+          <div>
+            <input type="number" pInputText [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.CLASS_CAPACITY.NAME" min="0" max="150"
+                   [ngClass]="{'ng-dirty ng-invalid': formAddNew.get('classCapacity')?.touched && formAddNew.get('classCapacity')?.invalid}">
+          </div>
+          <div *ngIf="formAddNew.get('classCapacity')?.touched && formAddNew.get('classCapacity')?.invalid">
+            <small class="p-error" *ngIf="formAddNew.get('classCapacity')?.errors?.['required']">Classroom Capacity is
+              required.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Save"
+      (onClick)="saveNewClassroom()"
+      [disabled]="formAddNew.invalid"
+      styleClass="cp-button">
+    </p-button>
+    <p-button (click)="isAddNewClassroom = false"
+              label="Cancel"
+              styleClass="cp-button">
+    </p-button>
   </ng-template>
 </p-dialog>

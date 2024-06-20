@@ -11,9 +11,10 @@
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.START_DATE.NAME"
             dateFormat="dd/mm/yy"
-            placeholder="Start Date"
-            [showTime]="true"
+            placeholder="Create Time Start Date"
+            [maxDate]="today"
             [showSeconds]="true"
+            [showTime]="true"
             [showIcon]="true"
             [readonlyInput]="true"
             selectionMode="single"
@@ -28,10 +29,11 @@
         <div class="calendar-container">
           <p-calendar
             [formControlName]="SEARCH_FORM_CONTROL.END_DATE.NAME"
-            placeholder="End Date"
+            placeholder="Create Time End Date"
             dateFormat="dd/mm/yy"
-            [showTime]="true"
             [showSeconds]="true"
+            [maxDate]="today"
+            [showTime]="true"
             [showIcon]="true"
             [readonlyInput]="true"
             selectionMode="single"
@@ -96,6 +98,7 @@
     responsiveLayout="scroll"
     [paginator]="true"
     [rows]="10"
+    [autoLayout]="true"
   >
     <ng-template pTemplate="header" let-columns>
       <p-confirmDialog
@@ -182,7 +185,8 @@
       <div class="col-6 field">
         <label class="font-bold text-xl">Username</label>
         <div>
-          <input pInputText placeholder="Username" required [formControlName]="REGISTRATION_FORM_CONTROL.USERNAME.NAME">
+          <input pInputText placeholder="Username" required [formControlName]="REGISTRATION_FORM_CONTROL.USERNAME.NAME"
+                 [ngClass]="{'ng-dirty ng-invalid': formRegister.get(REGISTRATION_FORM_CONTROL.USERNAME.NAME)?.touched && formRegister.get(REGISTRATION_FORM_CONTROL.USERNAME.NAME)?.invalid}">
           <div *ngIf="formRegister.get('username')?.touched && formRegister.get('username')?.invalid">
             <small class="p-error" *ngIf="formRegister.get('username')?.errors?.['required']">Username is
               required.</small>
@@ -197,7 +201,8 @@
         <label class="font-bold text-xl">User Role</label>
         <div>
           <p-dropdown [options]="role" optionValue="id" optionLabel="name" placeholder="User Role"
-                      [required]="true" [formControlName]="REGISTRATION_FORM_CONTROL.ROLE.NAME"></p-dropdown>
+                      [required]="true" [formControlName]="REGISTRATION_FORM_CONTROL.ROLE.NAME"
+                      [ngClass]="{'ng-dirty ng-invalid': formRegister.get(REGISTRATION_FORM_CONTROL.ROLE.NAME)?.touched && formRegister.get(REGISTRATION_FORM_CONTROL.ROLE.NAME)?.invalid}"></p-dropdown>
           <div *ngIf="formRegister.get('role')?.touched && formRegister.get('role')?.invalid">
             <small class="p-error" *ngIf="formRegister.get('role')?.errors?.['required']">User role is required.</small>
           </div>
@@ -207,7 +212,8 @@
         <label class="font-bold text-xl">Password</label>
         <div>
           <input pInputText type="password" placeholder="Password" required
-                 [formControlName]="REGISTRATION_FORM_CONTROL.PASSWORD.NAME" (change)="validatePassword()">
+                 [formControlName]="REGISTRATION_FORM_CONTROL.PASSWORD.NAME" (change)="validatePassword()"
+                 [ngClass]="{'ng-dirty ng-invalid': formRegister.get(REGISTRATION_FORM_CONTROL.PASSWORD.NAME)?.touched && formRegister.get(REGISTRATION_FORM_CONTROL.PASSWORD.NAME)?.invalid}">
           <div *ngIf="formRegister.get('password')?.touched && formRegister.get('password')?.invalid">
             <small class="p-error" *ngIf="formRegister.get('password')?.errors?.['required']">Password is
               required.</small>
@@ -222,7 +228,8 @@
         <label class="font-bold text-xl">Email Address</label>
         <div>
           <input pInputText type="email" placeholder="Email Address" required
-                 [formControlName]="REGISTRATION_FORM_CONTROL.EMAIL.NAME">
+                 [formControlName]="REGISTRATION_FORM_CONTROL.EMAIL.NAME"
+                 [ngClass]="{'ng-dirty ng-invalid': formRegister.get(REGISTRATION_FORM_CONTROL.EMAIL.NAME)?.touched && formRegister.get(REGISTRATION_FORM_CONTROL.EMAIL.NAME)?.invalid}">
           <div *ngIf="formRegister.get('email')?.touched && formRegister.get('email')?.invalid">
             <small class="p-error" *ngIf="formRegister.get('email')?.errors?.['required']">Email address is
               required.</small>
@@ -236,7 +243,8 @@
         <label class="font-bold text-xl">Re-enter Password</label>
         <div>
           <input pInputText type="password" placeholder="Re-enter Password" required
-                 [formControlName]="REGISTRATION_FORM_CONTROL.CONFIRM_PASSWORD.NAME" (change)="validatePassword()">
+                 [formControlName]="REGISTRATION_FORM_CONTROL.CONFIRM_PASSWORD.NAME" (change)="validatePassword()"
+                 [ngClass]="{'ng-dirty ng-invalid': formRegister.get(REGISTRATION_FORM_CONTROL.CONFIRM_PASSWORD.NAME)?.touched && (formRegister.get(REGISTRATION_FORM_CONTROL.CONFIRM_PASSWORD.NAME)?.invalid || !isMatchPassword) }">
           <small class="p-error" *ngIf="!isMatchPassword">Passwords do not match.</small>
           <div *ngIf="formRegister.get('confirmPassword')?.touched && formRegister.get('confirmPassword')?.invalid">
             <small class="p-error" *ngIf="formRegister.get('confirmPassword')?.errors?.['required']">Re-entering the

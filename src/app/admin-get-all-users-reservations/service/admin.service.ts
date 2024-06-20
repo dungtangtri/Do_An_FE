@@ -16,13 +16,15 @@ import {GetNumberOfReservationsByYearDto} from "../models/get-number-of-reservat
 import {GetAllClassroomSearchForm} from "../../manage-classroom/models/GetAllClassroomSearchForm";
 import {GetAllClassroomDTO} from "../../manage-classroom/models/GetAllClassroomDTO";
 import {UpdateClassroomDetailsRequest} from "../../admin-dashboard/models/update-classroom-details-request";
+import {AddNewClassroomRequest} from "../../manage-classroom/models/AddNewClassroomRequest";
+import {GetAllReservationSearchForm} from "../models/get-all-reservation-search-form";
 const API_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
   constructor(private http: HttpClient) {}
-  getAllReservations(searchForm: BaseSearchForm) {
+  getAllReservations(searchForm: GetAllReservationSearchForm) {
     return this.http.post<GetAllUserWithReservationDto[]>(
       API_URL + 'get-all-user-reservations',
       searchForm,
@@ -39,7 +41,7 @@ export class AdminService {
       searchForm,
     );
   }
-  exportGetAllReservations(searchForm: BaseSearchForm) {
+  exportGetAllReservations(searchForm: GetAllReservationSearchForm) {
     return this.http.post(
       API_URL + 'export-get-all-user-reservations',
       searchForm,
@@ -118,6 +120,15 @@ export class AdminService {
   updateClassroomDetail(form: UpdateClassroomDetailsRequest){
     return this.http.post(
       API_URL + 'edit-room',
+      form,
+      {
+        responseType: 'text'
+      }
+    )
+  }
+  addNewClassroom(form: AddNewClassroomRequest){
+    return this.http.post(
+      API_URL + 'add-room',
       form,
       {
         responseType: 'text'

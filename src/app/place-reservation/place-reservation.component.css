@@ -1,0 +1,4 @@
+::ng-deep .p-card{
+  border-radius: 50px !important;
+  border: 3px solid grey !important;
+}

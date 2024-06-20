@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { StorageService } from '../_services/storage.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-
+const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -64,4 +64,5 @@ export class LoginComponent implements OnInit {
       },
     });
   }
+
 }

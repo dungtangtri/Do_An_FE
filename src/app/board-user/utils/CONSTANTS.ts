@@ -59,6 +59,12 @@ export class CONSTANTS {
       VALUE: '',
       VALIDATORS: [Validators.required],
     },
+    ROOM_CAPACITY: {
+      NAME: 'roomCapacity',
+      VALUE: '',
+      VALIDATORS: '',
+      disabled: true
+    },
   };
   static readonly REGISTRATION_FORM_CONTROL_NAME = {
     USERNAME: {
@@ -98,5 +104,49 @@ export class CONSTANTS {
       VALUE: '',
       VALIDATORS: [],
     }
+  }
+  static readonly ADD_NEW_CLASSROOM_FORM_CONTROL_NAME = {
+    CLASS_LOCATION: {
+      NAME: 'classLocation',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
+    HAS_POWER_OUTLET: {
+      NAME: 'powerOutlet',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
+    CLASS_CAPACITY: {
+      NAME: 'classCapacity',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    }
+  }
+  static readonly SUGGESTION_FORM_CONTROL_NAME = {
+    CAN_ACCEPT_NO_POWER_OUTLET: {
+      NAME: 'canAcceptNoPowerOutlet',
+      VALUE: false,
+      VALIDATORS: [],
+    },
+    HAS_POWER_OUTLET: {
+      NAME: 'powerOutlet',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
+    CLASS_CAPACITY: {
+      NAME: 'classCapacity',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
+    SHIFT_OPTION: {
+      NAME: 'shiftOption',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
+    DAY: {
+      NAME: 'day',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
   }
 }

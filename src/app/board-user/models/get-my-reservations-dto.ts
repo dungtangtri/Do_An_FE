@@ -4,6 +4,6 @@ export interface GetMyReservationsDto {
   reservation_description: string;
   reservation_start_time: string;
   reservation_end_time: string;
-  room_id: number;
+  class_location: string;
   status: string;
 }
