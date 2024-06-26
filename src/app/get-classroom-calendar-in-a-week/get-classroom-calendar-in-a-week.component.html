@@ -2,11 +2,12 @@
 <p-panel>
   <ng-template pTemplate="header">
     <span
-      class="text-primary font-semibold text-5xl ml-auto justify-content-center">View the Classroom Calendar in the next 7 days</span>
+      class="text-primary font-semibold text-5xl ml-auto justify-content-center">View Classroom Calendar</span>
   </ng-template>
   <ng-template pTemplate="body">
     <div>
-      <label class="font-bold text-xl">Choose a room</label>
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+      <label class="font-bold text-xl">Select a room</label>
       <div>
         <p-dropdown [options]="classroomList" optionLabel="name" optionValue="id"
                     placeholder="Room Location" [filter]="true" [(ngModel)]="roomId" (onChange)="getData()">

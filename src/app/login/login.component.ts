@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.roles = this.storageService.getUser().roles;
         this.messageService.add({
           severity: 'success',
-          summary: 'Successfully Signing In',
+          summary: 'Successfully Signed In',
           detail:
             'Successfully signed in. Redirecting to home page in 3 seconds. ',
         });
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
         this.messageService.add({
           severity: 'error',
-          summary: 'Unsuccessfully Sign In',
+          summary: 'Unsuccessfully Signed In',
           detail: this.errorMessage,
         });
       },

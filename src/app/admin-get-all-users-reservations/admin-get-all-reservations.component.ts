@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from './service/admin.service';
 import {GetAllUserWithReservationDto} from './models/get-all-user-with-reservation-dto';
 import {ConfirmationService, MessageService,} from 'primeng/api';
@@ -19,6 +19,7 @@ import {UserService} from "../_services/user.service";
   providers: [ConfirmationService, MessageService],
 })
 export class AdminGetAllReservationsComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
   readonly SEARCH_FORM_CONTROL = CONSTANTS.SEARCH_FORM_CONTROL_NAME;
   content: GetAllUserWithReservationDto[] = [];
   cols: any[] = [];
@@ -31,17 +32,22 @@ export class AdminGetAllReservationsComponent implements OnInit {
   description: any;
   currentStatus: any;
   formSearch: FormGroup;
-  today: any;
-  maxDate: any;
-  minDate: any;
+  today: Date;
+  maxDate: Date;
+  minDate: Date;
   isVisibleImportExcel = false;
   isVisibleCalendar = false;
   isVisibleEdit = false;
   isValid = true;
   isValidDateEdit = true;
   selectedIds: number[] = [];
+  selectedFile: any;
+  validFile = false;
+  resultImport: any;
+  isSubmitFile = false;
   view: CalendarView = CalendarView.Month;
   activeDayIsOpen: boolean = true;
+
   viewDate: Date = new Date();
 
   events: CalendarEvent[] = [];
@@ -338,4 +344,59 @@ export class AdminGetAllReservationsComponent implements OnInit {
     });
   }
 
+  downloadExcelTemplate() {
+    this.adminService.downloadExcelTemplate().subscribe({
+      next: (res) => {
+        Util.checkExportFile(res, 'Import_Reservations_Template');
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successfully download Excel Template',
+        });
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error when Downloading Excel Template',
+        });
+      },
+    });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const file = input.files[0];
+      const fileType = file.name.split('.').pop()?.toLowerCase();
+      if (fileType === 'xls' || fileType === 'xlsx') {
+        this.selectedFile = file;
+        this.validFile = true;
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Please upload a valid Excel file (.xls or .xlsx).',
+        });
+        this.selectedFile = null;
+        this.validFile = false;
+        this.fileInput.nativeElement.value = '';
+      }
+    }
+  }
+
+  onSubmitFile() {
+    this.adminService.importExcel(this.selectedFile).subscribe({
+      next: (res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successfully import Excel file',
+        });
+        this.resultImport = res;
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error processing Excel File',
+        });
+      },
+    });
+  }
 }

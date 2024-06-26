@@ -81,7 +81,7 @@
         <div class="field col-12 md:col-6">
           <div>
             <span class="pi pi-exclamation-triangle" style="color: red;font-size: 1.25rem"></span>
-            <small class="font-bold underline">Will only suggest rooms without a power outlet when no other available
+            <small class="font-bold underline">Select to suggest rooms without a power outlet when no other available
               rooms with a power outlet match your requirements.</small>
           </div>
           <label class="font-bold text-xl">Can take rooms without Power Outlet?</label>
@@ -163,6 +163,10 @@
   </ng-template>
   <ng-template pTemplate="body">
   <form [formGroup]="formReservation">
+    <div class="text-2xl font-bold underline">
+      It is suggested to find a suitable room above before placing your reservation.
+    </div>
+    <br>
   <div class="formgrid grid">
     <div class="field col-12 md:col-6">
       <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>

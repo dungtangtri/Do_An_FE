@@ -135,4 +135,15 @@ export class AdminService {
       }
     )
   }
+  downloadExcelTemplate() {
+    return this.http.get(
+      API_URL + 'download-import-reservations-template',
+      { responseType: 'blob' },
+    );
+  }
+  importExcel(file: File): Observable<string[]>{
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<string[]>(API_URL + 'import-reservations', formData );
+  }
 }

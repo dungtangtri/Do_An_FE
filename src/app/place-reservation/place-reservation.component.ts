@@ -122,7 +122,6 @@ export class PlaceReservationComponent implements OnInit {
   }
 
   getRoomSuggestion() {
-    // if the user is not logged in then the user can't place a reservation
     if (this.isLoggedIn()) {
       const searchForm: GetRoomSuggestionForm = Util.getDataFormSearch(this.formRoomSuggestion)
       this.userService.getRoomSuggestion(searchForm).subscribe({

@@ -15,6 +15,7 @@ import {NotFoundPageComponent} from "./not-found-page/not-found-page.component";
 import {
   GetClassroomCalendarInAWeekComponent
 } from "./get-classroom-calendar-in-a-week/get-classroom-calendar-in-a-week.component";
+import {UserChangePasswordComponent} from "./user-change-password/user-change-password.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'place-reservation', component: PlaceReservationComponent },
   { path: 'manage-classroom', component: ManageClassroomComponent },
   { path: 'view-classroom-calendar', component: GetClassroomCalendarInAWeekComponent},
+  { path: 'change-password', component: UserChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: NotFoundPageComponent }
 ];

@@ -224,7 +224,7 @@
             [showSeconds]="true"
             [showButtonBar]="true"
             view="date"
-            [minDate]="minDate"
+            [minDate]="today"
             [maxDate]="maxDate"
             [(ngModel)]="startTime"
             [ngModelOptions]="{standalone: true}"
@@ -254,7 +254,7 @@
             placeholder="End Date"
             dateFormat="dd/mm/yy"
             (onClose)="validateTimeEditForm()"
-            [minDate]="minDate"
+            [minDate]="today"
             [maxDate]="maxDate"
             [showButtonBar]="true"
             [showIcon]="true"
@@ -338,18 +338,55 @@
     </div>
   </div>
 </p-dialog>
-<p-dialog [style]="{width: '400px', height: '300px'}"
+<p-dialog [style]="{width: '900px', height: '700px'}"
           styleClass="cp-dialog"
           header="Import Excel"
           [modal]="true"
           [(visible)]="isVisibleImportExcel"
           (onHide)="isVisibleImportExcel = false">
-  <div class="flex align-content-center">
-    <button pButton icon="pi pi-download"
-            pTooltip="Download Excel Template for Import Excel"
-            label="Download Excel Template"
-            class="cp-button ">
-    </button>
+  <ng-template pTemplate="body">
+    <div class="formgrid flex flex-column align-items-center">
+      <div class="col-12 text-center mb-5">
+        <label class="font-bold text-xl">Select Excel File</label>
+        <span> .xlx or .xlsx file only</span>
+        <div>
+          <input type="file" id="file" accept=".xls,.xlsx" (change)="onFileSelected($event)" #fileInput>
+        </div>
+      </div>
+      <div class="col-12 text-center">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-download"
+          pTooltip="Download Excel Template"
+          label="Download Excel Template"
+          (click)="downloadExcelTemplate()"
+          class="cp-button"
+        ></button>
+      </div>
   </div>
-
+    <p-panel *ngIf="isSubmitFile">
+      <ng-template pTemplate="header">
+        <span
+          class="text-primary font-semibold text-2xl ml-auto justify-content-center">Import Result</span>
+      </ng-template>
+      <ng-template pTemplate="body">
+        <div *ngFor="let result of resultImport">
+          <p>{{ result }}</p>
+        </div>
+      </ng-template>
+    </p-panel>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Upload"
+      (onClick)="onSubmitFile(); isSubmitFile = true"
+      styleClass="cp-button"
+      [disabled]="!validFile ">
+    </p-button>
+    <p-button (click)="isVisibleImportExcel = false; isSubmitFile = false"
+              label="Cancel"
+              styleClass="cp-button">
+    </p-button>
+  </ng-template>
 </p-dialog>

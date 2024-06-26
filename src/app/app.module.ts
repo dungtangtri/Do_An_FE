@@ -57,6 +57,7 @@ import {SliderModule} from "primeng/slider";
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import {SplitterModule} from "primeng/splitter";
 import { GetClassroomCalendarInAWeekComponent } from './get-classroom-calendar-in-a-week/get-classroom-calendar-in-a-week.component';
+import { UserChangePasswordComponent } from './user-change-password/user-change-password.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { GetClassroomCalendarInAWeekComponent } from './get-classroom-calendar-i
     ManageClassroomComponent,
     NotFoundPageComponent,
     GetClassroomCalendarInAWeekComponent,
+    UserChangePasswordComponent,
   ],
     imports: [
         BrowserModule,
