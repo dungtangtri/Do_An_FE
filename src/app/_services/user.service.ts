@@ -8,11 +8,13 @@ import {UserSearchForm} from "../all-user/models/user-search-form";
 import {GetClassroomListDTO} from "../board-user/models/GetClassroomListDTO";
 import {GetRoomSuggestionForm} from "../place-reservation/models/get-room-suggestion-form";
 import {GetRoomSuggestionsDto} from "../place-reservation/models/get-room-suggestions-dto";
-import {GetAllReservationSearchForm} from "../admin-get-all-users-reservations/models/get-all-reservation-search-form";
 import {GetAllReservationsByWeekDto} from "../get-classroom-calendar-in-a-week/models/get-all-reservations-by-week-dto";
 import {
   GetAllReservationsByWeekSearchForm
 } from "../get-classroom-calendar-in-a-week/models/get-all-reservations-by-week-search-form";
+import {UserChangePasswordRequest} from "../user-change-password/models/user-change-password-request";
+import {UserResetPasswordRequest} from "../user-reset-password/models/user-reset-password-request";
+import {ForgotPasswordRequest} from "../forgot-password/models/forgot-password-request";
 
 const API_URL = API.GENERAL_API;
 
@@ -70,4 +72,26 @@ export class UserService {
     );
   }
 
+  userChangePassword(request: UserChangePasswordRequest) {
+    return this.http.post(
+      API_URL + 'change-password',
+      request,
+      {responseType: 'text'},
+    );
+  }
+
+  userResetPassword(request: UserResetPasswordRequest) {
+    return this.http.post(
+      API_URL + 'public/verify-reset-password',
+      request,
+      {responseType: 'text'},
+    );
+  }
+  userForgotPassword(request: ForgotPasswordRequest) {
+    return this.http.post(
+      API_URL + 'public/forgot-password',
+      request,
+      {responseType: 'text'},
+    );
+  }
 }

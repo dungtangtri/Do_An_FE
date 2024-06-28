@@ -37,14 +37,13 @@ export class RegisterComponent implements OnInit{
 
     this.authService.register(username, email, password).subscribe({
       next: (data) => {
-        console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Successfully Signing Up',
           detail:
-            'Successfully signed up. Redirecting to login page in 3 seconds. ',
+            'Successfully signed up. Please check your email to activate your account. Redirecting to login page in 3 seconds. ',
         });
         window.setTimeout(function () {
           window.location.replace('/login');

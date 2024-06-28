@@ -58,6 +58,8 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 import {SplitterModule} from "primeng/splitter";
 import { GetClassroomCalendarInAWeekComponent } from './get-classroom-calendar-in-a-week/get-classroom-calendar-in-a-week.component';
 import { UserChangePasswordComponent } from './user-change-password/user-change-password.component';
+import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,8 @@ import { UserChangePasswordComponent } from './user-change-password/user-change-
     NotFoundPageComponent,
     GetClassroomCalendarInAWeekComponent,
     UserChangePasswordComponent,
+    UserResetPasswordComponent,
+    ForgotPasswordComponent,
   ],
     imports: [
         BrowserModule,
