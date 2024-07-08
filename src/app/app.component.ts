@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { StorageService } from './_services/storage.service';
-import { AuthService } from './_services/auth.service';
-import { EventBusService } from './_shared/event-bus.service';
+import { StorageService } from './auth-service/storage.service';
+import { AuthService } from './auth-service/auth.service';
+import { EventBusService } from './util/shared/event-bus.service';
 import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({

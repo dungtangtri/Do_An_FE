@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from "primeng/api";
 import {UserResetPasswordRequest} from "../user-reset-password/models/user-reset-password-request";
-import {UserService} from "../_services/user.service";
+import {UserService} from "../auth-service/user.service";
 import {ForgotPasswordRequest} from "./models/forgot-password-request";
 
 const USER_KEY = 'auth-user';

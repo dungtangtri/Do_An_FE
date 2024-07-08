@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {UserService} from "../_services/user.service";
-import {AuthService} from "../_services/auth.service";
+import {UserService} from "../auth-service/user.service";
+import {AuthService} from "../auth-service/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserResetPasswordRequest} from "./models/user-reset-password-request";
 

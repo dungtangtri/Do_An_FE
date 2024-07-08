@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit
 import {Subject, takeUntil} from "rxjs";
 import {CalendarEvent, CalendarView} from "angular-calendar";
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
-import {UserService} from "../_services/user.service";
+import {UserService} from "../auth-service/user.service";
 import {MessageService} from "primeng/api";
 import {GetAllReservationsByWeekSearchForm} from "./models/get-all-reservations-by-week-search-form";
 

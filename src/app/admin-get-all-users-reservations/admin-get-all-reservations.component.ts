@@ -9,7 +9,7 @@ import {UpdateReservationDetailForm} from "./models/update-reservation-detail-fo
 import {CalendarEvent, CalendarView} from "angular-calendar";
 import {isSameDay, isSameMonth,} from 'date-fns';
 import {GetAllReservationSearchForm} from "./models/get-all-reservation-search-form";
-import {UserService} from "../_services/user.service";
+import {UserService} from "../auth-service/user.service";
 
 @Component({
   selector: 'app-admin-get-all-users-reservations',
@@ -256,8 +256,8 @@ export class AdminGetAllReservationsComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error updating reservation detail',
-          detail:
-            'Error updating reservation detail, please try again later.',
+          detail:err.error
+            ,
         });
       },
     });

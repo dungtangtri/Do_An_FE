@@ -1,4 +1,4 @@
-import {BaseSearchForm} from "../../shared/BaseSearchForm";
+import {BaseSearchForm} from "../../util/shared/BaseSearchForm";
 
 export interface UserSearchForm extends BaseSearchForm{
   status: string[];

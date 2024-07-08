@@ -1,10 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {CONSTANTS} from '../board-user/utils/CONSTANTS';
 import {FormGroup} from "@angular/forms";
 import {Util} from "../util/util.class";
 import {PlaceReservationForm} from "./models/place-reservation-form";
-import {UserService} from "../_services/user.service";
+import {UserService} from "../auth-service/user.service";
 import {GetRoomSuggestionForm} from "./models/get-room-suggestion-form";
 import {GetRoomSuggestionsDto} from "./models/get-room-suggestions-dto";
 
@@ -16,7 +16,7 @@ const USER_KEY = 'auth-user';
   providers: [ConfirmationService, MessageService],
 })
 
-export class PlaceReservationComponent implements OnInit {
+export class PlaceReservationComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService,
     private messageService: MessageService,
@@ -29,7 +29,11 @@ export class PlaceReservationComponent implements OnInit {
     this.formRoomSuggestion = Util.createFormGroup(CONSTANTS.SUGGESTION_FORM_CONTROL_NAME);
   }
 
-  @ViewChild('noteInput') noteInput: ElementRef | undefined;
+  @ViewChild('focus') noteInput: ElementRef | undefined;
+
+  ngAfterViewInit() {
+    console.log(this.noteInput);
+  }
   isSubmitFormSuggestion = false;
   havePowerOutlet = [{id: 0, name: 'No'}, {id: 1, name: 'Yes'}];
   classroomList: any;
@@ -54,6 +58,14 @@ export class PlaceReservationComponent implements OnInit {
     { id: 6, name: 'Shift 7: 16h00 - 17h30' },
     { id: 7, name: 'Shift 8: 17h45 - 19h15' },
   ];
+
+  reason: any = [
+    {id: 'For Self/Group Study Sessions', name: 'For Self/Group Study Sessions'},
+    {id: 'For Club or Organization Meetings', name: 'For Club or Organization Meetings'},
+    {id: 'For Project Work', name: 'For Project Work'},
+    {id: 'For Online Classes or Meetings', name: 'For Online Classes or Meetings'},
+    {id: 'For Personal Use', name: 'For Personal Use'}
+  ]
   dataRoomSuggestion: any;
 
   ngOnInit() {
@@ -157,7 +169,11 @@ export class PlaceReservationComponent implements OnInit {
       this.formReservation.get(this.SEARCH_FORM_CONTROL.DAY.NAME)?.setValue(this.formRoomSuggestion.get(this.SUGGESTION_FORM_CONTROL.DAY.NAME)?.value);
       this.formReservation.get(this.SEARCH_FORM_CONTROL.ROOM_ID.NAME)?.setValue(data.id);
       this.formReservation.get(this.SEARCH_FORM_CONTROL.SHIFT_OPTION.NAME)?.setValue(this.formRoomSuggestion.get(this.SUGGESTION_FORM_CONTROL.SHIFT_OPTION.NAME)?.value);
-      this.noteInput?.nativeElement.focus();
+      setTimeout(() => {
+        if (this.noteInput) {
+          this.noteInput.nativeElement.focus();
+        }
+      }, 1);
     }
 
   }

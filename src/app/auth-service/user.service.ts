@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {GetMyReservationsDto} from '../board-user/models/get-my-reservations-dto';
-import {ChangeStatusForm} from '../shared/ChangeStatusForm';
-import {API} from "../shared/API";
+import {ChangeStatusForm} from '../util/shared/ChangeStatusForm';
+import {API} from "../util/shared/API";
 import {PlaceReservationForm} from "../place-reservation/models/place-reservation-form";
 import {UserSearchForm} from "../all-user/models/user-search-form";
 import {GetClassroomListDTO} from "../board-user/models/GetClassroomListDTO";
@@ -16,8 +16,8 @@ import {UserChangePasswordRequest} from "../user-change-password/models/user-cha
 import {UserResetPasswordRequest} from "../user-reset-password/models/user-reset-password-request";
 import {ForgotPasswordRequest} from "../forgot-password/models/forgot-password-request";
 
-const API_URL = API.GENERAL_API;
-
+const API_URL = API.USER_API;
+const PUBLIC_URL = API.GENERAL_API;
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +26,7 @@ export class UserService {
 
   getMyReservation(searchForm: UserSearchForm) {
     return this.http.post<GetMyReservationsDto[]>(
-      API_URL + 'get_user_profile',
+      API_URL + 'get-current-user-reservations',
       searchForm,
     );
   }
@@ -54,7 +54,7 @@ export class UserService {
 
   getClassroomList() {
     return this.http.get<GetClassroomListDTO[]>(
-      API_URL + 'public/user-get-all-classroom'
+      PUBLIC_URL + 'public/user-get-all-classroom'
     );
   }
 
@@ -67,7 +67,7 @@ export class UserService {
 
   getAllReservationsByWeek(searchForm: GetAllReservationsByWeekSearchForm) {
     return this.http.post<GetAllReservationsByWeekDto[]>(
-      API_URL + 'public/get-all-reservations-by-week',
+      PUBLIC_URL + 'public/get-all-reservations-by-week',
       searchForm,
     );
   }

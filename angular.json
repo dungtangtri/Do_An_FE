@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-16-jwt-auth": {
+    "do-an-fe": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -64,10 +64,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-16-jwt-auth:build:production"
+              "browserTarget": "do-an-fe:build:production"
             },
             "development": {
-              "browserTarget": "angular-16-jwt-auth:build:development"
+              "browserTarget": "do-an-fe:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-16-jwt-auth:build"
+            "browserTarget": "do-an-fe:build"
           }
         },
         "test": {

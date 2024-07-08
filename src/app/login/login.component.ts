@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { StorageService } from '../_services/storage.service';
+import { AuthService } from '../auth-service/auth.service';
+import { StorageService } from '../auth-service/storage.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 const USER_KEY = 'auth-user';
 @Component({

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../_services/user.service';
+import {UserService} from '../auth-service/user.service';
 import {ConfirmationService, MessageService,} from 'primeng/api';
 import {GetMyReservationsDto} from './models/get-my-reservations-dto';
 import {FormGroup} from '@angular/forms';
 import {CONSTANTS} from './utils/CONSTANTS';
 import {Util} from '../util/util.class';
-import {ChangeStatusForm} from '../shared/ChangeStatusForm';
+import {ChangeStatusForm} from '../util/shared/ChangeStatusForm';
 import {CalendarEvent, CalendarView} from "angular-calendar";
 import {isSameDay, isSameMonth} from "date-fns";
 import {UserSearchForm} from "../all-user/models/user-search-form";

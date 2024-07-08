@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { GetAllUserWithReservationDto } from '../models/get-all-user-with-reservation-dto';
-import { BaseSearchForm } from '../../shared/BaseSearchForm';
-import { AllUserInformationDto } from '../../all-user/models/all-user-information-dto';
-import { SummaryReservationsByStatusDto } from '../../admin-dashboard/models/summary-reservations-by-status-dto';
-import { API } from '../../shared/API';
-import { UpdateReservationDetailForm } from '../models/update-reservation-detail-form';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {GetAllUserWithReservationDto} from '../models/get-all-user-with-reservation-dto';
+import {BaseSearchForm} from '../../util/shared/BaseSearchForm';
+import {AllUserInformationDto} from '../../all-user/models/all-user-information-dto';
+import {SummaryReservationsByStatusDto} from '../../admin-dashboard/models/summary-reservations-by-status-dto';
+import {API} from '../../util/shared/API';
+import {UpdateReservationDetailForm} from '../models/update-reservation-detail-form';
 import {UserSearchForm} from "../../all-user/models/user-search-form";
 import {UserRegisterForm} from "../../all-user/models/user-register-form";
 import {UpdateUserInformationDto} from "../../all-user/models/update-user-information-dto";
@@ -18,7 +18,7 @@ import {GetAllClassroomDTO} from "../../manage-classroom/models/GetAllClassroomD
 import {UpdateClassroomDetailsRequest} from "../../admin-dashboard/models/update-classroom-details-request";
 import {AddNewClassroomRequest} from "../../manage-classroom/models/AddNewClassroomRequest";
 import {GetAllReservationSearchForm} from "../models/get-all-reservation-search-form";
-const API_URL = API.GENERAL_API;
+const API_URL = API.ADMIN_API;
 @Injectable({
   providedIn: 'root',
 })
@@ -31,7 +31,7 @@ export class AdminService {
     );
   }
   deleteReservation(id: number) {
-    return this.http.post(API_URL + 'deleteReservation', id, {
+    return this.http.delete(API_URL + 'deleteReservation/' + id, {
       responseType: 'text',
     });
   }
@@ -54,7 +54,7 @@ export class AdminService {
     });
   }
   deleteUser(id: number) {
-    return this.http.post(API_URL + 'delete_user', id, {
+    return this.http.delete(API_URL + 'delete_user/' + id, {
       responseType: 'text',
     });
   }
@@ -98,7 +98,7 @@ export class AdminService {
   }
   getNumberOfReservationByYear(form: GetNumberOfReservationsByYearSearchForm): Observable<GetNumberOfReservationsByYearDto[]>{
     return this.http.post<GetNumberOfReservationsByYearDto[]>(
-      API_URL + 'get-number-of-reservations',
+      API_URL + 'get-number-of-reservations-by-year',
       form
     )
   }
@@ -109,9 +109,8 @@ export class AdminService {
     )
   }
   deleteClassroom(id: number){
-    return this.http.post(
-      API_URL + 'delete-room-by-id',
-      id,
+    return this.http.delete(
+      API_URL + 'delete-room-by-id/' + id,
       {
         responseType: 'text'
       }

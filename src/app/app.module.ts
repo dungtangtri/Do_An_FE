@@ -15,13 +15,13 @@ import {
 import {AllUserComponent} from './all-user/all-user.component';
 import {UserGetMyReservationsComponent} from './board-user/user-get-my-reservations.component';
 import {TableModule} from 'primeng/table';
-import {httpInterceptorProviders} from './_helpers/http.interceptor';
+import {httpInterceptorProviders} from './auth-service/http.interceptor';
 import {ImageModule} from "primeng/image";
 import {ButtonModule} from "primeng/button";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InputTextModule} from "primeng/inputtext";
-import {DateFormatPipe} from './date-format.pipe';
+import {DateFormatPipe} from './pipe/date-format.pipe';
 import {TagModule} from "primeng/tag";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {TabViewModule} from "primeng/tabview";
@@ -44,7 +44,7 @@ import { PlaceReservationComponent } from './place-reservation/place-reservation
 import {PanelModule} from "primeng/panel";
 import { CalendarModule as Calendar, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { DemoUtilsModule } from './demo-utils/module';
+import { DemoUtilsModule } from './calendar-utils/module';
 import {MultiSelectModule} from "primeng/multiselect";
 import {PasswordModule} from "primeng/password";
 import {BadgeModule} from "primeng/badge";

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../_services/auth.service';
+import {AuthService} from '../auth-service/auth.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 
 const USER_KEY = 'auth-user';

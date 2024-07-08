@@ -113,7 +113,7 @@ export class ManageClassroomComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Delete Unsuccessfully',
-          detail: 'You have deleted unsuccessfully',
+          detail: err.error,
         });
       },
     });

@@ -4,7 +4,7 @@ import {CONSTANTS} from "../board-user/utils/CONSTANTS";
 import {FormGroup} from "@angular/forms";
 import {Util} from "../util/util.class";
 import {AdminService} from "../admin-get-all-users-reservations/service/admin.service";
-import {BaseSearchForm} from "../shared/BaseSearchForm";
+import {BaseSearchForm} from "../util/shared/BaseSearchForm";
 import {
   GetNumberOfReservationsByYearSearchForm
 } from "../admin-get-all-users-reservations/models/get-number-of-reservations-by-year-search-form";

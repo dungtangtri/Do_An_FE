@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../_services/user.service';
+import {UserService} from '../auth-service/user.service';
 
 const USER_KEY = 'auth-user';
 
@@ -23,7 +23,9 @@ export class HomeComponent implements OnInit {
       window.location.replace('/place-reservation');
     }
   }
-
+  viewClassroomCalendar() {
+    window.location.replace('/view-classroom-calendar')
+  }
   public isLoggedIn(): boolean {
     const user = window.localStorage.getItem(USER_KEY);
     if (user) {

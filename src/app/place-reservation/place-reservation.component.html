@@ -4,7 +4,7 @@
 <p-panel>
   <ng-template pTemplate="header">
     <span
-    class="text-primary font-semibold text-4xl ml-auto justify-content-center">Find an Available Room</span>
+    class="text-primary font-semibold text-4xl ml-auto justify-content-center">Find Available Rooms</span>
   </ng-template>
   <ng-template pTemplate="body">
     <form [formGroup]="formRoomSuggestion">
@@ -144,7 +144,7 @@
           <td colspan="11">
             <div class="flex flex-column empty">
               <p-image src="assets/images/Empty.png" alt="empty"></p-image>
-              <span> No available classrooms fit your requirements.</span>
+              <span> No available classrooms that match your requirements.</span>
             </div>
           </td>
         </tr>
@@ -182,7 +182,8 @@
           [showIcon]="true"
           selectionMode="single"
           [required]="true"
-          [ngClass]="{'ng-dirty ng-invalid': formReservation.get(SEARCH_FORM_CONTROL.DAY.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.DAY.NAME)?.invalid}">
+          [ngClass]="{'ng-dirty ng-invalid': formReservation.get(SEARCH_FORM_CONTROL.DAY.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.DAY.NAME)?.invalid}"
+          >
         </p-calendar>
         <div *ngIf="formReservation.get('day')?.touched && formReservation.get('day')?.invalid">
           <small class="p-error" *ngIf="formReservation.get('day')?.errors?.['required']">Select a day is
@@ -228,21 +229,33 @@
       </div>
     </div>
     <div class="field col-12">
-      <label class="font-bold text-xl">Note</label>
-      <textarea
-        #noteInput
+      <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+      <label class="font-bold text-xl">Reason for the reservation</label>
+      <div>
+        <p-dropdown
         [formControlName]="SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME"
-        type="text"
-        rows="4"
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        placeholder="Optional"
-      ></textarea>
+        [options]="reason"
+        [filter]="true"
+        optionValue="id"
+        optionLabel="name"
+        class="w-full"
+        placeholder="Reason"
+        [ngClass]="{'ng-dirty ng-invalid': formReservation.get(SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME)?.invalid}"
+        ></p-dropdown>
+        <div
+          *ngIf="formReservation.get(SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME)?.touched && formReservation.get(SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME)?.invalid">
+          <small class="p-error"
+                 *ngIf="formReservation.get(SEARCH_FORM_CONTROL.RESERVATION_DESCRIPTION.NAME)?.errors?.['required']">Select
+            a reason for the reservation is
+            required.</small>
+        </div>
+      </div>
     </div>
   </div>
   </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <p-button styleClass="cp-button" (onClick)="placeReservation()" type="submit"
+    <p-button styleClass="cp-button" (onClick)="placeReservation()" type="submit" #focus
               label="Place Reservation" [disabled]="formReservation.invalid"></p-button>
   </ng-template>
 </p-panel>

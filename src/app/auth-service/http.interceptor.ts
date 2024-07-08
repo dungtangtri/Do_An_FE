@@ -3,9 +3,9 @@ import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
-import {StorageService} from '../_services/storage.service';
-import {EventBusService} from '../_shared/event-bus.service';
-import {EventData} from '../_shared/event.class';
+import {StorageService} from './storage.service';
+import {EventBusService} from '../util/shared/event-bus.service';
+import {EventData} from '../util/shared/event.class';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {

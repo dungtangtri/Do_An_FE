@@ -47,7 +47,7 @@ export class CONSTANTS {
     RESERVATION_DESCRIPTION: {
       NAME: 'reservationDescription',
       VALUE: '',
-      VALIDATORS: [],
+      VALIDATORS: [Validators.required],
     },
     ROOM_ID: {
       NAME: 'roomId',
