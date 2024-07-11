@@ -15,9 +15,11 @@ import {
 import {UserChangePasswordRequest} from "../user-change-password/models/user-change-password-request";
 import {UserResetPasswordRequest} from "../user-reset-password/models/user-reset-password-request";
 import {ForgotPasswordRequest} from "../forgot-password/models/forgot-password-request";
+import {VerifyUserSuccessfulRequest} from "../verify-user-successful/models/verify-user-successful-request";
 
 const API_URL = API.USER_API;
 const PUBLIC_URL = API.GENERAL_API;
+const AUTH_API = API.AUTH_API;
 @Injectable({
   providedIn: 'root',
 })
@@ -76,6 +78,12 @@ export class UserService {
     return this.http.post(
       API_URL + 'change-password',
       request,
+      {responseType: 'text'},
+    );
+  }
+  verifyUserRegistration(token: string) {
+    return this.http.get(
+      AUTH_API + 'verify-registration?token=' + token,
       {responseType: 'text'},
     );
   }

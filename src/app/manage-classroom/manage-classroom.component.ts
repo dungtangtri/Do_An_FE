@@ -23,12 +23,15 @@ export class ManageClassroomComponent implements OnInit {
   rangeValue = [0, 100];
   blockSpace: RegExp = /[^\s]/;
   havePowerOutlet = [{id: 0, name: 'No'}, {id: 1, name: 'Yes'}];
+  building = [{id: 'D6', name: 'D6'}, {id: 'D8', name: 'D8'}, {id: 'D4', name: 'D4'}]
   data: any;
   cols: any;
   isEditRoom = false;
   roomID: any;
   today: any;
   classLocation : any;
+  currentBuilding: any;
+  currentRoom : any;
   classCapacity: any;
   changePowerOutlet: any;
   isAddNewClassroom = false;
@@ -125,7 +128,9 @@ export class ManageClassroomComponent implements OnInit {
   }
   getRoomData(data: GetAllClassroomDTO){
     this.roomID = data.id;
-    this.classLocation = data.class_location;
+    const parts = data.class_location.split('-');
+    this.currentBuilding = parts[0];
+    this.currentRoom = parts[1];
     this.changePowerOutlet = data.power_outlet;
     this.classCapacity = data.class_capacity;
   }
@@ -140,7 +145,7 @@ export class ManageClassroomComponent implements OnInit {
       });
   }
   acceptUpdateClassroom(){
-    let request: UpdateClassroomDetailsRequest = {classCapacity: this.classCapacity, classLocation: this.classLocation, classId: this.roomID, powerOutlet: this.changePowerOutlet}
+    let request: UpdateClassroomDetailsRequest = {classCapacity: this.classCapacity, classLocation: this.currentBuilding + '-' + this.currentRoom, classId: this.roomID, powerOutlet: this.changePowerOutlet}
     this.adminService.updateClassroomDetail(request).subscribe({
       next: (res) => {
         this.isEditRoom = false;

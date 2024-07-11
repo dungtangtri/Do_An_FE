@@ -23,6 +23,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   readonly SEARCH_FORM_CONTROL = CONSTANTS.SEARCH_FORM_CONTROL_NAME;
   content: GetAllUserWithReservationDto[] = [];
   cols: any[] = [];
+  exampleData : any;
   reservation_id: any;
   startTime: any;
   endTime: any;
@@ -35,6 +36,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   today: Date;
   maxDate: Date;
   minDate: Date;
+  exampleFormat: any;
   isVisibleImportExcel = false;
   isVisibleCalendar = false;
   isVisibleEdit = false;
@@ -86,6 +88,30 @@ export class AdminGetAllReservationsComponent implements OnInit {
       { field: 'status', header: 'Status' },
       { field: 'action', header: 'Action' },
     ];
+    this.exampleFormat = [
+      { field: 'reservation_date', header: 'Reservation Date' },
+      { field: 'shift', header: 'Shift' },
+      { field: 'room_id', header: 'Room ID'},
+      { field: 'note', header: 'Note' },
+      { field: 'username', header: 'Username' },
+    ];
+    this.exampleData = [
+      {
+        reservation_date: 'yyyy-dd-mm',
+        shift: '1 to 8',
+        room_id: 'Classroom ID',
+        note: 'Note ',
+        username: 'Valid username'
+      },
+      {
+        reservation_date: '2024-11-7',
+        shift: '1',
+        room_id: '4',
+        note: 'For personal use',
+        username: 'admin'
+      }
+    ];
+
   }
 
   classroomList: any;

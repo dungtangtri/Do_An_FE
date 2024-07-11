@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, OnInit} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {RegisterComponent} from './register/register.component';
@@ -20,6 +20,7 @@ import {
 import {UserChangePasswordComponent} from "./user-change-password/user-change-password.component";
 import {UserResetPasswordComponent} from "./user-reset-password/user-reset-password.component";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {VerifyUserSuccessfulComponent} from "./verify-user-successful/verify-user-successful.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'change-password', component: UserChangePasswordComponent},
   { path: 'verify-reset-password', component: UserResetPasswordComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'verify-registration', component: VerifyUserSuccessfulComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: NotFoundPageComponent }
 ];
@@ -44,4 +46,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+}

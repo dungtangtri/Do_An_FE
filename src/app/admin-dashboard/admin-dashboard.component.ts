@@ -8,6 +8,8 @@ import {BaseSearchForm} from "../util/shared/BaseSearchForm";
 import {
   GetNumberOfReservationsByYearSearchForm
 } from "../admin-get-all-users-reservations/models/get-number-of-reservations-by-year-search-form";
+import {GetNumberOfReservationsByReasonSearchForm} from "./models/get-number-of-reservations-by-reason-search-form";
+import {StorageService} from "../auth-service/storage.service";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,7 +23,8 @@ export class AdminDashboardComponent implements OnInit {
   data: any;
   data2: any;
   today: any;
-  data3: any;
+  numberOfReservationsByMonth: any;
+  numberOfReservationsByReason: any;
   chartOptions: any;
   totalReservation: any;
   totalReservationToday: any;
@@ -34,18 +37,58 @@ export class AdminDashboardComponent implements OnInit {
   acceptedReservation: any;
   isValidDate = true;
   years: any = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+  months: any = [
+    {id: 1, name: 'January'},
+    {id: 2, name: 'February'},
+    {id: 3, name: 'March'},
+    {id: 4, name: 'April'},
+    {id: 5, name: 'May'},
+    {id: 6, name: 'June'},
+    {id: 7, name: 'July'},
+    {id: 8, name: 'August'},
+    {id: 9, name: 'September'},
+    {id: 10, name: 'October'},
+    {id: 11, name: 'November'},
+    {id: 12, name: 'December'}
+  ];
+  userRole: any[] = [{
+    id: 'ROLE_STUDENT',
+    name: 'ROLE_STUDENT'
+  }, {id: 'ROLE_TEACHER', name: 'ROLE_TEACHER'}];
+  status: any[] = [{id: '1', name: 'ACCEPTED'}, {id: '2', name: 'REJECTED'}, {id: '0', name: 'PROCESSING'}];
+  selectedMonth: any;
+  selectedStatus: any;
+  selectedUserRole: any;
+  selectedYearReason: any;
   lineChartData: any;
+  reasons: any;
+  studentReasons: any = [
+    'For Self/Group Study Sessions',
+    'For Club or Organization Meetings',
+    'For Project Work',
+    'For Online Classes or Meetings',
+    'For Personal Use'
+  ];
+  teacherReasons = [
+    'Scheduled Classes',
+    'Exams and Assessments',
+    'Meetings and Consultations',
+    'Special Events',
+    'Group Activities',
+  ];
   customColor = ['#ffc700', '#0fb215', '#e53131'];
   customColorUserRole = ['#6A1B9A', '#E64A19', '#00838F']
   constructor(private adminService: AdminService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService) {
+              private confirmationService: ConfirmationService,
+              private storageService: StorageService) {
     this.formSearch = Util.createFormGroup(CONSTANTS.SEARCH_FORM_CONTROL_NAME)
   }
 
   statusSummary: any;
   userSummary: any
   ngOnInit(): void {
+    this.selectedUserRole = 'ROLE_TEACHER';
     this.today = new Date();
     this.getDataToday();
     this.getDataNumberOfReservations();
@@ -55,8 +98,11 @@ export class AdminDashboardComponent implements OnInit {
     this.getDataNewUserThisMonth();
     this.generatePieChart1();
     this.generatePieChart2();
+    this.selectedYearReason = new Date().getFullYear();
     this.selectedYear = new Date().getFullYear();
+    this.selectedMonth = new Date().getMonth() + 1;
     this.generateLineChart();
+    this.generateBarChart();
   }
 
   onSearch() {
@@ -223,7 +269,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   generateLineChart() {
-    console.log(this.selectedYear);
     const searchForm: GetNumberOfReservationsByYearSearchForm = {year: this.selectedYear};
     return this.adminService.getNumberOfReservationByYear(searchForm).subscribe({
       next: (data) => {
@@ -234,7 +279,7 @@ export class AdminDashboardComponent implements OnInit {
           totalReservationsPerMonth[monthIndex] = item.total_reservations;
         });
         this.lineChartData = totalReservationsPerMonth;
-        this.data3 = {
+        this.numberOfReservationsByMonth = {
           labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
           datasets: [
             {
@@ -264,5 +309,87 @@ export class AdminDashboardComponent implements OnInit {
     } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
       this.isValidDate = false;
     }
+  }
+
+  generateBarChart() {
+    if (this.selectedUserRole == 'ROLE_TEACHER') {
+      this.reasons = this.teacherReasons;
+    } else {
+      this.reasons = this.studentReasons;
+    }
+    const searchForm: GetNumberOfReservationsByReasonSearchForm = {
+      year: this.selectedYearReason,
+      month: this.selectedMonth,
+      status: this.selectedStatus,
+      userRole: this.selectedUserRole
+    }
+    this.adminService.getNumberOfReservationByReason(searchForm).subscribe({
+      next: (data) => {
+        const role = this.selectedUserRole;
+        const reasons = this.getReasonsByRole(role);
+        const result = reasons.map(reason => {
+          const matchingResponse = data.find(res => res.reservation_description === reason);
+          return {
+            reason,
+            total_reservations: matchingResponse ? matchingResponse.total_reservations : 0
+          };
+        });
+
+        this.numberOfReservationsByReason = {
+          labels: reasons,
+          datasets: [
+            {
+              label: 'Number of Reservations',
+              data: result.map(item => item.total_reservations),
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(199, 199, 199, 0.2)',
+                'rgba(83, 102, 255, 0.2)',
+                'rgba(132, 132, 132, 0.2)',
+                'rgba(75, 75, 75, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(199, 199, 199, 1)',
+                'rgba(83, 102, 255, 1)',
+                'rgba(132, 132, 132, 1)',
+                'rgba(75, 75, 75, 1)'
+              ],
+              borderWidth: 1
+            }
+          ]
+        };
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: "Error retrieving data from the server",
+        });
+      },
+    })
+    this.messageService.add({
+      severity: 'success',
+      summary: "Successfully retrieving data from the server",
+    });
+  }
+
+  getReasonsByRole(role: string): any[] {
+    if (role === 'ROLE_STUDENT') {
+      return this.studentReasons;
+    } else if (role === 'ROLE_TEACHER') {
+      return this.teacherReasons;
+    }
+    return [];
   }
 }

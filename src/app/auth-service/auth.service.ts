@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {API} from "../util/shared/API";
+import {ResendVerificationLinkRequest} from "../login/models/resend-verification-link-request";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -40,4 +41,14 @@ export class AuthService {
     return this.http.post(API.AUTH_API + 'signout', {}, httpOptions);
   }
 
+  resendVerificationLink(request: ResendVerificationLinkRequest) {
+    return this.http.post(
+      API.AUTH_API + 'resend-verification-link', request,
+      {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        responseType: 'text'
+      }
+
+    )
+  }
 }

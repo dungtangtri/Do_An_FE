@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit{
         }, 3000);
       },
       error: (err) => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.error;
         this.isSignUpFailed = true;
         this.messageService.add({
           severity: 'error',

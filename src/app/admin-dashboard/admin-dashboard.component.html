@@ -137,8 +137,32 @@
       <p-dropdown [options]="years" [(ngModel)]="selectedYear"
       placeholder="Select a year" (onChange)="generateLineChart()"></p-dropdown>
       <span class="chart-title text-primary-500 text-2xl">Number of reservations by month</span>
-      <p-chart style="width: 360px; height: 360px;" type="line" [data]="data3"
+      <p-chart style="width: 360px; height: 360px;" type="line" [data]="numberOfReservationsByMonth"
               ></p-chart>
+    </ng-template>
+  </p-panel>
+</p-card>
+<br>
+<p-card>
+  <p-panel>
+    <ng-template pTemplate="header">
+    </ng-template>
+    <ng-template pTemplate="body">
+      <p-dropdown [options]="months"  optionValue="id" optionLabel="name"  [(ngModel)]="selectedMonth" placeholder="Select a month" class="mr-2" (onChange)="generateBarChart()"></p-dropdown>
+      <p-dropdown [options]="years" [(ngModel)]="selectedYearReason" class="mr-2"
+                  placeholder="Select a year" (onChange)="generateBarChart()"></p-dropdown>
+      <p-dropdown [options]="userRole" [(ngModel)]="selectedUserRole" placeholder="User's Role"
+                     optionValue="id" optionLabel="name" (onChange)="generateBarChart()"
+                     class="mr-2"
+      ></p-dropdown>
+      <p-dropdown [options]="status" [(ngModel)]="selectedStatus" placeholder="Reservation's Status"
+                     optionValue="id" optionLabel="name" (onChange)="generateBarChart()"
+                     class="mr-2"
+      ></p-dropdown>
+      <br>
+      <span class="chart-title text-primary-500 text-2xl">Number of reservations by reservation's reason</span>
+      <p-chart style="width: 360px; height: 360px;" type="bar" [data]="numberOfReservationsByReason"
+      ></p-chart>
     </ng-template>
   </p-panel>
 </p-card>

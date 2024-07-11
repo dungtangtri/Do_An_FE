@@ -58,6 +58,9 @@
           role="alert"
         >
           Login failed: {{ errorMessage }}
+          <div *ngIf="!isUserActivated">
+            Please click <a href="#" (click)="resendVerificationLink($event)">here</a> to resend your verification link.
+          </div>
         </div>
       </div>
   </div>

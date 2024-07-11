@@ -7,6 +7,7 @@ import {PlaceReservationForm} from "./models/place-reservation-form";
 import {UserService} from "../auth-service/user.service";
 import {GetRoomSuggestionForm} from "./models/get-room-suggestion-form";
 import {GetRoomSuggestionsDto} from "./models/get-room-suggestions-dto";
+import {StorageService} from "../auth-service/storage.service";
 
 const USER_KEY = 'auth-user';
 @Component({
@@ -21,6 +22,7 @@ export class PlaceReservationComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private storageService: StorageService
   ) {
     this.today = new Date();
     this.maxDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 7);
@@ -79,6 +81,15 @@ export class PlaceReservationComponent implements OnInit, AfterViewInit {
     });
     this.getClassroomList();
     this.changeClassroomCapacity();
+    if(this.isTeacher()){
+      this.reason = [
+        {id: 'Scheduled Classes', name: 'Scheduled Classes'},
+        {id: 'Exams and Assessments', name: 'Exams and Assessments'},
+        {id: 'Meetings and Consultations', name: 'Meetings and Consultations'},
+        {id: 'Special Events', name: 'Special Events'},
+        {id: 'Group Activities', name: 'Group Activities'},
+      ];
+    }
   }
 
   placeReservation() {
@@ -184,5 +195,17 @@ export class PlaceReservationComponent implements OnInit, AfterViewInit {
       return true;
     }
     return false;
+  }
+  isTeacher(){
+    if (this.storageService.isLoggedIn()) {
+      const roles = this.storageService.getUser().roles;
+      if(roles.includes('ROLE_TEACHER')){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
   }
 }

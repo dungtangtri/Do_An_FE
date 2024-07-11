@@ -106,8 +106,13 @@ export class CONSTANTS {
     }
   }
   static readonly ADD_NEW_CLASSROOM_FORM_CONTROL_NAME = {
-    CLASS_LOCATION: {
-      NAME: 'classLocation',
+    ROOM_LOCATION: {
+      NAME: 'roomLocation',
+      VALUE: '',
+      VALIDATORS: [Validators.required],
+    },
+    CLASSROOM_BUILDING: {
+      NAME: 'classroomBuilding',
       VALUE: '',
       VALIDATORS: [Validators.required],
     },

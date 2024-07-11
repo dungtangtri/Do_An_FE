@@ -60,6 +60,7 @@ import { GetClassroomCalendarInAWeekComponent } from './get-classroom-calendar-i
 import { UserChangePasswordComponent } from './user-change-password/user-change-password.component';
 import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { VerifyUserSuccessfulComponent } from './verify-user-successful/verify-user-successful.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     UserChangePasswordComponent,
     UserResetPasswordComponent,
     ForgotPasswordComponent,
+    VerifyUserSuccessfulComponent,
   ],
     imports: [
         BrowserModule,

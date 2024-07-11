@@ -18,6 +18,12 @@ import {GetAllClassroomDTO} from "../../manage-classroom/models/GetAllClassroomD
 import {UpdateClassroomDetailsRequest} from "../../admin-dashboard/models/update-classroom-details-request";
 import {AddNewClassroomRequest} from "../../manage-classroom/models/AddNewClassroomRequest";
 import {GetAllReservationSearchForm} from "../models/get-all-reservation-search-form";
+import {
+  GetNumberOfReservationsByReasonSearchForm
+} from "../../admin-dashboard/models/get-number-of-reservations-by-reason-search-form";
+import {
+  GetNumberOfReservationsByReasonDto
+} from "../../admin-dashboard/models/get-number-of-reservations-by-reason-dto";
 const API_URL = API.ADMIN_API;
 @Injectable({
   providedIn: 'root',
@@ -144,5 +150,11 @@ export class AdminService {
     const formData = new FormData();
     formData.append('file', file);
     return this.http.post<string[]>(API_URL + 'import-reservations', formData );
+  }
+  getNumberOfReservationByReason(form: GetNumberOfReservationsByReasonSearchForm): Observable<GetNumberOfReservationsByReasonDto[]>{
+    return this.http.post<GetNumberOfReservationsByReasonDto[]>(
+      API_URL + 'get-number-reservations-by-reason',
+      form
+    )
   }
 }

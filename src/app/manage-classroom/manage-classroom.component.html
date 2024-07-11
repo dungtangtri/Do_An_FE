@@ -103,7 +103,7 @@
   [modal]="true"
   [(visible)]="isEditRoom"
   (onHide)="isEditRoom = false"
-  [style]="{width: '800px', height: '450px'}">
+  [style]="{width: '800px', height: '550px'}">
   <ng-template pTemplate="body">
     <div class="formgrid flex p-fluid">
       <div class="col-6 w-full">
@@ -114,32 +114,63 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="font-bold text-xl">Class Location</label>
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Classroom's Building</label>
           <div>
-            <input pInputText [(ngModel)]="classLocation" required #classLocationField="ngModel"
-                   [pKeyFilter]="blockSpace">
+            <p-dropdown [options]="building"
+                        [style]="{width: '100%'}"
+                        placeholder="Classroom's Building?"
+                        optionLabel="name"
+                        optionValue="id"
+                        class="cp-form-item"
+                        #buildingField="ngModel"
+            [(ngModel)]="currentBuilding">
+            </p-dropdown>
           </div>
-          <div *ngIf="classLocationField.touched && classLocationField.invalid">
-            <small class="p-error" *ngIf="classLocationField.errors?.['required']">
-              Class Location is required.
+          <div *ngIf="buildingField.touched && buildingField.invalid">
+            <small class="p-error" *ngIf="buildingField.errors?.['required']">
+             Classroom's Building is required.
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Room Number</label>
+          <div>
+            <input pInputText [(ngModel)]="currentRoom" required #roomNumberField="ngModel"
+            min="0" type="number">
+          </div>
+          <div *ngIf="roomNumberField.touched && roomNumberField.invalid">
+            <small class="p-error" *ngIf="roomNumberField.errors?.['required']">
+              Room Number is required.
+            </small>
+            <small class="p-error" *ngIf="roomNumberField.errors?.['min']">
+              Room Number minimum value is 0.
             </small>
           </div>
         </div>
       </div>
       <div class="col-6">
         <div class="form-group">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
           <label class="font-bold text-xl">Class Capacity</label>
           <div>
-            <input type="text" pInputText [(ngModel)]="classCapacity" required #classCapacityField="ngModel"
-                   [pKeyFilter]="'money'">
+            <input type="number" pInputText [(ngModel)]="classCapacity" required #classCapacityField="ngModel" min="0" max="100">
           </div>
           <div *ngIf="classCapacityField.touched && classCapacityField.invalid">
             <small class="p-error" *ngIf="classCapacityField.errors?.['required']">
               Class Capacity is required.
             </small>
+            <small class="p-error" *ngIf="classCapacityField.errors?.['min']">
+              Class Capacity minimum value is 0.
+            </small>
+            <small class="p-error" *ngIf="classCapacityField.errors?.['max']">
+              Class Capacity maximum value is 100.
+            </small>
           </div>
         </div>
         <div>
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
           <label class="font-bold text-xl">Has Power Outlet?</label>
           <p-dropdown [options]="havePowerOutlet"
                       [(ngModel)]="changePowerOutlet"
@@ -148,14 +179,20 @@
                       placeholder="Has Power Outlet?"
                       optionLabel="name"
                       optionValue="id"
-                      class="cp-form-item">
+                      class="cp-form-item"
+          #powerOptionField="ngModel">
           </p-dropdown>
+          <div *ngIf="powerOptionField.touched && powerOptionField.invalid">
+            <small class="p-error" *ngIf="classCapacityField.errors?.['required']">
+              Power Outlet option is required.
+            </small>
+          </div>
         </div>
       </div>
     </div>
     <div class="flex flex-row-reverse">
       <button pButton class="cp-button" label="Save"
-              [disabled]="classLocationField.invalid || classCapacityField.invalid"
+              [disabled]="roomNumberField.invalid || classCapacityField.invalid || buildingField.invalid || powerOptionField.invalid"
               (click)="updateRoomData()"></button>
       <button (click)="isEditRoom = false"
               label="Cancel"
@@ -176,17 +213,26 @@
     <div class="formgrid flex p-fluid">
       <div class="col-6 w-full">
         <div class="form-group">
-          <label class="font-bold text-xl">Class Location</label>
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Classroom's Building</label>
           <div>
-            <input pInputText [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.CLASS_LOCATION.NAME"
-                   [pKeyFilter]="blockSpace" [ngClass]="{'ng-dirty ng-invalid': formAddNew.get('classLocation')?.touched && formAddNew.get('classLocation')?.invalid}">
+            <p-dropdown [options]="building"
+                        [style]="{width: '100%'}"
+                        [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.CLASSROOM_BUILDING.NAME"
+                        placeholder="Classroom's Building?"
+                        optionLabel="name"
+                        optionValue="id"
+                        class="cp-form-item"
+                        [ngClass]="{'ng-dirty ng-invalid': formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.CLASSROOM_BUILDING.NAME)?.touched && formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.CLASSROOM_BUILDING.NAME)?.invalid}">
+            </p-dropdown>
           </div>
-          <div *ngIf="formAddNew.get('classLocation')?.touched && formAddNew.get('classLocation')?.invalid">
-            <small class="p-error" *ngIf="formAddNew.get('classLocation')?.errors?.['required']">Classroom Location is
+          <div *ngIf="formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.CLASSROOM_BUILDING.NAME)?.touched && formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.CLASSROOM_BUILDING.NAME)?.invalid">
+            <small class="p-error" *ngIf="formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.CLASSROOM_BUILDING.NAME)?.errors?.['required']">Classroom's Building is
               required.</small>
           </div>
         </div>
         <div>
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
           <label class="font-bold text-xl">Has Power Outlet?</label>
           <p-dropdown [options]="havePowerOutlet"
                       [style]="{width: '100%'}"
@@ -205,14 +251,30 @@
       </div>
       <div class="col-6">
         <div class="form-group">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
+          <label class="font-bold text-xl">Room Number</label>
+          <div>
+            <input pInputText [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME" min="0"
+                   type="number" [ngClass]="{'ng-dirty ng-invalid': formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME)?.touched && formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME)?.invalid}">
+          </div>
+          <div *ngIf="formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME)?.touched && formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME)?.invalid">
+            <small class="p-error" *ngIf="formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME)?.errors?.['required']">Room Number is
+              required.</small>
+            <small class="p-error" *ngIf="formAddNew.get(ADD_NEW_CLASSROOM_FORM_CONTROL.ROOM_LOCATION.NAME)?.errors?.['min']">Room Number minimum value is 0</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
           <label class="font-bold text-xl">Class Capacity</label>
           <div>
-            <input type="number" pInputText [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.CLASS_CAPACITY.NAME" min="0" max="150"
+            <input type="number" pInputText [formControlName]="ADD_NEW_CLASSROOM_FORM_CONTROL.CLASS_CAPACITY.NAME" min="0" max="200"
                    [ngClass]="{'ng-dirty ng-invalid': formAddNew.get('classCapacity')?.touched && formAddNew.get('classCapacity')?.invalid}">
           </div>
           <div *ngIf="formAddNew.get('classCapacity')?.touched && formAddNew.get('classCapacity')?.invalid">
             <small class="p-error" *ngIf="formAddNew.get('classCapacity')?.errors?.['required']">Classroom Capacity is
               required.</small>
+            <small class="p-error" *ngIf="formAddNew.get('classCapacity')?.errors?.['min']">Classroom Capacity minimum value is 0</small>
+            <small class="p-error" *ngIf="formAddNew.get('classCapacity')?.errors?.['min']">Classroom Capacity maximum value is 100</small>
           </div>
         </div>
       </div>
