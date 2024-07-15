@@ -184,12 +184,13 @@ export class AllUserComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Successfully Sign Up ',
+          detail: data.message
         });
       },
       error: (err) => {
         this.messageService.add({
           severity: 'error',
-          summary: err.error.message,
+          summary: err.error,
         });
       },
     });

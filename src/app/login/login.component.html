@@ -20,8 +20,8 @@
                [(ngModel)]="form.username"
                required
                #username="ngModel"
-               [ngClass]="{ 'is-invalid': f.submitted && username.errors }">
-        <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+               [ngClass]="{ 'is-invalid': username.touched && username.errors }">
+        <div *ngIf="username.errors && username.touched" class="invalid-feedback">
           Username is required!
         </div>
       </div>
@@ -34,8 +34,8 @@
                required
                minlength="5"
                #password="ngModel"
-               [ngClass]="{ 'is-invalid': f.submitted && password.errors }">
-        <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+               [ngClass]="{ 'is-invalid': password.touched && password.errors }">
+        <div *ngIf="password.touched && password.errors" class="invalid-feedback">
           <div *ngIf="password.errors['required']">Password is required</div>
           <div *ngIf="password.errors['minlength']">
             Password must be at least 5 characters

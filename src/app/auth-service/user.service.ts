@@ -97,7 +97,7 @@ export class UserService {
   }
   userForgotPassword(request: ForgotPasswordRequest) {
     return this.http.post(
-      API_URL + 'public/forgot-password',
+       PUBLIC_URL+ 'public/forgot-password',
       request,
       {responseType: 'text'},
     );

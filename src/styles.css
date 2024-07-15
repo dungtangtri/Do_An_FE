@@ -708,6 +708,7 @@ input::placeholder {
   }
 }
 .error-validation-message {
+  position: absolute;
   color: red;
   font-size: 12px;
   margin-top: 5px;

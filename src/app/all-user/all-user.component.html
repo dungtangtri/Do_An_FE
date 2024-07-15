@@ -183,6 +183,7 @@
   <form [formGroup]="formRegister">
     <div class="grid p-fluid">
       <div class="col-6 field">
+        <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
         <label class="font-bold text-xl">Username</label>
         <div>
           <input pInputText placeholder="Username" required [formControlName]="REGISTRATION_FORM_CONTROL.USERNAME.NAME"
@@ -198,6 +199,7 @@
         </div>
       </div>
       <div class="col-6 field">
+        <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
         <label class="font-bold text-xl">User Role</label>
         <div>
           <p-dropdown [options]="role" optionValue="id" optionLabel="name" placeholder="User Role"
@@ -209,6 +211,7 @@
         </div>
       </div>
       <div class="col-6 field">
+        <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
         <label class="font-bold text-xl">Password</label>
         <div>
           <input pInputText type="password" placeholder="Password" required
@@ -225,6 +228,7 @@
         </div>
       </div>
       <div class="col-6 field">
+        <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
         <label class="font-bold text-xl">Email Address</label>
         <div>
           <input pInputText type="email" placeholder="Email Address" required
@@ -240,6 +244,7 @@
         </div>
       </div>
       <div class="col-6 field">
+        <span class="pi pi-asterisk" style="color: red;font-size: 0.75rem"></span>
         <label class="font-bold text-xl">Re-enter Password</label>
         <div>
           <input pInputText type="password" placeholder="Re-enter Password" required

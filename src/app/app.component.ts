@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
         const errorMessage = err.error.message;
         this.messageService.add({
           severity: 'error',
-          summary: 'Unsuccessfully Sign In',
+          summary: 'Unsuccessfully Sign Out',
           detail: errorMessage,
         });
       },

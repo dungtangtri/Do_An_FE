@@ -25,9 +25,9 @@
           maxlength="20"
           [pKeyFilter]="blockSpace"
           #username="ngModel"
-          [ngClass]="{ 'is-invalid': username.errors }"
+          [ngClass]="{ 'is-invalid': username.errors && username.touched}"
         />
-        <div class="invalid-feedback" *ngIf="username.errors">
+        <div class="invalid-feedback" *ngIf="username.errors && username.touched">
           <div *ngIf="username.errors['required']">Username is required</div>
           <div *ngIf="username.errors['minlength']">
             Username must be at least 3 characters
@@ -49,9 +49,9 @@
           [pKeyFilter]="blockSpace"
           email
           #email="ngModel"
-          [ngClass]="{ 'is-invalid': email.errors }"
+          [ngClass]="{ 'is-invalid': email.errors && email.touched}"
         />
-        <div class="invalid-feedback" *ngIf="email.errors">
+        <div class="invalid-feedback" *ngIf="email.errors && email.touched">
           <div *ngIf="email.errors['required']">Email is required</div>
           <div *ngIf="email.errors['email']">
             Email must be a valid email address
@@ -71,9 +71,9 @@
           minlength="5"
           #password="ngModel"
           (change)="validatePassword()"
-          [ngClass]="{ 'is-invalid':  password.errors }"
+          [ngClass]="{ 'is-invalid':  password.errors && password.touched}"
         />
-        <div class="invalid-feedback" *ngIf="password.errors">
+        <div class="invalid-feedback" *ngIf="password.errors && password.touched">
           <div *ngIf="password.errors['required']">Password is required</div>
           <div *ngIf="password.errors['minlength']">
             Password must be at least 5 characters
@@ -85,7 +85,7 @@
         <input type="password" required class="w-full mb-3" [(ngModel)]="form.confirmPassword" name="confirmPassword"
                [pKeyFilter]="blockSpace" pInputText
                #confirmPassword="ngModel" [ngClass]="{ 'is-invalid':  confirmPassword.errors || isSamePassword}" (change)="validatePassword()">
-        <div class="invalid-feedback" *ngIf="confirmPassword.errors">
+        <div class="invalid-feedback" *ngIf="confirmPassword.errors && confirmPassword.touched">
           <div *ngIf="confirmPassword.errors['required']">Re-enter Password is required</div>
         </div>
         <div class="invalid-feedback" *ngIf="isSamePassword">Passwords do not match.</div>
