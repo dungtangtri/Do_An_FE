@@ -183,6 +183,7 @@
             type="button"
             icon="pi pi-pencil"
             class="cp-button"
+            [disabled]="data.reservation_start_time <= today"
             pTooltip="Edit Reservation"
             (click)="editReservation(data)"
           ></button>
@@ -222,7 +223,6 @@
             (onClose)="validateTimeEditForm()"
             [showTime]="true"
             [showSeconds]="true"
-            [showButtonBar]="true"
             view="date"
             [minDate]="today"
             [maxDate]="maxDate"
@@ -256,7 +256,6 @@
             (onClose)="validateTimeEditForm()"
             [minDate]="today"
             [maxDate]="maxDate"
-            [showButtonBar]="true"
             [showIcon]="true"
             [showTime]="true"
             [showSeconds]="true"

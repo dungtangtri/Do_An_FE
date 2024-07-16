@@ -111,14 +111,14 @@
   <ng-template pTemplate="body">
   <div class="flex">
     <div class="w-6">
-      <span class="chart-title">Reservation's status</span>
+      <span class="chart-title">Reservations' status</span>
       <div class="flex justify-content-center">
         <p-chart style="width: 360px; height: 360px;" type="pie" [data]="data"
                  [options]="chartOptions"></p-chart>
       </div>
     </div>
     <div class="w-6">
-      <span class="chart-title">User's Role </span>
+      <span class="chart-title">Users' Role </span>
       <div class="flex justify-content-center">
         <p-chart style="width: 360px; height: 360px;" type="pie" [data]="data2"
                  [options]="chartOptions"></p-chart>
@@ -160,7 +160,7 @@
                      class="mr-2"
       ></p-dropdown>
       <br>
-      <span class="chart-title text-primary-500 text-2xl">Number of reservations by reservation's reason</span>
+      <span class="chart-title text-primary-500 text-2xl">Number of reservations by reasons</span>
       <p-chart style="width: 360px; height: 360px;" type="bar" [data]="numberOfReservationsByReason"
       ></p-chart>
     </ng-template>

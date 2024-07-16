@@ -304,12 +304,18 @@ export class AdminDashboardComponent implements OnInit {
     })
   }
   validateTime() {
-    if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
-      this.isValidDate = true;
-    } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
-      this.isValidDate = false;
+    const startDate = this.formSearch.get(this.SEARCH_FORM_CONTROL.START_DATE.NAME)?.value;
+    const endDate = this.formSearch.get(this.SEARCH_FORM_CONTROL.END_DATE.NAME)?.value;
+
+    if (startDate && endDate) {
+      this.isValidDate = startDate < endDate;
+    } else if (startDate && !endDate) {
+      this.isValidDate = true; // Consider it valid if only start date is set and end date is not set
+    } else {
+      this.isValidDate = true; // Consider it valid if neither date is set
     }
   }
+
 
   generateBarChart() {
     if (this.selectedUserRole == 'ROLE_TEACHER') {

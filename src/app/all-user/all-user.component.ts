@@ -153,14 +153,19 @@ export class AllUserComponent implements OnInit {
   }
   resetForm() {
     this.formSearch.reset();
-    this.getData();
     this.isValidSearchForm = true;
+    this.getData();
   }
   validateTime() {
-    if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
-      this.isValidSearchForm = true;
-    } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
-      this.isValidSearchForm = false;
+    const startDate = this.formSearch.get(this.SEARCH_FORM_CONTROL.START_DATE.NAME)?.value;
+    const endDate = this.formSearch.get(this.SEARCH_FORM_CONTROL.END_DATE.NAME)?.value;
+
+    if (startDate && endDate) {
+      this.isValidSearchForm = startDate < endDate;
+    } else if (startDate && !endDate) {
+      this.isValidSearchForm = true; // Consider it valid if only start date is set and end date is not set
+    } else {
+      this.isValidSearchForm = true; // Consider it valid if neither date is set
     }
   }
 

@@ -37,6 +37,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   maxDate: Date;
   minDate: Date;
   exampleFormat: any;
+  currentTime: any;
   isVisibleImportExcel = false;
   isVisibleCalendar = false;
   isVisibleEdit = false;
@@ -219,6 +220,7 @@ export class AdminGetAllReservationsComponent implements OnInit {
   }
   resetForm() {
     this.formSearch.reset();
+    this.isValid = true;
     this.getData();
   }
 
@@ -245,10 +247,15 @@ export class AdminGetAllReservationsComponent implements OnInit {
       });
   }
   validateTime() {
-    if (this.formSearch.get('startDate')?.value < this.formSearch.get('endDate')?.value) {
-      this.isValid = true;
-    } else if((this.formSearch.get('startDate')?.value > this.formSearch.get('endDate')?.value) && this.formSearch.get('endDate')?.value != '' ) {
-      this.isValid = false;
+    const startDate = this.formSearch.get(this.SEARCH_FORM_CONTROL.START_DATE.NAME)?.value;
+    const endDate = this.formSearch.get(this.SEARCH_FORM_CONTROL.END_DATE.NAME)?.value;
+
+    if (startDate && endDate) {
+      this.isValid = startDate < endDate;
+    } else if (startDate && !endDate) {
+      this.isValid = true; // Consider it valid if only start date is set and end date is not set
+    } else {
+      this.isValid = true; // Consider it valid if neither date is set
     }
   }
 

@@ -13,7 +13,7 @@ body{
 }
 .container {
   width: 100%; /* Set the width as needed, e.g., 80% of the parent container */
- max-width: 1800px/* Optionally set a maximum width */
+ max-width: 1820px/* Optionally set a maximum width */
 }
 .chart-title {
   display: flex;
